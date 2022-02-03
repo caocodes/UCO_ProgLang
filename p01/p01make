@@ -1,16 +1,21 @@
 #------------------------------------------------------------------
 # File p01make contains instructions for program p01. Instructions are written for the UNIX utility make.
 #------------------------------------------------------------------
-
-#----------------------------------------------------------------------
-# File make creates a subset Pascal Scanner 
+# Author:	Mr. Cao Truong
+# Student ID: *20500231
+# E-Mail:	ctruong3@uco.edu
+# Course:	CMSC 5023 – Programming Languages
+# CRN:		22708, Spring 2022
+# Project:	p01
+# Due:		February 3, 2022
+# Project Account Number: tt035
 #----------------------------------------------------------------------
 # Object files
 #----------------------------------------------------------------------
 obj =		p01.o \
 	 p01lex.o			
 #----------------------------------------------------------------------
-# Bind the subset Pascal Scanneer 
+# Bind the subset Pascal Scanner using the linkage editor
 #----------------------------------------------------------------------
 p01:		${obj}
 	g++ -o p01 ${obj} -lm -ll
@@ -26,10 +31,7 @@ p01lex.cpp:	p01lex.l p01lex.h p01tkn.h
 	lex p01lex.l
 	mv lex.yy.c p01lex.cpp
 #----------------------------------------------------------------------
-#----------------------------------------------------------------------
 p01lex.o:	p01lex.cpp p01lex.h p01tkn.h
 	g++ -c -g p01lex.cpp
-#----------------------------------------------------------------------
-clean:
-	rm *.o p01lex.cpp p01
+
 	

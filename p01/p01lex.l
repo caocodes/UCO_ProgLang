@@ -233,13 +233,13 @@ char* Scanner::getSpelling(void){
 //--------------------------------------------------------------------
 //Function getLines returns the line number of the most recent token
 //--------------------------------------------------------------------
-int Scanner::getLines(void){
+int Scanner::getLine(void){
 	return lines;
 }
 //--------------------------------------------------------------------
 //Function getColumns returns the column number of the most recent token 
 //--------------------------------------------------------------------
-int Scanner::getColumns(void){	
+int Scanner::getColumn(void){	
 	return cols - strlen(yytext);
 }
 //-----------------------End of Lex Definition------------------------

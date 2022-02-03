@@ -17,33 +17,34 @@
 #include <cstdio>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 //--------------------------------------------------------------------
 //Namespaces
 //--------------------------------------------------------------------
 using namespace std;
 //--------------------------------------------------------------------
-//Function: yylex                                                     
-//Function yylex is the expner.  Function yylex returns an integer   
-//token code as defined above or 0 if end-of-file has been     
-//reached.                                                            
+//Function: yylex
+//Function yylex is the Scanner. Function yylex returns an integer
+//token code as defined above or 0 if end-of-file has been
+//reached.
 //--------------------------------------------------------------------
 #ifdef __cplusplus
-extern "C" 
+extern "C"
 #endif
-int yylex(void);
+    int
+    yylex(void);
 //--------------------------------------------------------------------
 //Class Scanner defines the attributes of a Scanner
 //--------------------------------------------------------------------
-class Scanner {
-	int tokenCode;
+class Scanner
+{
+  int tokenCode;
 
 public:
-  Scanner(FILE *i);                //Constructor used to redirect the keyboard
-  int getScan(void);			 
+  Scanner(FILE *i);
+  int getScan(void);
   char *getSpelling(void);
-  int getLines(void);
-  int getColumns(void);
+  int getLine(void);
+  int getColumn(void);
 };
 
 #endif

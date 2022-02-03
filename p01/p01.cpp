@@ -54,7 +54,7 @@ void printTrace(ostream &out, const map<int, string> &tokenMap, Scanner &scanner
 	while (token > 0)
 	{
 		out << "Token: \"" << scanner.getSpelling() << "\"";
-		out << "\t Position: (" << scanner.getLines() << ", " << scanner.getColumns() << ")";
+		out << "\t Position: (" << scanner.getLine() << ", " << scanner.getColumn() << ")";
 		out << "\t Code: " << token;
 		out << "\t Symbol: " << tokenMap.at(token);
 		token = scanner.getScan();
