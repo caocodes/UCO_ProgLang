@@ -33,15 +33,15 @@ extern "C"
 #endif
 int yylex(void);
 //--------------------------------------------------------------------
-//Class Lexer defines the attributes of a Scanner
+//Class Scanner defines the attributes of a Scanner
 //--------------------------------------------------------------------
-class Lexer {
+class Scanner {
 	int tokenCode;
 
 public:
-  Lexer(FILE *i);                //Constructor used to redirect the keyboard
+  Scanner(FILE *i);                //Constructor used to redirect the keyboard
   int getScan(void);			 
-  char *spellCheck(void);
+  char *getSpelling(void);
   int getLines(void);
   int getColumns(void);
 };

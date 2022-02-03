@@ -228,7 +228,7 @@ int Scanner::getScan(void){
 //Function returns a pointer to the spelling of the most
 //recent token.
 //--------------------------------------------------------------------
-char* Scanner::spellCheck(void){
+char* Scanner::getSpelling(void){
 	return (char*)yytext;
 }
 //--------------------------------------------------------------------

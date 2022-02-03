@@ -10,6 +10,7 @@
 // Due:		February 3, 2022
 // Project Account Number: tt035
 
+#include <map>
 //This is for when the program should be exiting
 #ifndef YYERRCODE
 #define YYERRCODE 256
@@ -70,3 +71,60 @@
 #define APOSTROPHE 308
 #define ERROR 309
 #define TOKENMAX 310
+
+const map<int, string> tokenMap = {
+	{TOKENSIZE, "TOKENSIZE"},
+	{AND, "AND"},
+	{ARRAY, "ARRAY"},
+	{BEGAN, "BEGAN"},
+	{DIV, "DIV"},
+	{DO, "DO"},
+	{DOWNTO, "DOWNTO"},
+	{ELSE, "ELSE"},
+	{END, "END"},
+	{FOR, "FOR"},
+	{FUNCTION, "FUNCTION"},
+	{IF, "IF"},
+	{INTEGER, "INTEGER"},
+	{MOD, "MOD"},
+	{NOT, "NOT"},
+	{OF, "OF"},
+	{OR, "OR"},
+	{PROCEDURE, "PROCEDURE"},
+	{PROGRAM, "PROGRAM"},
+	{REPEAT, "REPEAT"},
+	{THEN, "THEN"},
+	{TO, "TO"},
+	{UNTIL, "UNTIL"},
+	{VAR, "VAR"},
+	{WHILE, "WHILE"},
+	{ID, "ID"},
+	{INTLIT, "INTLIT"},
+	{REALIT, "REALIT"},
+	{CHRLIT, "CHRLIT"},
+	{EQU, "EQU"},
+	{NEQ, "NEQ"},
+	{LES, "LES"},
+	{LEQ, "LEQ"},
+	{GRT, "GRT"},
+	{GEQ, "GEQ"},
+	{PLUS, "PLUS"},
+	{MINUS, "MINUS"},
+	{STAR, "STAR"},
+	{SLASH, "SLASH"},
+	{ASSIGN, "ASSIGN"},
+	{LPAREN, "LPAREN"},
+	{RPAREN, "RPAREN"},
+	{LBRACKET, "LBRACKET"},
+	{RBRACKET, "RBRACKET"},
+	{LCURLY, "LCURLY"},
+	{RCURLY, "RCURLY"},
+	{COLON, "COLON"},
+	{SEMICOLON, "SEMICOLON"},
+	{COMMA, "COMMA"},
+	{PERIOD, "PERIOD"},
+	{RANGE, "RANGE"},
+	{APOSTROPHE, "APOSTROPHE"},
+	{ERROR, "ERROR"},
+	{TOKENMAX, "TOKENMAX"},
+};
