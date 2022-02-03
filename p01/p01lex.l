@@ -24,32 +24,120 @@ using namespace std;
 #include "p01lex.h"
 #include "p01tkn.h"
 //--------------------------------------------------------------------
-//Function prototypes
+//Function prototypes, class fields
 //--------------------------------------------------------------------
-int tokenMgr(int T);
-int tokencode;
-int lines;
-int cols;
+int tokenMgr(int token);
+int tokenCode;
+int lineCount;
+int columnCount;
 
 %}
 %%
 
-[ \t]+ {
- cols += strlen(yytext);
+[aA][nN][dD] {
+ return(tokenMgr(AND));
+ }
+
+[aA][rR][rR][aA][yY] {
+ return(tokenMgr(ARRAY));
 }
-[\n] {
- lines++;
- cols=1;
+
+[bB][eE][gG][iI][nN] {
+ return(tokenMgr(BEGAN));
 }
+
+[dD][iI][vV] {
+ return(tokenMgr(DIV));
+}
+
+[dD][oO] {
+ return(tokenMgr(DO));
+}
+
+[dD][oO][wW][nN][tT][oO] {
+ return(tokenMgr(DOWNTO));
+}
+
+[eE][lL][sS][eE] {
+ return(tokenMgr(ELSE));
+}
+
+[eE][nN][dD] {
+ return(tokenMgr(END));
+}
+
+[fF][oO][rR] {
+ return(tokenMgr(FOR));
+}
+
+[fF][uU][nN][cC][tT][iI][oO][nN] {
+ return(tokenMgr(FUNCTION));
+}
+
+[iI][fF] {
+ return(tokenMgr(IF));
+}
+
+[mM][oO][dD] {
+ return(tokenMgr(MOD));
+}
+
+[nN][oO][tT] {
+ return(tokenMgr(NOT));
+}
+
+[oO][fF] {
+ return(tokenMgr(OF));
+}
+
+[oO][rR] {
+ return(tokenMgr(OR));
+}
+
+[pP][rR][oO][cC][eE][dD][uU][rR][eE] {
+ return(tokenMgr(PROCEDURE));
+}
+
+[pP][rR][oO][gG][rR][aA][mM] {
+ return(tokenMgr(PROGRAM));
+}
+
+[rR][eE][pP][eE][aA][tT] {
+	return(tokenMgr(REPEAT));
+}
+
+[tT][hH][eE][nN] {
+return(tokenMgr(THEN));
+}
+
+[tT][oO] {
+ return(tokenMgr(TO));
+}
+
+[uU][nN][tT][iI][lL] {
+ return(tokenMgr(UNTIL));
+}
+
+[vV][aA][rR] {
+ return(tokenMgr(VAR));
+}
+
+[wW][hH][iI][lL][eE] {
+ return(tokenMgr(WHILE));
+}
+
 "+" {
  return(tokenMgr(PLUS));
  }
+
 "-" {
  return(tokenMgr(MINUS));
  }
+
 "*" {
  return(tokenMgr(STAR));
  }
+
 "/" {
  return(tokenMgr(SLASH));
  }
@@ -110,81 +198,23 @@ int cols;
 "'" {
  return(tokenMgr(APOSTROPHE));
  }
-[aA][nN][dD] {
- return(tokenMgr(AND));
- }
-[aA][rR][rR][aA][yY] {
- return(tokenMgr(ARRAY));
- }
-[bB][eE][gG][iI][nN] {
- return(tokenMgr(BEGAN));
- }
-[dD][iI][vV] {
- return(tokenMgr(DIV));
- }
-[dD][oO] {
- return(tokenMgr(DO));
- }
-[dD][oO][wW][nN][tT][oO] {
- return(tokenMgr(DOWNTO));
- }
-[eE][lL][sS][eE] {
- return(tokenMgr(ELSE));
- }
-[eE][nN][dD] {
- return(tokenMgr(END));
- }
-[fF][oO][rR] {
- return(tokenMgr(FOR));
- }
-[fF][uU][nN][cC][tT][iI][oO][nN] {
- return(tokenMgr(FUNCTION));
- }
-[iI][fF] {
- return(tokenMgr(IF));
- }
-[mM][oO][dD] {
- return(tokenMgr(MOD));
- }
-[nN][oO][tT] {
- return(tokenMgr(NOT));
- }
-[oO][fF] {
- return(tokenMgr(OF));
- }
-[oO][rR] {
- return(tokenMgr(OR));
- }
-[pP][rR][oO][cC][eE][dD][uU][rR][eE] {
- return(tokenMgr(PROCEDURE));
- }
-[pP][rR][oO][gG][rR][aA][mM] {
- return(tokenMgr(PROGRAM));
- }
-[rR][eE][pP][eE][aA][tT] {
- return(tokenMgr(REPEAT));
- }
-[tT][hH][eE][nN] {
- return(tokenMgr(THEN));
- }
-[tT][oO] {
- return(tokenMgr(TO));
- }
-[uU][nN][tT][iI][lL] {
- return(tokenMgr(UNTIL));
- }
-[vV][aA][rR] {
- return(tokenMgr(VAR));
- }
-[wW][hH][iI][lL][eE] {
- return(tokenMgr(WHILE));
- } 
+
+ 
+[ \t]+ {
+ columnCount += strlen(yytext);
+}
+
+[\n] {
+ lineCount++;
+ columnCount = 1;
+}
+
  [{][^}]*[}] {
 	for(int a=0; a < strlen(yytext); a++){
-		cols++;
+		columnCount++;
 		if(yytext[a]=='\n'){
-			cols=1;
-			lines++;
+			columnCount=1;
+			lineCount++;
 		}
 	}
 }
@@ -197,14 +227,16 @@ int cols;
 [0-9]*\.[0-9]*([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
 [']([^']|(\'\'))[']					return tokenMgr(CHRLIT);
 [_a-zA-Z][_a-zA-Z0-9]*				return tokenMgr(ID);
+
 . {
  return tokenMgr(ERROR);
- }
+}
+
 %%
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
-	cols += strlen(yytext);
+	columnCount += strlen(yytext);
 	return t;
 }
 //--------------------------------------------------------------------
@@ -220,26 +252,24 @@ Scanner::Scanner(FILE* i){
 //Function Lex calls yylex
 //--------------------------------------------------------------------
 int Scanner::getScan(void){
-	tokencode=yylex();
-	return tokencode;
+	tokenCode = yylex();
+	return tokenCode;
 }
 //--------------------------------------------------------------------
-//Function returns a pointer to the spelling of the most
-//recent token.
+//Function getSpelling returns the spelling of the most recent token.
 //--------------------------------------------------------------------
 char* Scanner::getSpelling(void){
 	return (char*)yytext;
 }
 //--------------------------------------------------------------------
-//Function getLines returns the line number of the most recent token
+//Function getLines returns the line position of the most recent token.
 //--------------------------------------------------------------------
 int Scanner::getLine(void){
-	return lines;
+	return lineCount;
 }
 //--------------------------------------------------------------------
-//Function getColumns returns the column number of the most recent token 
+//Function getColumn returns the column position of the most recent token. 
 //--------------------------------------------------------------------
 int Scanner::getColumn(void){	
-	return cols - strlen(yytext);
+	return columnCount - strlen(yytext);
 }
-//-----------------------End of Lex Definition------------------------
