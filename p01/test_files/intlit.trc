@@ -1,0 +1,11 @@
+
+Token Spelling    Position Token CodeToken Name 
+token "         0"  pos(  1,  1) code( 50) symbol:INTLIT
+token "         1"  pos(  1,  2) code( 50) symbol:INTLIT
+token "         -"  pos(  1,  3) code( 31) symbol:MINUS
+token "         5"  pos(  1,  3) code( 50) symbol:INTLIT
+token "         +"  pos(  1,  4) code( 30) symbol:PLUS
+token "        10"  pos(  1,  4) code( 50) symbol:INTLIT
+token "   6272844"  pos(  1,  5) code( 50) symbol:INTLIT
+token "        03"  pos(  1,  6) code( 50) symbol:INTLIT
+token "123456789101112131415"  pos(  1,  7) code( 50) symbol:INTLIT

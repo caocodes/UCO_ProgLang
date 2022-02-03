@@ -1,0 +1,21 @@
+
+Token Spelling    Position Token CodeToken Name 
+token "         ="  pos(  1,  1) code( 24) symbol:EQU
+token "        <>"  pos(  1,  1) code( 25) symbol:NEQ
+token "         <"  pos(  1,  1) code( 26) symbol:LES
+token "        <="  pos(  1,  1) code( 27) symbol:LEQ
+token "         >"  pos(  1,  1) code( 28) symbol:GRT
+token "        >="  pos(  1,  1) code( 29) symbol:GEQ
+token "         +"  pos(  1,  1) code( 30) symbol:PLUS
+token "         -"  pos(  1,  1) code( 31) symbol:MINUS
+token "         *"  pos(  1,  1) code( 32) symbol:STAR
+token "         /"  pos(  1,  1) code( 33) symbol:SLASH
+token "        :="  pos(  1,  1) code( 34) symbol:ASSIGN
+token "         ("  pos(  1,  1) code( 35) symbol:LPAREN
+token "         )"  pos(  1,  1) code( 36) symbol:RPAREN
+token "         ["  pos(  1,  1) code( 37) symbol:LBRACKET
+token "         ]"  pos(  1,  1) code( 38) symbol:RBRACKET
+token "         :"  pos(  1,  1) code( 39) symbol:COLON
+token "         ;"  pos(  1,  1) code( 40) symbol:SEMICOLON
+token "         ."  pos(  1,  1) code( 42) symbol:PERIOD
+token "        .."  pos(  1,  2) code( 43) symbol:RANGE

@@ -35,71 +35,71 @@ int columnCount;
 %%
 
 [aA][nN][dD] {
- return(tokenMgr(AND));
- }
+	return(tokenMgr(AND));
+}
 
 [aA][rR][rR][aA][yY] {
- return(tokenMgr(ARRAY));
+	return(tokenMgr(ARRAY));
 }
 
 [bB][eE][gG][iI][nN] {
- return(tokenMgr(BEGAN));
+	return(tokenMgr(BEGAN));
 }
 
 [dD][iI][vV] {
- return(tokenMgr(DIV));
+	return(tokenMgr(DIV));
 }
 
 [dD][oO] {
- return(tokenMgr(DO));
+	return(tokenMgr(DO));
 }
 
 [dD][oO][wW][nN][tT][oO] {
- return(tokenMgr(DOWNTO));
+	return(tokenMgr(DOWNTO));
 }
 
 [eE][lL][sS][eE] {
- return(tokenMgr(ELSE));
+	return(tokenMgr(ELSE));
 }
 
 [eE][nN][dD] {
- return(tokenMgr(END));
+	return(tokenMgr(END));
 }
 
 [fF][oO][rR] {
- return(tokenMgr(FOR));
+	return(tokenMgr(FOR));
 }
 
 [fF][uU][nN][cC][tT][iI][oO][nN] {
- return(tokenMgr(FUNCTION));
+	return(tokenMgr(FUNCTION));
 }
 
 [iI][fF] {
- return(tokenMgr(IF));
+	return(tokenMgr(IF));
 }
 
 [mM][oO][dD] {
- return(tokenMgr(MOD));
+	return(tokenMgr(MOD));
 }
 
 [nN][oO][tT] {
- return(tokenMgr(NOT));
+	return(tokenMgr(NOT));
 }
 
 [oO][fF] {
- return(tokenMgr(OF));
+	return(tokenMgr(OF));
 }
 
 [oO][rR] {
- return(tokenMgr(OR));
+	return(tokenMgr(OR));
 }
 
 [pP][rR][oO][cC][eE][dD][uU][rR][eE] {
- return(tokenMgr(PROCEDURE));
+	return(tokenMgr(PROCEDURE));
 }
 
 [pP][rR][oO][gG][rR][aA][mM] {
- return(tokenMgr(PROGRAM));
+	return(tokenMgr(PROGRAM));
 }
 
 [rR][eE][pP][eE][aA][tT] {
@@ -107,98 +107,115 @@ int columnCount;
 }
 
 [tT][hH][eE][nN] {
-return(tokenMgr(THEN));
+	return(tokenMgr(THEN));
 }
 
 [tT][oO] {
- return(tokenMgr(TO));
+	return(tokenMgr(TO));
 }
 
 [uU][nN][tT][iI][lL] {
- return(tokenMgr(UNTIL));
+	return(tokenMgr(UNTIL));
 }
 
 [vV][aA][rR] {
- return(tokenMgr(VAR));
+	return(tokenMgr(VAR));
 }
 
 [wW][hH][iI][lL][eE] {
- return(tokenMgr(WHILE));
+	return(tokenMgr(WHILE));
+}
+
+"=" {
+	return(tokenMgr(EQU));
+}
+
+"<>" {
+	return(tokenMgr(NEQ));
+}
+
+"<" {
+ 	return(tokenMgr(LES));
+}
+
+"<=" {
+ 	return(tokenMgr(LEQ));
+}
+
+">" {
+	return(tokenMgr(GRT));
+}
+
+">=" {
+	return(tokenMgr(GEQ));
 }
 
 "+" {
- return(tokenMgr(PLUS));
+	return(tokenMgr(PLUS));
  }
 
 "-" {
- return(tokenMgr(MINUS));
- }
+	return(tokenMgr(MINUS));
+}
 
 "*" {
- return(tokenMgr(STAR));
- }
+	return(tokenMgr(STAR));
+}
 
 "/" {
- return(tokenMgr(SLASH));
- }
-"=" {
- return(tokenMgr(EQU));
- }
-"<>" {
- return(tokenMgr(NEQ));
- }
-"<" {
- return(tokenMgr(LES));
- }
-"<=" {
- return(tokenMgr(LEQ));
- }
-">" {
- return(tokenMgr(GRT));
- }
-">=" {
- return(tokenMgr(GEQ));
- }
+	return(tokenMgr(SLASH));
+}
+
 ":=" {
- return(tokenMgr(ASSIGN));
- }
+	return(tokenMgr(ASSIGN));
+}
+
 "(" {
- return(tokenMgr(LPAREN));
- }
+	return(tokenMgr(LPAREN));
+}
+
 ")" {
- return(tokenMgr(RPAREN));
- }
+	return(tokenMgr(RPAREN));
+}
+
 "[" {
- return(tokenMgr(LBRACKET));
- }
+	return(tokenMgr(LBRACKET));
+}
+
 "]" {
- return(tokenMgr(RBRACKET));
- }
-"{" {
- return(tokenMgr(LCURLY));
- }
-"}" {
- return(tokenMgr(RCURLY));
- }
+	return(tokenMgr(RBRACKET));
+}
+
 ":" {
- return(tokenMgr(COLON));
- }
+	return(tokenMgr(COLON));
+}
+
 ";" {
- return(tokenMgr(SEMICOLON));
- }
+ 	return(tokenMgr(SEMICOLON));
+}
+
 "," {
- return(tokenMgr(COMMA));
- }
+	return(tokenMgr(COMMA));
+}
+
 "." {
- return(tokenMgr(PERIOD));
- }
+	return(tokenMgr(PERIOD));
+}
+
 ".." {
- return(tokenMgr(RANGE));
- }
-"'" {
- return(tokenMgr(APOSTROPHE));
+	return(tokenMgr(RANGE));
  }
 
+"{" {
+	return(tokenMgr(LCURLY));
+}
+
+"}" {
+	return(tokenMgr(RCURLY));
+} 
+"'" {
+	return(tokenMgr(APOSTROPHE));
+}
  
 [ \t]+ {
  columnCount += strlen(yytext);
@@ -218,27 +235,32 @@ return(tokenMgr(THEN));
 		}
 	}
 }
+
+[_a-zA-Z][_a-zA-Z0-9]*				return tokenMgr(ID);
+
 [0-9]+								return(tokenMgr(INTLIT));
 
-[0-9]+([Ee][+-]?[0-9]+)?			return tokenMgr(REALIT);
-
-[0-9]+\.[0-9]+([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
-
-[0-9]*\.[0-9]*([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
 [']([^']|(\'\'))[']					return tokenMgr(CHRLIT);
-[_a-zA-Z][_a-zA-Z0-9]*				return tokenMgr(ID);
+
+[0-9]+([Ee][+-]?[0-9]+)?			return tokenMgr(REALIT);
+[0-9]+\.[0-9]+([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
+[0-9]*\.[0-9]*([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
+
+
 
 . {
  return tokenMgr(ERROR);
 }
 
 %%
+
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
 	columnCount += strlen(yytext);
 	return t;
 }
+
 //--------------------------------------------------------------------
 //Class Scanner implementation
 //--------------------------------------------------------------------
@@ -249,9 +271,9 @@ Scanner::Scanner(FILE* i){
 	yyin=i;	
 }
 //--------------------------------------------------------------------
-//Function Lex calls yylex
+//Function lex calls yylex
 //--------------------------------------------------------------------
-int Scanner::getScan(void){
+int Scanner::lex(void){
 	tokenCode = yylex();
 	return tokenCode;
 }

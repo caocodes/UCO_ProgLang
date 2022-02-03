@@ -1,0 +1,8 @@
+
+Token Spelling    Position Token CodeToken Name 
+token "         {"  pos(  1,  1) code( 51) symbol:ERROR
+token "      This"  pos(  1,  2) code( 44) symbol:ID
+token "        is"  pos(  1,  3) code( 44) symbol:ID
+token "        an"  pos(  1,  4) code( 44) symbol:ID
+token "   invalid"  pos(  1,  5) code( 44) symbol:ID
+token "   comment"  pos(  1,  6) code( 44) symbol:ID

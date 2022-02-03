@@ -59,17 +59,11 @@
 #define COMMA 297
 #define PERIOD 298
 #define RANGE 299
-#define TOKENSIZE 300
-#define INTEGER 301
 #define ID 302
 #define INTLIT 303
-#define REALIT 304
 #define CHRLIT 305
-#define LCURLY 306
-#define RCURLY 307
-#define APOSTROPHE 308
+#define REALIT 304
 #define ERROR 309
-#define TOKENMAX 310
 
 const map<int, string> tokenMap = {
 	{AND, "AND"},
@@ -95,6 +89,7 @@ const map<int, string> tokenMap = {
 	{UNTIL, "UNTIL"},
 	{VAR, "VAR"},
 	{WHILE, "WHILE"},
+
 	{EQU, "EQU"},
 	{NEQ, "NEQ"},
 	{LES, "LES"},
@@ -115,15 +110,10 @@ const map<int, string> tokenMap = {
 	{COMMA, "COMMA"},
 	{PERIOD, "PERIOD"},
 	{RANGE, "RANGE"},
-	{TOKENSIZE, "TOKENSIZE"},
-	{INTEGER, "INTEGER"},
+	
 	{ID, "ID"},
 	{INTLIT, "INTLIT"},
-	{REALIT, "REALIT"},
 	{CHRLIT, "CHRLIT"},
-	{LCURLY, "LCURLY"},
-	{RCURLY, "RCURLY"},
-	{APOSTROPHE, "APOSTROPHE"},
+	{REALIT, "REALIT"},
 	{ERROR, "ERROR"},
-	{TOKENMAX, "TOKENMAX"},
 };

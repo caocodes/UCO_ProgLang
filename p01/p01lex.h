@@ -41,7 +41,7 @@ class Scanner
 
 public:
   Scanner(FILE *i);
-  int getScan(void);
+  int lex(void);
   char *getSpelling(void);
   int getLine(void);
   int getColumn(void);

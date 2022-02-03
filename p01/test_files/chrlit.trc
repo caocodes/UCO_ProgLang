@@ -1,0 +1,22 @@
+
+Token Spelling    Position Token CodeToken Name 
+token "         '"  pos(  1,  1) code( 51) symbol:ERROR
+token "         -"  pos(  1,  1) code( 31) symbol:MINUS
+token "         '"  pos(  1,  1) code( 51) symbol:ERROR
+token "         '"  pos(  2,  1) code( 51) symbol:ERROR
+token "         '"  pos(  2,  1) code( 51) symbol:ERROR
+token "         '"  pos(  2,  1) code( 51) symbol:ERROR
+token "         '"  pos(  2,  1) code( 51) symbol:ERROR
+token "         '"  pos(  3,  1) code( 51) symbol:ERROR
+token "         ."  pos(  3,  1) code( 42) symbol:PERIOD
+token "         '"  pos(  3,  1) code( 51) symbol:ERROR
+token "         '"  pos(  4,  1) code( 51) symbol:ERROR
+token "       don"  pos(  4,  1) code( 44) symbol:ID
+token "         '"  pos(  4,  1) code( 51) symbol:ERROR
+token "         '"  pos(  4,  1) code( 51) symbol:ERROR
+token "         t"  pos(  4,  1) code( 44) symbol:ID
+token "         '"  pos(  4,  1) code( 51) symbol:ERROR
+token "         '"  pos(  5,  1) code( 51) symbol:ERROR
+token "      Alan"  pos(  5,  1) code( 44) symbol:ID
+token "    Turing"  pos(  5,  2) code( 44) symbol:ID
+token "         '"  pos(  5,  2) code( 51) symbol:ERROR
