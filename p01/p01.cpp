@@ -11,13 +11,13 @@
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <cstdio>
 #include <string>
-#include <iomanip>
-#include <cstdlib>
 #include <cstring>
+
 #include "p01lex.h"
 #include "p01tkn.h"
 using namespace std;
@@ -54,9 +54,9 @@ void printTrace(ostream &out, const map<int, string> &tokenMap, Scanner &scanner
 	while (token > 0)
 	{
 		out << "Token: \"" << scanner.getSpelling() << "\"";
-		out << "\t Symbol: " << tokenMap.at(token);
-		out << "\t Code: " << token;
 		out << "\t Position: (" << scanner.getLines() << ", " << scanner.getColumns() << ")";
+		out << "\t Code: " << token;
+		out << "\t Symbol: " << tokenMap.at(token);
 		token = scanner.getScan();
 		out << endl;
 	}
