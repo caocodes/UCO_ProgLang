@@ -37,8 +37,6 @@ extern "C"
 //--------------------------------------------------------------------
 class Scanner
 {
-  int tokenCode;
-
 public:
   Scanner(FILE *i);
   int lex(void);

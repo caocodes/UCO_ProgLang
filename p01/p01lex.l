@@ -27,12 +27,34 @@ using namespace std;
 //Function prototypes, class fields
 //--------------------------------------------------------------------
 int tokenMgr(int token);
-int tokenCode;
 int lineCount;
 int columnCount;
 
 %}
 %%
+
+[ \t]+ {
+ columnCount += strlen(yytext);
+}
+
+[\n] {
+ lineCount++;
+ columnCount = 1;
+}
+
+'' {
+	columnCount += 2;	
+}
+
+[\{][^{]*[\}] {
+	for(int i = 0; i < strlen(yytext); i++){
+		columnCount++;
+		if(yytext[i] == '\n'){
+			lineCount++;
+			columnCount = 1;
+		}
+	}
+}
 
 [aA][nN][dD] {
 	return(tokenMgr(AND));
@@ -43,7 +65,7 @@ int columnCount;
 }
 
 [bB][eE][gG][iI][nN] {
-	return(tokenMgr(BEGAN));
+	return(tokenMgr(BEGIN));
 }
 
 [dD][iI][vV] {
@@ -204,52 +226,19 @@ int columnCount;
 
 ".." {
 	return(tokenMgr(RANGE));
- }
-
-"{" {
-	return(tokenMgr(LCURLY));
 }
 
-"}" {
-	return(tokenMgr(RCURLY));
-} 
-"'" {
-	return(tokenMgr(APOSTROPHE));
-}
- 
-[ \t]+ {
- columnCount += strlen(yytext);
-}
+[_a-zA-Z][_a-zA-Z0-9]*						return tokenMgr(ID);
 
-[\n] {
- lineCount++;
- columnCount = 1;
-}
+[0-9]+(\.[0-9]+)((e|E)[+\-]?[0-9]+)?		return tokenMgr(REALIT);
+[0-9]+((e|E)[+\-]?[0-9]+)					return tokenMgr(REALIT);
 
- [{][^}]*[}] {
-	for(int a=0; a < strlen(yytext); a++){
-		columnCount++;
-		if(yytext[a]=='\n'){
-			columnCount=1;
-			lineCount++;
-		}
-	}
-}
+[0-9]+										return(tokenMgr(INTLIT));
 
-[_a-zA-Z][_a-zA-Z0-9]*				return tokenMgr(ID);
-
-[0-9]+								return(tokenMgr(INTLIT));
-
-[']([^']|(\'\'))[']					return tokenMgr(CHRLIT);
-
-[0-9]+([Ee][+-]?[0-9]+)?			return tokenMgr(REALIT);
-[0-9]+\.[0-9]+([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
-[0-9]*\.[0-9]*([Ee][+-]?[0-9]+)?	return tokenMgr(REALIT);
-
-
+['][^']+[']									return tokenMgr(CHRLIT);
 
 . {
- return tokenMgr(ERROR);
+	return tokenMgr(ERROR);
 }
 
 %%
@@ -274,8 +263,7 @@ Scanner::Scanner(FILE* i){
 //Function lex calls yylex
 //--------------------------------------------------------------------
 int Scanner::lex(void){
-	tokenCode = yylex();
-	return tokenCode;
+	return yylex();
 }
 //--------------------------------------------------------------------
 //Function getSpelling returns the spelling of the most recent token.
@@ -290,7 +278,8 @@ int Scanner::getLine(void){
 	return lineCount;
 }
 //--------------------------------------------------------------------
-//Function getColumn returns the column position of the most recent token. 
+//Function getColumn returns the column position of the most recent 
+//token. 
 //--------------------------------------------------------------------
 int Scanner::getColumn(void){	
 	return columnCount - strlen(yytext);

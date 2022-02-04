@@ -16,59 +16,61 @@
 #define YYERRCODE 256
 #endif
 
-#define AND 257
-#define ARRAY 258
-#define BEGAN 259
-#define DIV 260
-#define DO 261
-#define DOWNTO 262
-#define ELSE 263
-#define END 264
-#define FOR 265
-#define FUNCTION 266
-#define IF 267
-#define MOD 268
-#define NOT 269
-#define OF 270
-#define OR 271
-#define PROCEDURE 272
-#define PROGRAM 273
-#define REPEAT 274
-#define THEN 275
-#define TO 276
-#define UNTIL 277
-#define VAR 278
-#define WHILE 279
-#define EQU 280
-#define NEQ 281
-#define LES 282
-#define LEQ 283
-#define GRT 284
-#define GEQ 285
-#define PLUS 286
-#define MINUS 287
-#define STAR 288
-#define SLASH 289
-#define ASSIGN 290
-#define LPAREN 291
-#define RPAREN 292
-#define LBRACKET 293
-#define RBRACKET 294
-#define COLON 295
-#define SEMICOLON 296
-#define COMMA 297
-#define PERIOD 298
-#define RANGE 299
-#define ID 302
-#define INTLIT 303
-#define CHRLIT 305
-#define REALIT 304
-#define ERROR 309
+#define AND 1
+#define ARRAY 2
+#define BEGIN 3
+#define DIV 4
+#define DO 5
+#define DOWNTO 6
+#define ELSE 7
+#define END 8
+#define FOR 9
+#define FUNCTION 10
+#define IF 11
+#define MOD 12
+#define NOT 13
+#define OF 14
+#define OR 15
+#define PROCEDURE 16
+#define PROGRAM 17
+#define REPEAT 18
+#define THEN 19
+#define TO 20
+#define UNTIL 21
+#define VAR 22
+#define WHILE 23
+
+#define EQU 24
+#define NEQ 25
+#define LES 26
+#define LEQ 27
+#define GRT 28
+#define GEQ 29
+#define PLUS 30
+#define MINUS 31
+#define STAR 32
+#define SLASH 33
+#define ASSIGN 34
+#define LPAREN 35
+#define RPAREN 36
+#define LBRACKET 37
+#define RBRACKET 38
+#define COLON 39
+#define SEMICOLON 40
+#define COMMA 41
+#define PERIOD 42
+#define RANGE 43
+
+#define ID 44
+#define INTLIT 45
+#define CHRLIT 46
+#define REALIT 47
+#define ERROR 48
 
 const map<int, string> tokenMap = {
 	{AND, "AND"},
 	{ARRAY, "ARRAY"},
-	{BEGAN, "BEGAN"},
+	{BEGIN, "BEGIN"},
 	{DIV, "DIV"},
 	{DO, "DO"},
 	{DOWNTO, "DOWNTO"},
@@ -110,7 +112,7 @@ const map<int, string> tokenMap = {
 	{COMMA, "COMMA"},
 	{PERIOD, "PERIOD"},
 	{RANGE, "RANGE"},
-	
+
 	{ID, "ID"},
 	{INTLIT, "INTLIT"},
 	{CHRLIT, "CHRLIT"},
