@@ -12,18 +12,9 @@
 // Due:		February 17, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
-// Standard C and C++ include files
-//--------------------------------------------------------------------
-#include <cstdio>
-#include <fstream>
-#include <iostream>
-//--------------------------------------------------------------------
-//Namespaces
-//--------------------------------------------------------------------
-using namespace std;
-//--------------------------------------------------------------------
+
 //Function: yylex
-//Function yylex is the Scanner. Function yylex returns an integer
+//Function yylex is the Lexer. Function yylex returns an integer
 //token code as defined above or 0 if end-of-file has been
 //reached.
 //--------------------------------------------------------------------
@@ -32,12 +23,12 @@ extern "C"
 #endif
     int yylex(void);
 //--------------------------------------------------------------------
-//Class Scanner defines the attributes of a Scanner
+//Class Lexer defines the attributes of a Lexer
 //--------------------------------------------------------------------
-class Scanner
+class Lexer
 {
 public:
-  Scanner(FILE *i);
+  Lexer(FILE *i);
   int lex(void);
   char* getSpelling(void);
   int getLine(void);

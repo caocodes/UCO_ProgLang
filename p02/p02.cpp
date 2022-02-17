@@ -1,5 +1,6 @@
 //--------------------------------------------------------------------
-// File p02.cpp contains functions which process command line arguments and invoke the scanner, repeatedly to find all the tokens in the input source file.
+// File p02.cpp contains functions which process command line arguments 
+// and invoke the scanner, repeatedly to find all the tokens in the input source file.
 //--------------------------------------------------------------------
 // Author:	Mr. Cao Truong
 // Student ID: *20500231
@@ -25,10 +26,10 @@ using namespace std;
 //--------------------------------------------------------------------
 // Externals
 //--------------------------------------------------------------------
-ofstream tfs; // trace file stream
+ofstream output; // trace file stream
 
 //-------------------------------------------------------------------------
-// ExtException is thrown when a file extension is incorrect
+// ExtException is thrown when a file's extension is incorrect
 //-------------------------------------------------------------------------
 struct ExtException
 {
@@ -105,17 +106,17 @@ int main(int argc, char *argv[])
 			throw FileException(inputfile);
 
 		// opens output file
-		tfs.open(outputfile);
-		if (!tfs)
+		output.open(outputfile);
+		if (!output)
 			throw FileException(outputfile);
 		
 		// parse input file
-		Parser P(i);
+		Parser P(inputPointer);
 		int rc = P.Parse();
 
 		// close resources
-		tfs << endl;
-		tfs.close();
+		output << endl;
+		output.close();
 		fclose(inputPointer);
 	}
 	catch (...)

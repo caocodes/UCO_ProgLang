@@ -14,9 +14,12 @@
 // C++ Library Include Files
 //--------------------------------------------------------------------
 #include <string>
+#include <cstdio>
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
+#include <map>
 using namespace std;
 //--------------------------------------------------------------------
 // Application Includes
@@ -25,44 +28,26 @@ using namespace std;
 #include "p02tkn.h"
 
 //--------------------------------------------------------------------
+//Externals 
+//--------------------------------------------------------------------
+extern ofstream output;
+//--------------------------------------------------------------------
 //Global Variables
 //--------------------------------------------------------------------
-static map<string, int> rwMap; // reserve words map
-static map<int, string> tokenNameMap;
 int lineCount = 1;
 int columnCount = 1;
-
+map<int, string> tokenMap;
 //--------------------------------------------------------------------
 //Function prototypes, class fields
 //--------------------------------------------------------------------
 int tokenMgr(int token);
 int isReserveWord(char* s);
-void tokenTrace(int t);
-void fillRwMap(void);
-void fillTokenNameMap(void);
-void toLower(char* d,char* s);
-
-//--------------------------------------------------------------------
-//BadCharacterException is thrown when a character outside the
-//defined set of characters for the Pascal language appears in the
-//source.
-//--------------------------------------------------------------------
-struct BadCharacterException{    
-    BadCharacterException(char p,int l,int c)
-    {
-        cout << endl;
-        cout << "line(" << l << ") col (" << c << ")" ;
-        cout << "Lexical error: ";
-        cout << "Illegal character |" << p << "| ASCII code=" << (int)p;
-        cout << endl;
-    }
-};
 
 %}
 %%
 
 [ \t]+ {
- columnCount += yyleng;
+ columnCount += strlen(yytext);
 }
 
 [\n] {
@@ -75,7 +60,7 @@ struct BadCharacterException{
 }
 
 [{][^}]*[}] {
-	for(int i = 0; i < yyleng; i++){
+	for(int i = 0; i < strlen(yytext); i++){
 		columnCount++;
 		if(yytext[i] == '\n'){
 			lineCount++;
@@ -93,7 +78,7 @@ struct BadCharacterException{
 }
 
 [bB][eE][gG][iI][nN] {
-	return(tokenMgr(BEGIN));
+	return(tokenMgr(BEGAN));
 }
 
 [dD][iI][vV] {
@@ -263,7 +248,7 @@ struct BadCharacterException{
 
 [0-9]+										return(tokenMgr(INTLIT));
 
-['][^']+[']									return tokenMgr(CHRLIT);
+['](([^'])|('[^']'))+[']					return tokenMgr(CHRLIT);
 
 . {
 	return tokenMgr(ERROR);
@@ -274,6 +259,13 @@ struct BadCharacterException{
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
+	output << endl;
+	output << setw(15) << "Token Code: " << t;
+	output << "\t  Name: " << tokenMap.at(t);
+	output << "\t  Line: " << lineCount;
+	output << "\t  Column: " << columnCount;
+	output << "\t  Spelling: " << (char*)yytext;
+	
 	columnCount += strlen(yytext);
 	return t;
 }
@@ -284,31 +276,81 @@ int tokenMgr(int t)
 //Constructor Scanner is used to redirect the input file stream from the
 //keyboard to input file stream i.
 //--------------------------------------------------------------------
-Scanner::Scanner(FILE* i){
-	yyin=i;	
+Lexer::Lexer(FILE* i){
+	yyin=i;
+	tokenMap = {
+		{AND, "AND"},
+		{ARRAY, "ARRAY"},
+		{BEGAN, "BEGIN"},
+		{DIV, "DIV"},
+		{DO, "DO"},
+		{DOWNTO, "DOWNTO"},
+		{ELSE, "ELSE"},
+		{END, "END"},
+		{FOR, "FOR"},
+		{FUNCTION, "FUNCTION"},
+		{IF, "IF"},
+		{MOD, "MOD"},
+		{NOT, "NOT"},
+		{OF, "OF"},
+		{OR, "OR"},
+		{PROCEDURE, "PROCEDURE"},
+		{PROGRAM, "PROGRAM"},
+		{REPEAT, "REPEAT"},
+		{THEN, "THEN"},
+		{TO, "TO"},
+		{UNTIL, "UNTIL"},
+		{VAR, "VAR"},
+		{WHILE, "WHILE"},
+		{EQU, "EQU"},
+		{NEQ, "NEQ"},
+		{LES, "LES"},
+		{LEQ, "LEQ"},
+		{GRT, "GRT"},
+		{GEQ, "GEQ"},
+		{PLUS, "PLUS"},
+		{MINUS, "MINUS"},
+		{STAR, "STAR"},
+		{SLASH, "SLASH"},
+		{ASSIGN, "ASSIGN"},
+		{LPAREN, "LPAREN"},
+		{RPAREN, "RPAREN"},
+		{LBRACKET, "LBRACKET"},
+		{RBRACKET, "RBRACKET"},
+		{COLON, "COLON"},
+		{SEMICOLON, "SEMICOLON"},
+		{COMMA, "COMMA"},
+		{PERIOD, "PERIOD"},
+		{RANGE, "RANGE"},
+		{ID, "ID"},
+		{INTLIT, "INTLIT"},
+		{CHRLIT, "CHRLIT"},
+		{REALIT, "REALIT"},
+		{ERROR, "ERROR"},
+	};	
 }
 //--------------------------------------------------------------------
 //Function lex calls yylex
 //--------------------------------------------------------------------
-int Scanner::lex(void){
+int Lexer::lex(void){
 	return yylex();
 }
 //--------------------------------------------------------------------
 //Function getSpelling returns the spelling of the most recent token.
 //--------------------------------------------------------------------
-char* Scanner::getSpelling(void){
+char* Lexer::getSpelling(void){
 	return (char*)yytext;
 }
 //--------------------------------------------------------------------
 //Function getLines returns the line position of the most recent token.
 //--------------------------------------------------------------------
-int Scanner::getLine(void){
+int Lexer::getLine(void){
 	return lineCount;
 }
 //--------------------------------------------------------------------
 //Function getColumn returns the column position of the most recent 
 //token. 
 //--------------------------------------------------------------------
-int Scanner::getColumn(void){	
+int Lexer::getColumn(void){	
 	return columnCount - strlen(yytext);
 }
