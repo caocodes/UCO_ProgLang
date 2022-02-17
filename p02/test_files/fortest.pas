@@ -1,13 +1,3 @@
-{--------------------------------------------------------------------}
-{File fortest.pas exercises Subset Pascal arrays and for-loops.      }
-{--------------------------------------------------------------------}
-{Author: Thomas R Turner                                             }
-{E-Mail: trturner@uco.edu                                            }
-{Date:   February, 2020                                              }
-{--------------------------------------------------------------------}
-{Copyright February, 2020 by Thomas R Turner.                        }
-{Do not reproduce without permission from Thomas R Turner.           }
-{--------------------------------------------------------------------}
 program fortest;
   var A:array[0..9] of integer;
   var i:integer;
