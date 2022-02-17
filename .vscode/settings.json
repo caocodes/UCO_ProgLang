@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "cstring": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "iosfwd": "cpp"
     },
     "makefile.makefilePath": "C:\\Users\\Cao Truong\\Desktop\\UCO\\ProgLang\\Project\\p01\\p01\\p01make"
 }
