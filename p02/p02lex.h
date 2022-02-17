@@ -13,8 +13,7 @@
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 
-//Function: yylex
-//Function yylex is the Lexer. Function yylex returns an integer
+//Function yylex returns an integer
 //token code as defined above or 0 if end-of-file has been
 //reached.
 //--------------------------------------------------------------------

@@ -41,7 +41,6 @@ map<int, string> tokenMap;
 //Function prototypes, class fields
 //--------------------------------------------------------------------
 int tokenMgr(int token);
-int isReserveWord(char* s);
 
 %}
 %%
