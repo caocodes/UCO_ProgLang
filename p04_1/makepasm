@@ -1,0 +1,38 @@
+#------------------------------------------------------------------
+# File pasmmake contains instructions for program pasm. 
+# Instructions are written for the UNIX utility make.
+#------------------------------------------------------------------
+# Author:	Mr. Cao Truong
+# Student ID: *20500231
+# E-Mail:	ctruong3@uco.edu
+# Course:	CMSC 5023 – Programming Languages
+# CRN:		22708, Spring 2022
+# Project:	p04.1
+# Due:		February 22, 2022
+# Project Account Number: tt035
+#----------------------------------------------------------------------
+# Object files
+#----------------------------------------------------------------------
+obj =		pasm.o \
+	 pasmlex.o			
+#----------------------------------------------------------------------
+# Bind the Lexer using the linkage editor
+#----------------------------------------------------------------------
+pasm:		${obj}
+	g++ -o pasm ${obj} -lm -ll
+#----------------------------------------------------------------------
+# File pasm.cpp processes command line arguments
+#----------------------------------------------------------------------
+pasm.o:		pasm.cpp pasmlex.h pasmtkn.h
+	g++ -c -g pasm.cpp
+#----------------------------------------------------------------------
+# File pasmlex.cpp is the lex-generated lexer
+#----------------------------------------------------------------------
+pasmlex.cpp:	pasmlex.l pasmlex.h pasmtkn.h
+	lex pasmlex.l
+	mv lex.yy.c pasmlex.cpp
+#----------------------------------------------------------------------
+pasmlex.o:	pasmlex.cpp pasmlex.h pasmtkn.h
+	g++ -c -g pasmlex.cpp
+
+	

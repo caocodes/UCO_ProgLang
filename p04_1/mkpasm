@@ -1,0 +1,4 @@
+rm pasm
+rm pasmlex.cpp
+rm *.o
+make -f makepasm

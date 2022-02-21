@@ -1,0 +1,21 @@
+          ldc       c         'Z'       
+          ldc       c         'c'       
+          ldc       c         '?'
+          ldc       c         ''''
+        ldc        b         0
+        ldc        b         1
+        ldc        c         'a'
+        ldc        c         '!'
+        ldc        c         ''''
+        ldc        c         'A'
+        ldc        i          1
+        ldc        i          0
+        ldc        i          -54
+        ldc        i          32767
+        ldc        r          1.0
+        ldc        r          0.0
+        ldc        r          -50.0
+        ldc        r          1.602e-19
+        ldc        s          'I like eels'
+        ldc        s          'except as meals'
+        ldc        s          'and how they feels.'

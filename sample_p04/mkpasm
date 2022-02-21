@@ -1,0 +1,6 @@
+rm pasm
+rm p04par.cpp
+rm p04lex.cpp
+rm *.o
+make -f p04make
+

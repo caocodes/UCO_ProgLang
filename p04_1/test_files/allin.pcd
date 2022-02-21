@@ -1,0 +1,89 @@
+         cup       5       L00000
+         csp               rdb
+         csp               rdc
+         csp               rdi
+         csp               rdr
+         csp               rln
+         csp               wrb
+         csp               wrc
+         csp               wri
+         csp               wre
+         csp               wrf
+         csp               wln
+         csp               sqt
+         csp               ln
+         csp               exp
+         ent       sp      L00005
+         ent       ep      L00001
+         mst               0
+         mst               5
+         rtn       p
+         rtn       b
+         rtn       c
+         rtn       i
+         rtn       r
+         rtn       s
+         rtn       t
+         adi
+         sbi
+         ngi
+         mpi
+         dvi
+         mod
+         abi
+         sqi
+         inc       b
+         inc       c
+         inc       i
+         dec       b
+         dec       c
+         dec       i
+         adr
+         sbr
+         ngr
+         mpr
+         dvr
+         abr
+         sqr
+         ior
+         and
+         xor
+         not
+         inn
+         uni
+         ntr
+         dif
+         cmp
+         sgs
+         ujp                 L00001
+         xjp                 L00001
+         fjp                 L00001
+         tjp                 L00001
+         flt
+         flo
+         trc
+         rnd
+         chr
+         ord
+         stp
+         lda       0         5
+         ldc       b         0
+         ldc       c         'c'
+         ldc       i         54
+         ldc       r         1.602e-19
+         ldi       b
+         ldi       c
+         ldi       i
+         ldi       r
+         ldi       s
+         ldi       t
+         lva       1         6
+         lvb       0         7
+         lvc       1         9
+         lvi       0        10
+         lvr       2        12
+         lvs       0        9
+         lvt       1        6
+         sti       c
+         ixa                4
+#define  L00000    12
