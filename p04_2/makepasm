@@ -1,52 +1,55 @@
 #------------------------------------------------------------------
-# File p02make contains instructions for program p02. 
+# File makepasm contains instructions for program pasm. 
 # Instructions are written for the UNIX utility make.
 #------------------------------------------------------------------
-# Author:	Mr. Cao Truong
+# Author 1:	Prantosh Neupane
+# Student ID: *20514054
+# E-Mail:	pneupane4@uco.edu
+# CRN:		21808, Spring 2022
+# Author 2:	Cao Truong
 # Student ID: *20500231
 # E-Mail:	ctruong3@uco.edu
-# Course:	CMSC 5023 - Programming Languages
 # CRN:		22708, Spring 2022
-# Project:	p02
-# Due:		February 17, 2022
+# Course:	CMSC 5023 – Programming Languages
+# Project:	p04.2
+# Due:		March 1, 2022
 # Project Account Number: tt035
 #----------------------------------------------------------------------
 # Object files
 #----------------------------------------------------------------------
-obj		=		p02par.o \
-				p02lex.o \
-				p02.o		
+obj		=		pasmpar.o \
+				pasmlex.o \
+				pasm.o		
 #----------------------------------------------------------------------
 # Bind the subset Pascal Scanner using the linkage editor
 #----------------------------------------------------------------------
-p02:			${obj}
-				g++ -o p02 ${obj} -lm -ll
+pasm:			${obj}
+				g++ -o pasm ${obj} -lm -ll
 #----------------------------------------------------------------------
-# File p02.cpp processes command line arguments
+# File pasm.cpp processes command line arguments
 #----------------------------------------------------------------------
-p02.o:		p02.cpp p02lex.h p02par.h
-			g++ -c -g p02.cpp
+pasm.o:		pasm.cpp pasmlex.h pasmpar.h
+			g++ -c -g pasm.cpp
 #----------------------------------------------------------------------
-# File p02lex.cpp is the lex-generated scanner
+# File pasmlex.cpp is the lex-generated scanner
 #----------------------------------------------------------------------
-p02lex.cpp:		p02lex.l p02lex.h
-				lex p02lex.l
-				mv lex.yy.c p02lex.cpp
+pasmlex.cpp:		pasmlex.l pasmlex.h
+				lex pasmlex.l
+				mv lex.yy.c pasmlex.cpp
 #----------------------------------------------------------------------
-p02lex.o:		p02lex.cpp p02lex.h
-				g++ -c -g p02lex.cpp
+pasmlex.o:		pasmlex.cpp pasmlex.h
+				g++ -c -g pasmlex.cpp
 #----------------------------------------------------------------------
-# Create files p02par.cpp and p02tkn.h from file p02par.y
+# Create files pasmpar.cpp and pasmtkn.h from file pasmpar.y
 #----------------------------------------------------------------------
-p02tkn.h		\
-p02par.cpp:		p02par.y
-				yacc -d -v p02par.y
-				mv y.tab.c p02par.cpp
-				cat p02tkn_prolog.h y.tab.h p02tkn_epilog.h > p02tkn.h
+pasmtkn.h		\
+pasmpar.cpp:		pasmpar.y
+				yacc -d -v pasmpar.y
+				mv y.tab.c pasmpar.cpp
+				cat pasmtkn_prolog.h y.tab.h pasmtkn_epilog.h > pasmtkn.h
 #----------------------------------------------------------------
-# Compile the parser p02par.o
+# Compile the parser pasmpar.o
 #----------------------------------------------------------------
-p02par.o:		p02par.cpp p02par.h
-				g++ -c -g p02par.cpp
+pasmpar.o:		pasmpar.cpp pasmpar.h
+				g++ -c -g pasmpar.cpp
 #----------------------------------------------------------------------
-	

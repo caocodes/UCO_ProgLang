@@ -13,12 +13,13 @@
 # E-Mail:	ctruong3@uco.edu
 # CRN:		22708, Spring 2022
 # Course:	CMSC 5023 – Programming Languages
-# Project:	p04.1
-# Due:		February 22, 2022
+# Project:	p04.2
+# Due:		March 1, 2022
 # Project Account Number: tt035
 #----------------------------------------------------------------------
 
 rm pasm
+rm pasmpar.cpp
 rm pasmlex.cpp
 rm *.o
 make -f makepasm

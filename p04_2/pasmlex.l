@@ -11,16 +11,19 @@
 // E-Mail:	ctruong3@uco.edu
 // CRN:		22708, Spring 2022
 // Course:	CMSC 5023 – Programming Languages
-// Project:	p04.1
-// Due:		February 22, 2022
+// Project:	p04.2
+// Due:		March 1, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 // C++ Library Include Files
 //--------------------------------------------------------------------
 #include <string>
+#include <cstdio>
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
+#include <map>
 using namespace std;
 //--------------------------------------------------------------------
 // Application Includes
@@ -28,11 +31,19 @@ using namespace std;
 #include "pasmlex.h"
 #include "pasmtkn.h"
 //--------------------------------------------------------------------
+//Externals 
+//--------------------------------------------------------------------
+extern ofstream output;
+//--------------------------------------------------------------------
+//Global Variables
+//--------------------------------------------------------------------
+int lineCount = 1;
+int columnCount = 1;
+map<int, string> tokenMap;
+//--------------------------------------------------------------------
 //Function prototypes, class fields
 //--------------------------------------------------------------------
 int tokenMgr(int token);
-int lineCount;
-int columnCount;
 
 %}
 %%
@@ -54,7 +65,7 @@ int columnCount;
 	columnCount += 2;	
 }
 
-[\{][^{]*[\}] {
+[{][^}]*[}] {
 	for(int i = 0; i < strlen(yytext); i++){
 		columnCount++;
 		if(yytext[i] == '\n'){
@@ -446,6 +457,13 @@ int columnCount;
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
+	output << setw(15) << "Token Code: " << t;
+	output << "\t  Name: " << tokenMap.at(t);
+	output << "\t  Line: " << lineCount;
+	output << "\t  Column: " << columnCount;
+	output << "\t  Spelling: " << (char*)yytext;
+	output << endl;
+
 	columnCount += strlen(yytext);
 	return t;
 }
@@ -458,6 +476,107 @@ int tokenMgr(int t)
 //--------------------------------------------------------------------
 Lexer::Lexer(FILE* i){
 	yyin=i;	
+	tokenMap = {
+		{CUP_O, "CUP_O"},
+		{CSP_O, "CSP_O"},
+		{ENT_O, "ENT_O"},
+		{MST_O, "MST_O"},
+		{RTN_O, "RTN_O"},
+		{EQU_O, "EQU_O"},
+		{NEQ_O, "NEQ_O"},
+		{GRT_O, "GRT_O"},
+		{GEQ_O, "GEQ_O"},
+		{LES_O, "LES_O"},
+		{LEQ_O, "LEQ_O"},
+		{ADI_O, "ADI_O"},
+		{SBI_O, "SBI_O"},
+		{NGI_O, "NGI_O"},
+		{MPI_O, "MPI_O"},
+		{DVI_O, "DVI_O"},
+		{MOD_O, "MOD_O"},
+		{ABI_O, "ABI_O"},
+		{SQI_O, "SQI_O"},
+		{INC_O, "INC_O"},
+		{DEC_O, "DEC_O"},
+		{ADR_O, "ADR_O"},
+		{SBR_O, "SBR_O"},
+		{NGR_O, "NGR_O"},
+		{MPR_O, "MPR_O"},
+		{DVR_O, "DVR_O"},
+		{ABR_O, "ABR_O"},
+		{SQR_O, "SQR_O"},
+		{IOR_O, "IOR_O"},
+		{AND_O, "AND_O"},
+		{XOR_O, "XOR_O"},
+		{NOT_O, "NOT_O"},
+		{INN_O, "INN_O"},
+		{UNI_O, "UNI_O"},
+		{NTR_O, "NTR_O"},
+		{DIF_O, "DIF_O"},
+		{CMP_O, "CMP_O"},
+		{SGS_O, "SGS_O"},
+		{UJP_O, "UJP_O"},
+		{XJP_O, "XJP_O"},
+		{FJP_O, "FJP_O"},
+		{TJP_O, "TJP_O"},
+		{FLT_O, "FLT_O"},
+		{FLO_O, "FLO_O"},
+		{TRC_O, "TRC_O"},
+		{RND_O, "RND_O"},
+		{CHR_O, "CHR_O"},
+		{ORD_O, "ORD_O"},
+		{STP_O, "STP_O"},
+		{LDA_O, "LDA_O"},
+		{LDC_O, "LDC_O"},
+		{LDI_O, "LDI_O"},
+		{LVA_O, "LVA_O"},
+		{LVB_O, "LVB_O"},
+		{LVC_O, "LVC_O"},
+		{LVI_O, "LVI_O"},
+		{LVR_O, "LVR_O"},
+		{LVS_O, "LVS_O"},
+		{LVT_O, "LVT_O"},
+		{STI_O, "STI_O"},
+		{IXA_O, "IXA_O"},
+		{RDB_F, "RDB_F"},
+		{RDC_F, "RDC_F"},
+		{RDI_F, "RDI_F"},
+		{RDR_F, "RDR_F"},
+		{RLN_F, "RLN_F"},
+		{WRB_F, "WRB_F"},
+		{WRC_F, "WRC_F"},
+		{WRI_F, "WRI_F"},
+		{WRE_F, "WRE_F"},
+		{WRF_F, "WRF_F"},
+		{WRS_F, "WRS_F"},
+		{WRT_F, "WRT_F"},
+		{WLN_F, "WLN_F"},
+		{SQT_F, "SQT_F"},
+		{LN_F, "LN_F"},
+		{EXP_F, "EXP_F"},
+		{SP_R, "SP_R"},
+		{EP_R, "EP_R"},
+		{MP_R, "MP_R"},
+		{PC_R, "PC_R"},
+		{NP_R, "NP_R"},
+		{A_T, "A_T"},
+		{B_T, "B_T"},
+		{C_T, "C_T"},
+		{I_T, "I_T"},
+		{R_T, "R_T"},
+		{S_T, "S_T"},
+		{T_T, "T_T"},
+		{P_T, "P_T"},
+		{X_T, "X_T"},
+		{LABEL, "LABEL"},
+		{DEFINE, "DEFINE"},
+		{INTLIT, "INTLIT"},
+		{REALIT, "REALIT"},
+		{CHRLIT, "CHRLIT"},
+		{STRLIT, "STRLIT"},
+		{ID, "ID"},
+		{ERROR, "ERROR"},
+	};
 }
 //--------------------------------------------------------------------
 //Function lex calls yylex

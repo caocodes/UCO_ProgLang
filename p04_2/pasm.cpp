@@ -11,8 +11,8 @@
 // E-Mail:	ctruong3@uco.edu
 // CRN:		22708, Spring 2022
 // Course:	CMSC 5023 – Programming Languages
-// Project:	p04.1
-// Due:		February 22, 2022
+// Project:	p04.2
+// Due:		March 1, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 
@@ -24,8 +24,14 @@
 #include <cstring>
 
 #include "pasmlex.h"
-#include "pasmtkn.h"
+#include "pasmpar.h"
 using namespace std;
+
+
+//--------------------------------------------------------------------
+// Externals
+//--------------------------------------------------------------------
+ofstream output; // trace file stream
 
 //-------------------------------------------------------------------------
 // FileException is thrown when a file whose name is given on the command line
@@ -66,20 +72,6 @@ struct ExtException
 	}
 };
 
-void printTrace(ostream &out, const map<int, string> &tokenMap, Lexer &lexer)
-{
-	int token = lexer.lex();
-	while (token > 0)
-	{
-		out << "Token: " << lexer.getSpelling();
-		out << "\t Position: (" << lexer.getLine() << ", " << lexer.getColumn() << ")";
-		out << "\t Code: " << token;
-		out << "\t Symbol: " << tokenMap.at(token);
-		token = lexer.lex();
-		out << endl;
-	}
-}
-
 int main(int argc, char *argv[])
 {
 	try
@@ -103,18 +95,27 @@ int main(int argc, char *argv[])
 		if (!strstr(inputfile, ".pcd"))
 			throw ExtException(inputfile);
 
+		// create output file
 		strcpy(outputfile, ((string)inputfile).replace(((string)inputfile).size() - 4, 4, ".atrc").c_str());
 
+		// opens input file
 		FILE *inputPointer = fopen(inputfile, "r");
 		if (!inputPointer)
 			throw FileException(inputfile);
 
-		ofstream output(outputfile);
-		Lexer lexer(inputPointer);
-		printTrace(output, tokenMap, lexer);
-
-		fclose(inputPointer);
+		// opens output file
+		output.open(outputfile);
+		if (!output)
+			throw FileException(outputfile);
+			
+		// parse input file
+		Parser p(inputPointer);
+		int rc = p.parse();
+		
+		// close resources
+		output << endl;
 		output.close();
+		fclose(inputPointer);
 	}
 	catch (...)
 	{

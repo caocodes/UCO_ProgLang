@@ -1,12 +1,16 @@
 #------------------------------------------------------------------
-# File pasmmake contains instructions for program pasm. 
+# File makepasm contains instructions for program pasm. 
 # Instructions are written for the UNIX utility make.
 #------------------------------------------------------------------
-# Author:	Mr. Cao Truong
+# Author 1:	Prantosh Neupane
+# Student ID: *20514054
+# E-Mail:	pneupane4@uco.edu
+# CRN:		21808, Spring 2022
+# Author 2:	Cao Truong
 # Student ID: *20500231
 # E-Mail:	ctruong3@uco.edu
-# Course:	CMSC 5023 – Programming Languages
 # CRN:		22708, Spring 2022
+# Course:	CMSC 5023 – Programming Languages
 # Project:	p04.1
 # Due:		February 22, 2022
 # Project Account Number: tt035
