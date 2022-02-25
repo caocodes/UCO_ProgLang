@@ -442,8 +442,8 @@ int tokenMgr(int token);
 [L][0-9]+       							return tokenMgr(LABEL);
 "#define"       							return tokenMgr(DEFINE);
 [+\-]?[0-9]+ 								return tokenMgr(INTLIT);
-[0-9]+(\.[0-9]+)([eE][+\-]?[0-9]+)?			return tokenMgr(REALIT);
-[0-9]+([eE][+\-]?[0-9]+)					return tokenMgr(REALIT);
+[+\-]?[0-9]+(\.[0-9]+)([eE][+\-]?[0-9]+)?	return tokenMgr(REALIT);
+[+\-]?[0-9]+([eE][+\-]?[0-9]+)				return tokenMgr(REALIT);
 '([^']|(''))'                    			return tokenMgr(CHRLIT);
 '([^']|('')){2,}'                   		return tokenMgr(STRLIT);
 [a-z]+										return tokenMgr(ID);
@@ -457,13 +457,13 @@ int tokenMgr(int token);
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
+	output << endl;
 	output << setw(15) << "Token Code: " << t;
 	output << "\t  Name: " << tokenMap.at(t);
 	output << "\t  Line: " << lineCount;
 	output << "\t  Column: " << columnCount;
 	output << "\t  Spelling: " << (char*)yytext;
-	output << endl;
-
+	
 	columnCount += strlen(yytext);
 	return t;
 }
