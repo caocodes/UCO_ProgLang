@@ -43,33 +43,29 @@ def check_str(str):
 		return str + balance_str
 	else:
 		return str + unbalance_str
-
-def process(in_path, out_path):
-	in_file = open(in_path, "r")
-	out_file = open(out_path, "w")
-	while line := in_file.readline():
-		out_file.write(check_str(line.strip()) + "\n")
-	out_file.close()
-	in_file.close()
-
+	
 if __name__ == '__main__':
 	try:
 		args = sys.argv[1:]
+		args_count = len(args)
 		in_msg = "Enter the input file name: "
 		out_msg = "Enter the output file name: "
-		match len(args):
-			case 0:
-				in_path = input(in_msg)
-				out_path = input(out_msg)
-			case 1:
-				in_path = args[0]
-				out_path = input(out_msg)
-			case 2:
-				in_path = args[0]
-				out_path = args[1]
-			case _:
-				raise ValueError("Arguments count > 2")
-		process(in_path, out_path)
+		if args_count == 0:
+			in_path = input(in_msg)
+			out_path = input(out_msg)
+		elif args_count == 1:
+			in_path = args[0]
+			out_path = input(out_msg)
+		elif args_count == 2:
+			in_path = args[0]
+			out_path = args[1]
+		else :
+			raise ValueError("Arguments count > 2")
+		
+		with open(in_path, "r") as in_file, open(out_path, "w") as out_file:
+			for line in in_file:
+				out_file.write(check_str(line.strip()) + "\n")
+	
 	except Exception as e:
 		print("Encountered exception type: {0}".format(type(e).__name__))
 		print(traceback.format_exc())
