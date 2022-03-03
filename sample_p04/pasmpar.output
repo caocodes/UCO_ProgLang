@@ -1,0 +1,1554 @@
+Terminals unused in grammar
+
+   ID
+   PCODEMNEMONIC
+   PCODETYPE
+   X_T
+   PCODEREGISTER
+   PCODEFUNCTION
+   ERROR
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: statement_list
+
+    2 statement_list: statement
+    3               | statement_list statement
+
+    4 statement: labeled_instruction
+    5          | instruction
+    6          | definition
+
+    7 labeled_instruction: label_list instruction
+
+    8 label_list: LABEL
+    9           | label_list LABEL
+
+   10 definition: DEFINE LABEL INTLIT
+
+   11 instruction: op_only_instruction
+   12            | type_instruction
+   13            | jump_instruction
+   14            | load_instruction
+   15            | ent_instruction
+   16            | cup_instruction
+   17            | csp_instruction
+   18            | mst_instruction
+   19            | ldc_instruction
+   20            | ixa_instruction
+
+   21 op_only_instruction: op_only_op
+
+   22 op_only_op: ADI_O
+   23           | SBI_O
+   24           | NGI_O
+   25           | MPI_O
+   26           | DVI_O
+   27           | MOD_O
+   28           | ABI_O
+   29           | SQI_O
+   30           | ADR_O
+   31           | SBR_O
+   32           | NGR_O
+   33           | MPR_O
+   34           | DVR_O
+   35           | ABR_O
+   36           | SQR_O
+   37           | IOR_O
+   38           | AND_O
+   39           | XOR_O
+   40           | NOT_O
+   41           | INN_O
+   42           | UNI_O
+   43           | INT_O
+   44           | DIF_O
+   45           | CMP_O
+   46           | SGS_O
+   47           | FLT_O
+   48           | FLO_O
+   49           | TRC_O
+   50           | RND_O
+   51           | CHR_O
+   52           | ORD_O
+   53           | STP_O
+
+   54 type_instruction: type_op type
+
+   55 type_op: RTN_O
+   56        | EQU_O
+   57        | NEQ_O
+   58        | GRT_O
+   59        | GEQ_O
+   60        | LES_O
+   61        | LEQ_O
+   62        | LDI_O
+   63        | STI_O
+   64        | INC_O
+   65        | DEC_O
+
+   66 type: P_T
+   67     | A_T
+   68     | B_T
+   69     | C_T
+   70     | I_T
+   71     | R_T
+   72     | S_T
+   73     | T_T
+
+   74 jump_instruction: jump_op LABEL
+
+   75 jump_op: UJP_O
+   76        | TJP_O
+   77        | FJP_O
+   78        | XJP_O
+
+   79 load_instruction: load_op INTLIT INTLIT
+
+   80 load_op: LDA_O
+   81        | LVA_O
+   82        | LVB_O
+   83        | LVC_O
+   84        | LVI_O
+   85        | LVR_O
+   86        | LVS_O
+
+   87 cup_instruction: CUP_O INTLIT LABEL
+
+   88 csp_instruction: CSP_O function
+
+   89 function: RDB_F
+   90         | RDC_F
+   91         | RDI_F
+   92         | RDR_F
+   93         | RLN_F
+   94         | WRB_F
+   95         | WRC_F
+   96         | WRI_F
+   97         | WRE_F
+   98         | WRF_F
+   99         | WRS_F
+  100         | WLN_F
+  101         | SQT_F
+  102         | LN_F
+  103         | EXP_F
+
+  104 ent_instruction: ENT_O register LABEL
+
+  105 register: SP_R
+  106         | EP_R
+  107         | MP_R
+  108         | PC_R
+  109         | NP_R
+
+  110 mst_instruction: MST_O INTLIT
+
+  111 ldc_instruction: LDC_O type constant
+
+  112 ixa_instruction: IXA_O INTLIT
+
+  113 constant: INTLIT
+  114         | REALIT
+  115         | STRLIT
+  116         | CHRLIT
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+LABEL (258) 8 9 10 74 87 104
+DEFINE (259) 10
+INTLIT (260) 10 79 87 110 112 113
+REALIT (261) 114
+STRLIT (262) 115
+CHRLIT (263) 116
+ID (264)
+PCODEMNEMONIC (265)
+CUP_O (266) 87
+CSP_O (267) 88
+ENT_O (268) 104
+MST_O (269) 110
+RTN_O (270) 55
+EQU_O (271) 56
+NEQ_O (272) 57
+GRT_O (273) 58
+GEQ_O (274) 59
+LES_O (275) 60
+LEQ_O (276) 61
+ADI_O (277) 22
+SBI_O (278) 23
+NGI_O (279) 24
+MPI_O (280) 25
+DVI_O (281) 26
+MOD_O (282) 27
+ABI_O (283) 28
+SQI_O (284) 29
+INC_O (285) 64
+DEC_O (286) 65
+ADR_O (287) 30
+SBR_O (288) 31
+NGR_O (289) 32
+MPR_O (290) 33
+DVR_O (291) 34
+ABR_O (292) 35
+SQR_O (293) 36
+IOR_O (294) 37
+AND_O (295) 38
+XOR_O (296) 39
+NOT_O (297) 40
+INN_O (298) 41
+UNI_O (299) 42
+INT_O (300) 43
+DIF_O (301) 44
+CMP_O (302) 45
+SGS_O (303) 46
+UJP_O (304) 75
+XJP_O (305) 78
+FJP_O (306) 77
+TJP_O (307) 76
+FLT_O (308) 47
+FLO_O (309) 48
+TRC_O (310) 49
+RND_O (311) 50
+CHR_O (312) 51
+ORD_O (313) 52
+STP_O (314) 53
+LDA_O (315) 80
+LDC_O (316) 111
+LDI_O (317) 62
+LVA_O (318) 81
+LVB_O (319) 82
+LVC_O (320) 83
+LVI_O (321) 84
+LVR_O (322) 85
+LVS_O (323) 86
+STI_O (324) 63
+IXA_O (325) 112
+PCODETYPE (326)
+A_T (327) 67
+B_T (328) 68
+C_T (329) 69
+I_T (330) 70
+R_T (331) 71
+S_T (332) 72
+T_T (333) 73
+P_T (334) 66
+X_T (335)
+PCODEREGISTER (336)
+SP_R (337) 105
+EP_R (338) 106
+MP_R (339) 107
+PC_R (340) 108
+NP_R (341) 109
+PCODEFUNCTION (342)
+RDB_F (343) 89
+RDC_F (344) 90
+RDI_F (345) 91
+RDR_F (346) 92
+RLN_F (347) 93
+WRB_F (348) 94
+WRC_F (349) 95
+WRI_F (350) 96
+WRE_F (351) 97
+WRF_F (352) 98
+WRS_F (353) 99
+WLN_F (354) 100
+SQT_F (355) 101
+LN_F (356) 102
+EXP_F (357) 103
+ERROR (358)
+
+
+Nonterminals, with rules where they appear
+
+$accept (104)
+    on left: 0
+program (105)
+    on left: 1, on right: 0
+statement_list (106)
+    on left: 2 3, on right: 1 3
+statement (107)
+    on left: 4 5 6, on right: 2 3
+labeled_instruction (108)
+    on left: 7, on right: 4
+label_list (109)
+    on left: 8 9, on right: 7 9
+definition (110)
+    on left: 10, on right: 6
+instruction (111)
+    on left: 11 12 13 14 15 16 17 18 19 20, on right: 5 7
+op_only_instruction (112)
+    on left: 21, on right: 11
+op_only_op (113)
+    on left: 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+    40 41 42 43 44 45 46 47 48 49 50 51 52 53, on right: 21
+type_instruction (114)
+    on left: 54, on right: 12
+type_op (115)
+    on left: 55 56 57 58 59 60 61 62 63 64 65, on right: 54
+type (116)
+    on left: 66 67 68 69 70 71 72 73, on right: 54 111
+jump_instruction (117)
+    on left: 74, on right: 13
+jump_op (118)
+    on left: 75 76 77 78, on right: 74
+load_instruction (119)
+    on left: 79, on right: 14
+load_op (120)
+    on left: 80 81 82 83 84 85 86, on right: 79
+cup_instruction (121)
+    on left: 87, on right: 16
+csp_instruction (122)
+    on left: 88, on right: 17
+function (123)
+    on left: 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103, on right:
+    88
+ent_instruction (124)
+    on left: 104, on right: 15
+register (125)
+    on left: 105 106 107 108 109, on right: 104
+mst_instruction (126)
+    on left: 110, on right: 18
+ldc_instruction (127)
+    on left: 111, on right: 19
+ixa_instruction (128)
+    on left: 112, on right: 20
+constant (129)
+    on left: 113 114 115 116, on right: 111
+
+
+State 0
+
+    0 $accept: . program $end
+
+    LABEL   shift, and go to state 1
+    DEFINE  shift, and go to state 2
+    CUP_O   shift, and go to state 3
+    CSP_O   shift, and go to state 4
+    ENT_O   shift, and go to state 5
+    MST_O   shift, and go to state 6
+    RTN_O   shift, and go to state 7
+    EQU_O   shift, and go to state 8
+    NEQ_O   shift, and go to state 9
+    GRT_O   shift, and go to state 10
+    GEQ_O   shift, and go to state 11
+    LES_O   shift, and go to state 12
+    LEQ_O   shift, and go to state 13
+    ADI_O   shift, and go to state 14
+    SBI_O   shift, and go to state 15
+    NGI_O   shift, and go to state 16
+    MPI_O   shift, and go to state 17
+    DVI_O   shift, and go to state 18
+    MOD_O   shift, and go to state 19
+    ABI_O   shift, and go to state 20
+    SQI_O   shift, and go to state 21
+    INC_O   shift, and go to state 22
+    DEC_O   shift, and go to state 23
+    ADR_O   shift, and go to state 24
+    SBR_O   shift, and go to state 25
+    NGR_O   shift, and go to state 26
+    MPR_O   shift, and go to state 27
+    DVR_O   shift, and go to state 28
+    ABR_O   shift, and go to state 29
+    SQR_O   shift, and go to state 30
+    IOR_O   shift, and go to state 31
+    AND_O   shift, and go to state 32
+    XOR_O   shift, and go to state 33
+    NOT_O   shift, and go to state 34
+    INN_O   shift, and go to state 35
+    UNI_O   shift, and go to state 36
+    INT_O   shift, and go to state 37
+    DIF_O   shift, and go to state 38
+    CMP_O   shift, and go to state 39
+    SGS_O   shift, and go to state 40
+    UJP_O   shift, and go to state 41
+    XJP_O   shift, and go to state 42
+    FJP_O   shift, and go to state 43
+    TJP_O   shift, and go to state 44
+    FLT_O   shift, and go to state 45
+    FLO_O   shift, and go to state 46
+    TRC_O   shift, and go to state 47
+    RND_O   shift, and go to state 48
+    CHR_O   shift, and go to state 49
+    ORD_O   shift, and go to state 50
+    STP_O   shift, and go to state 51
+    LDA_O   shift, and go to state 52
+    LDC_O   shift, and go to state 53
+    LDI_O   shift, and go to state 54
+    LVA_O   shift, and go to state 55
+    LVB_O   shift, and go to state 56
+    LVC_O   shift, and go to state 57
+    LVI_O   shift, and go to state 58
+    LVR_O   shift, and go to state 59
+    LVS_O   shift, and go to state 60
+    STI_O   shift, and go to state 61
+    IXA_O   shift, and go to state 62
+
+    program              go to state 63
+    statement_list       go to state 64
+    statement            go to state 65
+    labeled_instruction  go to state 66
+    label_list           go to state 67
+    definition           go to state 68
+    instruction          go to state 69
+    op_only_instruction  go to state 70
+    op_only_op           go to state 71
+    type_instruction     go to state 72
+    type_op              go to state 73
+    jump_instruction     go to state 74
+    jump_op              go to state 75
+    load_instruction     go to state 76
+    load_op              go to state 77
+    cup_instruction      go to state 78
+    csp_instruction      go to state 79
+    ent_instruction      go to state 80
+    mst_instruction      go to state 81
+    ldc_instruction      go to state 82
+    ixa_instruction      go to state 83
+
+
+State 1
+
+    8 label_list: LABEL .
+
+    $default  reduce using rule 8 (label_list)
+
+
+State 2
+
+   10 definition: DEFINE . LABEL INTLIT
+
+    LABEL  shift, and go to state 84
+
+
+State 3
+
+   87 cup_instruction: CUP_O . INTLIT LABEL
+
+    INTLIT  shift, and go to state 85
+
+
+State 4
+
+   88 csp_instruction: CSP_O . function
+
+    RDB_F  shift, and go to state 86
+    RDC_F  shift, and go to state 87
+    RDI_F  shift, and go to state 88
+    RDR_F  shift, and go to state 89
+    RLN_F  shift, and go to state 90
+    WRB_F  shift, and go to state 91
+    WRC_F  shift, and go to state 92
+    WRI_F  shift, and go to state 93
+    WRE_F  shift, and go to state 94
+    WRF_F  shift, and go to state 95
+    WRS_F  shift, and go to state 96
+    WLN_F  shift, and go to state 97
+    SQT_F  shift, and go to state 98
+    LN_F   shift, and go to state 99
+    EXP_F  shift, and go to state 100
+
+    function  go to state 101
+
+
+State 5
+
+  104 ent_instruction: ENT_O . register LABEL
+
+    SP_R  shift, and go to state 102
+    EP_R  shift, and go to state 103
+    MP_R  shift, and go to state 104
+    PC_R  shift, and go to state 105
+    NP_R  shift, and go to state 106
+
+    register  go to state 107
+
+
+State 6
+
+  110 mst_instruction: MST_O . INTLIT
+
+    INTLIT  shift, and go to state 108
+
+
+State 7
+
+   55 type_op: RTN_O .
+
+    $default  reduce using rule 55 (type_op)
+
+
+State 8
+
+   56 type_op: EQU_O .
+
+    $default  reduce using rule 56 (type_op)
+
+
+State 9
+
+   57 type_op: NEQ_O .
+
+    $default  reduce using rule 57 (type_op)
+
+
+State 10
+
+   58 type_op: GRT_O .
+
+    $default  reduce using rule 58 (type_op)
+
+
+State 11
+
+   59 type_op: GEQ_O .
+
+    $default  reduce using rule 59 (type_op)
+
+
+State 12
+
+   60 type_op: LES_O .
+
+    $default  reduce using rule 60 (type_op)
+
+
+State 13
+
+   61 type_op: LEQ_O .
+
+    $default  reduce using rule 61 (type_op)
+
+
+State 14
+
+   22 op_only_op: ADI_O .
+
+    $default  reduce using rule 22 (op_only_op)
+
+
+State 15
+
+   23 op_only_op: SBI_O .
+
+    $default  reduce using rule 23 (op_only_op)
+
+
+State 16
+
+   24 op_only_op: NGI_O .
+
+    $default  reduce using rule 24 (op_only_op)
+
+
+State 17
+
+   25 op_only_op: MPI_O .
+
+    $default  reduce using rule 25 (op_only_op)
+
+
+State 18
+
+   26 op_only_op: DVI_O .
+
+    $default  reduce using rule 26 (op_only_op)
+
+
+State 19
+
+   27 op_only_op: MOD_O .
+
+    $default  reduce using rule 27 (op_only_op)
+
+
+State 20
+
+   28 op_only_op: ABI_O .
+
+    $default  reduce using rule 28 (op_only_op)
+
+
+State 21
+
+   29 op_only_op: SQI_O .
+
+    $default  reduce using rule 29 (op_only_op)
+
+
+State 22
+
+   64 type_op: INC_O .
+
+    $default  reduce using rule 64 (type_op)
+
+
+State 23
+
+   65 type_op: DEC_O .
+
+    $default  reduce using rule 65 (type_op)
+
+
+State 24
+
+   30 op_only_op: ADR_O .
+
+    $default  reduce using rule 30 (op_only_op)
+
+
+State 25
+
+   31 op_only_op: SBR_O .
+
+    $default  reduce using rule 31 (op_only_op)
+
+
+State 26
+
+   32 op_only_op: NGR_O .
+
+    $default  reduce using rule 32 (op_only_op)
+
+
+State 27
+
+   33 op_only_op: MPR_O .
+
+    $default  reduce using rule 33 (op_only_op)
+
+
+State 28
+
+   34 op_only_op: DVR_O .
+
+    $default  reduce using rule 34 (op_only_op)
+
+
+State 29
+
+   35 op_only_op: ABR_O .
+
+    $default  reduce using rule 35 (op_only_op)
+
+
+State 30
+
+   36 op_only_op: SQR_O .
+
+    $default  reduce using rule 36 (op_only_op)
+
+
+State 31
+
+   37 op_only_op: IOR_O .
+
+    $default  reduce using rule 37 (op_only_op)
+
+
+State 32
+
+   38 op_only_op: AND_O .
+
+    $default  reduce using rule 38 (op_only_op)
+
+
+State 33
+
+   39 op_only_op: XOR_O .
+
+    $default  reduce using rule 39 (op_only_op)
+
+
+State 34
+
+   40 op_only_op: NOT_O .
+
+    $default  reduce using rule 40 (op_only_op)
+
+
+State 35
+
+   41 op_only_op: INN_O .
+
+    $default  reduce using rule 41 (op_only_op)
+
+
+State 36
+
+   42 op_only_op: UNI_O .
+
+    $default  reduce using rule 42 (op_only_op)
+
+
+State 37
+
+   43 op_only_op: INT_O .
+
+    $default  reduce using rule 43 (op_only_op)
+
+
+State 38
+
+   44 op_only_op: DIF_O .
+
+    $default  reduce using rule 44 (op_only_op)
+
+
+State 39
+
+   45 op_only_op: CMP_O .
+
+    $default  reduce using rule 45 (op_only_op)
+
+
+State 40
+
+   46 op_only_op: SGS_O .
+
+    $default  reduce using rule 46 (op_only_op)
+
+
+State 41
+
+   75 jump_op: UJP_O .
+
+    $default  reduce using rule 75 (jump_op)
+
+
+State 42
+
+   78 jump_op: XJP_O .
+
+    $default  reduce using rule 78 (jump_op)
+
+
+State 43
+
+   77 jump_op: FJP_O .
+
+    $default  reduce using rule 77 (jump_op)
+
+
+State 44
+
+   76 jump_op: TJP_O .
+
+    $default  reduce using rule 76 (jump_op)
+
+
+State 45
+
+   47 op_only_op: FLT_O .
+
+    $default  reduce using rule 47 (op_only_op)
+
+
+State 46
+
+   48 op_only_op: FLO_O .
+
+    $default  reduce using rule 48 (op_only_op)
+
+
+State 47
+
+   49 op_only_op: TRC_O .
+
+    $default  reduce using rule 49 (op_only_op)
+
+
+State 48
+
+   50 op_only_op: RND_O .
+
+    $default  reduce using rule 50 (op_only_op)
+
+
+State 49
+
+   51 op_only_op: CHR_O .
+
+    $default  reduce using rule 51 (op_only_op)
+
+
+State 50
+
+   52 op_only_op: ORD_O .
+
+    $default  reduce using rule 52 (op_only_op)
+
+
+State 51
+
+   53 op_only_op: STP_O .
+
+    $default  reduce using rule 53 (op_only_op)
+
+
+State 52
+
+   80 load_op: LDA_O .
+
+    $default  reduce using rule 80 (load_op)
+
+
+State 53
+
+  111 ldc_instruction: LDC_O . type constant
+
+    A_T  shift, and go to state 109
+    B_T  shift, and go to state 110
+    C_T  shift, and go to state 111
+    I_T  shift, and go to state 112
+    R_T  shift, and go to state 113
+    S_T  shift, and go to state 114
+    T_T  shift, and go to state 115
+    P_T  shift, and go to state 116
+
+    type  go to state 117
+
+
+State 54
+
+   62 type_op: LDI_O .
+
+    $default  reduce using rule 62 (type_op)
+
+
+State 55
+
+   81 load_op: LVA_O .
+
+    $default  reduce using rule 81 (load_op)
+
+
+State 56
+
+   82 load_op: LVB_O .
+
+    $default  reduce using rule 82 (load_op)
+
+
+State 57
+
+   83 load_op: LVC_O .
+
+    $default  reduce using rule 83 (load_op)
+
+
+State 58
+
+   84 load_op: LVI_O .
+
+    $default  reduce using rule 84 (load_op)
+
+
+State 59
+
+   85 load_op: LVR_O .
+
+    $default  reduce using rule 85 (load_op)
+
+
+State 60
+
+   86 load_op: LVS_O .
+
+    $default  reduce using rule 86 (load_op)
+
+
+State 61
+
+   63 type_op: STI_O .
+
+    $default  reduce using rule 63 (type_op)
+
+
+State 62
+
+  112 ixa_instruction: IXA_O . INTLIT
+
+    INTLIT  shift, and go to state 118
+
+
+State 63
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 119
+
+
+State 64
+
+    1 program: statement_list .
+    3 statement_list: statement_list . statement
+
+    LABEL   shift, and go to state 1
+    DEFINE  shift, and go to state 2
+    CUP_O   shift, and go to state 3
+    CSP_O   shift, and go to state 4
+    ENT_O   shift, and go to state 5
+    MST_O   shift, and go to state 6
+    RTN_O   shift, and go to state 7
+    EQU_O   shift, and go to state 8
+    NEQ_O   shift, and go to state 9
+    GRT_O   shift, and go to state 10
+    GEQ_O   shift, and go to state 11
+    LES_O   shift, and go to state 12
+    LEQ_O   shift, and go to state 13
+    ADI_O   shift, and go to state 14
+    SBI_O   shift, and go to state 15
+    NGI_O   shift, and go to state 16
+    MPI_O   shift, and go to state 17
+    DVI_O   shift, and go to state 18
+    MOD_O   shift, and go to state 19
+    ABI_O   shift, and go to state 20
+    SQI_O   shift, and go to state 21
+    INC_O   shift, and go to state 22
+    DEC_O   shift, and go to state 23
+    ADR_O   shift, and go to state 24
+    SBR_O   shift, and go to state 25
+    NGR_O   shift, and go to state 26
+    MPR_O   shift, and go to state 27
+    DVR_O   shift, and go to state 28
+    ABR_O   shift, and go to state 29
+    SQR_O   shift, and go to state 30
+    IOR_O   shift, and go to state 31
+    AND_O   shift, and go to state 32
+    XOR_O   shift, and go to state 33
+    NOT_O   shift, and go to state 34
+    INN_O   shift, and go to state 35
+    UNI_O   shift, and go to state 36
+    INT_O   shift, and go to state 37
+    DIF_O   shift, and go to state 38
+    CMP_O   shift, and go to state 39
+    SGS_O   shift, and go to state 40
+    UJP_O   shift, and go to state 41
+    XJP_O   shift, and go to state 42
+    FJP_O   shift, and go to state 43
+    TJP_O   shift, and go to state 44
+    FLT_O   shift, and go to state 45
+    FLO_O   shift, and go to state 46
+    TRC_O   shift, and go to state 47
+    RND_O   shift, and go to state 48
+    CHR_O   shift, and go to state 49
+    ORD_O   shift, and go to state 50
+    STP_O   shift, and go to state 51
+    LDA_O   shift, and go to state 52
+    LDC_O   shift, and go to state 53
+    LDI_O   shift, and go to state 54
+    LVA_O   shift, and go to state 55
+    LVB_O   shift, and go to state 56
+    LVC_O   shift, and go to state 57
+    LVI_O   shift, and go to state 58
+    LVR_O   shift, and go to state 59
+    LVS_O   shift, and go to state 60
+    STI_O   shift, and go to state 61
+    IXA_O   shift, and go to state 62
+
+    $default  reduce using rule 1 (program)
+
+    statement            go to state 120
+    labeled_instruction  go to state 66
+    label_list           go to state 67
+    definition           go to state 68
+    instruction          go to state 69
+    op_only_instruction  go to state 70
+    op_only_op           go to state 71
+    type_instruction     go to state 72
+    type_op              go to state 73
+    jump_instruction     go to state 74
+    jump_op              go to state 75
+    load_instruction     go to state 76
+    load_op              go to state 77
+    cup_instruction      go to state 78
+    csp_instruction      go to state 79
+    ent_instruction      go to state 80
+    mst_instruction      go to state 81
+    ldc_instruction      go to state 82
+    ixa_instruction      go to state 83
+
+
+State 65
+
+    2 statement_list: statement .
+
+    $default  reduce using rule 2 (statement_list)
+
+
+State 66
+
+    4 statement: labeled_instruction .
+
+    $default  reduce using rule 4 (statement)
+
+
+State 67
+
+    7 labeled_instruction: label_list . instruction
+    9 label_list: label_list . LABEL
+
+    LABEL  shift, and go to state 121
+    CUP_O  shift, and go to state 3
+    CSP_O  shift, and go to state 4
+    ENT_O  shift, and go to state 5
+    MST_O  shift, and go to state 6
+    RTN_O  shift, and go to state 7
+    EQU_O  shift, and go to state 8
+    NEQ_O  shift, and go to state 9
+    GRT_O  shift, and go to state 10
+    GEQ_O  shift, and go to state 11
+    LES_O  shift, and go to state 12
+    LEQ_O  shift, and go to state 13
+    ADI_O  shift, and go to state 14
+    SBI_O  shift, and go to state 15
+    NGI_O  shift, and go to state 16
+    MPI_O  shift, and go to state 17
+    DVI_O  shift, and go to state 18
+    MOD_O  shift, and go to state 19
+    ABI_O  shift, and go to state 20
+    SQI_O  shift, and go to state 21
+    INC_O  shift, and go to state 22
+    DEC_O  shift, and go to state 23
+    ADR_O  shift, and go to state 24
+    SBR_O  shift, and go to state 25
+    NGR_O  shift, and go to state 26
+    MPR_O  shift, and go to state 27
+    DVR_O  shift, and go to state 28
+    ABR_O  shift, and go to state 29
+    SQR_O  shift, and go to state 30
+    IOR_O  shift, and go to state 31
+    AND_O  shift, and go to state 32
+    XOR_O  shift, and go to state 33
+    NOT_O  shift, and go to state 34
+    INN_O  shift, and go to state 35
+    UNI_O  shift, and go to state 36
+    INT_O  shift, and go to state 37
+    DIF_O  shift, and go to state 38
+    CMP_O  shift, and go to state 39
+    SGS_O  shift, and go to state 40
+    UJP_O  shift, and go to state 41
+    XJP_O  shift, and go to state 42
+    FJP_O  shift, and go to state 43
+    TJP_O  shift, and go to state 44
+    FLT_O  shift, and go to state 45
+    FLO_O  shift, and go to state 46
+    TRC_O  shift, and go to state 47
+    RND_O  shift, and go to state 48
+    CHR_O  shift, and go to state 49
+    ORD_O  shift, and go to state 50
+    STP_O  shift, and go to state 51
+    LDA_O  shift, and go to state 52
+    LDC_O  shift, and go to state 53
+    LDI_O  shift, and go to state 54
+    LVA_O  shift, and go to state 55
+    LVB_O  shift, and go to state 56
+    LVC_O  shift, and go to state 57
+    LVI_O  shift, and go to state 58
+    LVR_O  shift, and go to state 59
+    LVS_O  shift, and go to state 60
+    STI_O  shift, and go to state 61
+    IXA_O  shift, and go to state 62
+
+    instruction          go to state 122
+    op_only_instruction  go to state 70
+    op_only_op           go to state 71
+    type_instruction     go to state 72
+    type_op              go to state 73
+    jump_instruction     go to state 74
+    jump_op              go to state 75
+    load_instruction     go to state 76
+    load_op              go to state 77
+    cup_instruction      go to state 78
+    csp_instruction      go to state 79
+    ent_instruction      go to state 80
+    mst_instruction      go to state 81
+    ldc_instruction      go to state 82
+    ixa_instruction      go to state 83
+
+
+State 68
+
+    6 statement: definition .
+
+    $default  reduce using rule 6 (statement)
+
+
+State 69
+
+    5 statement: instruction .
+
+    $default  reduce using rule 5 (statement)
+
+
+State 70
+
+   11 instruction: op_only_instruction .
+
+    $default  reduce using rule 11 (instruction)
+
+
+State 71
+
+   21 op_only_instruction: op_only_op .
+
+    $default  reduce using rule 21 (op_only_instruction)
+
+
+State 72
+
+   12 instruction: type_instruction .
+
+    $default  reduce using rule 12 (instruction)
+
+
+State 73
+
+   54 type_instruction: type_op . type
+
+    A_T  shift, and go to state 109
+    B_T  shift, and go to state 110
+    C_T  shift, and go to state 111
+    I_T  shift, and go to state 112
+    R_T  shift, and go to state 113
+    S_T  shift, and go to state 114
+    T_T  shift, and go to state 115
+    P_T  shift, and go to state 116
+
+    type  go to state 123
+
+
+State 74
+
+   13 instruction: jump_instruction .
+
+    $default  reduce using rule 13 (instruction)
+
+
+State 75
+
+   74 jump_instruction: jump_op . LABEL
+
+    LABEL  shift, and go to state 124
+
+
+State 76
+
+   14 instruction: load_instruction .
+
+    $default  reduce using rule 14 (instruction)
+
+
+State 77
+
+   79 load_instruction: load_op . INTLIT INTLIT
+
+    INTLIT  shift, and go to state 125
+
+
+State 78
+
+   16 instruction: cup_instruction .
+
+    $default  reduce using rule 16 (instruction)
+
+
+State 79
+
+   17 instruction: csp_instruction .
+
+    $default  reduce using rule 17 (instruction)
+
+
+State 80
+
+   15 instruction: ent_instruction .
+
+    $default  reduce using rule 15 (instruction)
+
+
+State 81
+
+   18 instruction: mst_instruction .
+
+    $default  reduce using rule 18 (instruction)
+
+
+State 82
+
+   19 instruction: ldc_instruction .
+
+    $default  reduce using rule 19 (instruction)
+
+
+State 83
+
+   20 instruction: ixa_instruction .
+
+    $default  reduce using rule 20 (instruction)
+
+
+State 84
+
+   10 definition: DEFINE LABEL . INTLIT
+
+    INTLIT  shift, and go to state 126
+
+
+State 85
+
+   87 cup_instruction: CUP_O INTLIT . LABEL
+
+    LABEL  shift, and go to state 127
+
+
+State 86
+
+   89 function: RDB_F .
+
+    $default  reduce using rule 89 (function)
+
+
+State 87
+
+   90 function: RDC_F .
+
+    $default  reduce using rule 90 (function)
+
+
+State 88
+
+   91 function: RDI_F .
+
+    $default  reduce using rule 91 (function)
+
+
+State 89
+
+   92 function: RDR_F .
+
+    $default  reduce using rule 92 (function)
+
+
+State 90
+
+   93 function: RLN_F .
+
+    $default  reduce using rule 93 (function)
+
+
+State 91
+
+   94 function: WRB_F .
+
+    $default  reduce using rule 94 (function)
+
+
+State 92
+
+   95 function: WRC_F .
+
+    $default  reduce using rule 95 (function)
+
+
+State 93
+
+   96 function: WRI_F .
+
+    $default  reduce using rule 96 (function)
+
+
+State 94
+
+   97 function: WRE_F .
+
+    $default  reduce using rule 97 (function)
+
+
+State 95
+
+   98 function: WRF_F .
+
+    $default  reduce using rule 98 (function)
+
+
+State 96
+
+   99 function: WRS_F .
+
+    $default  reduce using rule 99 (function)
+
+
+State 97
+
+  100 function: WLN_F .
+
+    $default  reduce using rule 100 (function)
+
+
+State 98
+
+  101 function: SQT_F .
+
+    $default  reduce using rule 101 (function)
+
+
+State 99
+
+  102 function: LN_F .
+
+    $default  reduce using rule 102 (function)
+
+
+State 100
+
+  103 function: EXP_F .
+
+    $default  reduce using rule 103 (function)
+
+
+State 101
+
+   88 csp_instruction: CSP_O function .
+
+    $default  reduce using rule 88 (csp_instruction)
+
+
+State 102
+
+  105 register: SP_R .
+
+    $default  reduce using rule 105 (register)
+
+
+State 103
+
+  106 register: EP_R .
+
+    $default  reduce using rule 106 (register)
+
+
+State 104
+
+  107 register: MP_R .
+
+    $default  reduce using rule 107 (register)
+
+
+State 105
+
+  108 register: PC_R .
+
+    $default  reduce using rule 108 (register)
+
+
+State 106
+
+  109 register: NP_R .
+
+    $default  reduce using rule 109 (register)
+
+
+State 107
+
+  104 ent_instruction: ENT_O register . LABEL
+
+    LABEL  shift, and go to state 128
+
+
+State 108
+
+  110 mst_instruction: MST_O INTLIT .
+
+    $default  reduce using rule 110 (mst_instruction)
+
+
+State 109
+
+   67 type: A_T .
+
+    $default  reduce using rule 67 (type)
+
+
+State 110
+
+   68 type: B_T .
+
+    $default  reduce using rule 68 (type)
+
+
+State 111
+
+   69 type: C_T .
+
+    $default  reduce using rule 69 (type)
+
+
+State 112
+
+   70 type: I_T .
+
+    $default  reduce using rule 70 (type)
+
+
+State 113
+
+   71 type: R_T .
+
+    $default  reduce using rule 71 (type)
+
+
+State 114
+
+   72 type: S_T .
+
+    $default  reduce using rule 72 (type)
+
+
+State 115
+
+   73 type: T_T .
+
+    $default  reduce using rule 73 (type)
+
+
+State 116
+
+   66 type: P_T .
+
+    $default  reduce using rule 66 (type)
+
+
+State 117
+
+  111 ldc_instruction: LDC_O type . constant
+
+    INTLIT  shift, and go to state 129
+    REALIT  shift, and go to state 130
+    STRLIT  shift, and go to state 131
+    CHRLIT  shift, and go to state 132
+
+    constant  go to state 133
+
+
+State 118
+
+  112 ixa_instruction: IXA_O INTLIT .
+
+    $default  reduce using rule 112 (ixa_instruction)
+
+
+State 119
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 120
+
+    3 statement_list: statement_list statement .
+
+    $default  reduce using rule 3 (statement_list)
+
+
+State 121
+
+    9 label_list: label_list LABEL .
+
+    $default  reduce using rule 9 (label_list)
+
+
+State 122
+
+    7 labeled_instruction: label_list instruction .
+
+    $default  reduce using rule 7 (labeled_instruction)
+
+
+State 123
+
+   54 type_instruction: type_op type .
+
+    $default  reduce using rule 54 (type_instruction)
+
+
+State 124
+
+   74 jump_instruction: jump_op LABEL .
+
+    $default  reduce using rule 74 (jump_instruction)
+
+
+State 125
+
+   79 load_instruction: load_op INTLIT . INTLIT
+
+    INTLIT  shift, and go to state 134
+
+
+State 126
+
+   10 definition: DEFINE LABEL INTLIT .
+
+    $default  reduce using rule 10 (definition)
+
+
+State 127
+
+   87 cup_instruction: CUP_O INTLIT LABEL .
+
+    $default  reduce using rule 87 (cup_instruction)
+
+
+State 128
+
+  104 ent_instruction: ENT_O register LABEL .
+
+    $default  reduce using rule 104 (ent_instruction)
+
+
+State 129
+
+  113 constant: INTLIT .
+
+    $default  reduce using rule 113 (constant)
+
+
+State 130
+
+  114 constant: REALIT .
+
+    $default  reduce using rule 114 (constant)
+
+
+State 131
+
+  115 constant: STRLIT .
+
+    $default  reduce using rule 115 (constant)
+
+
+State 132
+
+  116 constant: CHRLIT .
+
+    $default  reduce using rule 116 (constant)
+
+
+State 133
+
+  111 ldc_instruction: LDC_O type constant .
+
+    $default  reduce using rule 111 (ldc_instruction)
+
+
+State 134
+
+   79 load_instruction: load_op INTLIT INTLIT .
+
+    $default  reduce using rule 79 (load_instruction)

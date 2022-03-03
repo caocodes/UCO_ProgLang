@@ -1,0 +1,119 @@
+#----------------------------------------------------------------------
+# File makepasm creates the P-Code Assembler, Pasm.
+#----------------------------------------------------------------------
+# Author: Thomas R. Turner
+# E-Mail: trturner@ucok.edu
+# Date:   March, 2003
+#----------------------------------------------------------------------
+# Copyright March, 2003 by Thomas R. Turner.
+# Do not reproduce without permission from Thomas R. Turner.
+#----------------------------------------------------------------------
+# Object files
+#----------------------------------------------------------------------
+obj	=		pasm.o \
+			pasmpar.o \
+			pasmpcod.o \
+			PasmInstruction.o \
+			PasmFiles.o \
+			pasmicon.o \
+			pasmrcon.o \
+			pasmscon.o \
+			pasmtcon.o \
+			pasmlabl.o \
+			pasmdir.o	
+#----------------------------------------------------------------------
+# Bind the P-Code Assembler using the linkage editor
+#----------------------------------------------------------------------
+Pasm:			${obj}
+			g++ -o pasm ${obj} -lm   
+#----------------------------------------------------------------------
+# File Pasm.cpp processes command line arguments
+#----------------------------------------------------------------------
+pasm.o:			pasm.cpp pasmpar.h
+			g++ -c -g pasm.cpp
+#----------------------------------------------------------------------
+# File PasmParser.cpp parses the P-Code source file
+#----------------------------------------------------------------------
+pasmpar.o		\
+y.tab.h	:		pasmpar.cpp pasmpar.h \
+			PasmInstruction.h pasmpcod.h \
+			pasmicon.h
+			g++ -c -g pasmpar.cpp
+pasmpar.cpp:		pasmpar.y
+			yacc -d pasmpar.y
+			mv y.tab.c pasmpar.cpp
+
+#----------------------------------------------------------------------
+# File PasmScanner.l contains a lex specification of the P-Code
+# Assembler Scanner.
+#----------------------------------------------------------------------
+#PasmScanner.o:		PasmScanner.cpp PasmScanner.h y.tab.h
+#			g++ -c -g PasmScanner.cpp
+#PasmScanner.cpp:	PasmScanner.l PasmScanner.h y.tab.h
+#			flex -l PasmScanner.l
+#			mv lex.yy.c PasmScanner.cpp	
+#----------------------------------------------------------------------
+# File PasmInstruction.cpp implements members of class PasmInstruction.
+# File PasmInstruction defines storage and operations for a single
+# P-Code instruction
+#----------------------------------------------------------------------
+PasmInstruction.o:	PasmInstruction.cpp PasmInstruction.h
+			g++ -c -g PasmInstruction.cpp
+#----------------------------------------------------------------------
+# File PasmInstructionArray.cpp implements the Instruction Array
+#----------------------------------------------------------------------
+pasmpcod.o:	pasmpcod.cpp pasmpcod.h
+			g++ -c -g pasmpcod.cpp
+#----------------------------------------------------------------------
+# File PasmFiles is a collection of the files required by the P-Code
+# Assembler
+#----------------------------------------------------------------------
+PasmFiles.o:		PasmFiles.cpp PasmFiles.h
+			g++ -c -g PasmFiles.cpp
+#----------------------------------------------------------------------
+#File PasmIntegerConstants.cpp implements Integer Constants
+#----------------------------------------------------------------------
+pasmicon.o:	pasmicon.cpp pasmicon.h
+			g++ -c -g pasmicon.cpp
+#----------------------------------------------------------------------
+#File PasmRealConstants.cpp implements Real Constants
+#----------------------------------------------------------------------
+pasmrcon.o:	pasmrcon.cpp pasmrcon.h
+			g++ -c -g pasmrcon.cpp
+#----------------------------------------------------------------------
+#File PasmSetConstants.cpp implements Set Constants
+#----------------------------------------------------------------------
+pasmscon.o:	pasmscon.cpp pasmscon.h
+			g++ -c -g pasmscon.cpp
+#----------------------------------------------------------------------
+#File PasmStringConstants.cpp implements String Constants
+#----------------------------------------------------------------------
+pasmtcon.o:	pasmtcon.cpp pasmtcon.h
+			g++ -c -g pasmtcon.cpp
+#----------------------------------------------------------------------
+#File PasmList.cpp implements a list of integers stored in ascending
+#order.
+#----------------------------------------------------------------------
+#PasmList.o:		PasmList.cpp PasmList.h
+#			g++ -c -g PasmList.cpp
+#----------------------------------------------------------------------
+#File PasmLabel.cpp implements a single label
+#----------------------------------------------------------------------
+pasmlabl.o:		pasmlabl.cpp pasmlabl.h
+			g++ -c -g pasmlabl.cpp
+#----------------------------------------------------------------------
+#File PasmLabelTable.cpp implements the Label Table
+#----------------------------------------------------------------------
+#PasmLabelTable.o:	PasmLabelTable.cpp PasmLabelTable.h PasmLabel.h\
+#			PasmList.h
+#			g++ -c -g PasmLabelTable.cpp
+#----------------------------------------------------------------------
+#File PasmDirectory.cpp implements the P-Code Assembler Directory
+#----------------------------------------------------------------------
+pasmdir.o:	pasmdir.cpp pasmdir.h
+			g++ -c -g pasmdir.cpp
+#----------------------------------------------------------------------
+#File PasmYYWRAP.c implements function yywrap required by flex
+#----------------------------------------------------------------------
+#PasmYYWRAP.o:		PasmYYWRAP.cpp
+#			g++ -c -g PasmYYWRAP.cpp

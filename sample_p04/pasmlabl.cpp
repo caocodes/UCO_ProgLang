@@ -1,4 +1,3 @@
-
 #line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
@@ -7,8 +6,8 @@
 
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
-#define YY_FLEX_MINOR_VERSION 6
-#define YY_FLEX_SUBMINOR_VERSION 4
+#define YY_FLEX_MINOR_VERSION 5
+#define YY_FLEX_SUBMINOR_VERSION 35
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -83,48 +82,60 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
-#ifndef SIZE_MAX
-#define SIZE_MAX               (~(size_t)0)
-#endif
-
 #endif /* ! C99 */
 
 #endif /* ! FLEXINT_H */
 
-/* begin standard C++ headers. */
+#ifdef __cplusplus
 
-/* TODO: this is always defined, so inline it */
+/* The "const" storage-class-modifier is valid. */
+#define YY_USE_CONST
+
+#else	/* ! __cplusplus */
+
+/* C99 requires __STDC__ to be defined as 1. */
+#if defined (__STDC__)
+
+#define YY_USE_CONST
+
+#endif	/* defined (__STDC__) */
+#endif	/* ! __cplusplus */
+
+#ifdef YY_USE_CONST
 #define yyconst const
-
-#if defined(__GNUC__) && __GNUC__ >= 3
-#define yynoreturn __attribute__((__noreturn__))
 #else
-#define yynoreturn
+#define yyconst
 #endif
 
 /* Returned upon end-of-file. */
 #define YY_NULL 0
 
-/* Promotes a possibly negative, possibly signed char to an
- *   integer in range [0..255] for use as an array index.
+/* Promotes a possibly negative, possibly signed char to an unsigned
+ * integer for use as an array index.  If the signed char is negative,
+ * we want to instead treat it as an 8-bit unsigned char, hence the
+ * double cast.
  */
-#define YY_SC_TO_UI(c) ((YY_CHAR) (c))
+#define YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
 
 /* Enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
  * definition of BEGIN.
  */
 #define BEGIN (yy_start) = 1 + 2 *
+
 /* Translate the current start state into a value that can be later handed
  * to BEGIN to return to the state.  The YYSTATE alias is for lex
  * compatibility.
  */
 #define YY_START (((yy_start) - 1) / 2)
 #define YYSTATE YY_START
+
 /* Action number for EOF rule of a given start state. */
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
+
 /* Special action meaning "start processing a new file". */
-#define YY_NEW_FILE yyrestart( yyin  )
+#define YY_NEW_FILE yyrestart(yyin  )
+
 #define YY_END_OF_BUFFER_CHAR 0
 
 /* Size of default input buffer. */
@@ -149,11 +160,6 @@ typedef unsigned int flex_uint32_t;
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
-#ifndef YY_TYPEDEF_YY_SIZE_T
-#define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
-#endif
-
 extern int yyleng;
 
 extern FILE *yyin, *yyout;
@@ -161,9 +167,21 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_CONTINUE_SCAN 0
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
-    
-    #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
+
+    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
+     *       access to the local variable yy_act. Since yyless() is a macro, it would break
+     *       existing scanners that call yyless() from OUTSIDE yylex. 
+     *       One obvious solution it to make yy_act a global. I tried that, and saw
+     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
+     *       normally declared as a register variable-- so it is not worth it.
+     */
+    #define  YY_LESS_LINENO(n) \
+            do { \
+                int yyl;\
+                for ( yyl = n; yyl < yyleng; ++yyl )\
+                    if ( yytext[yyl] == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -178,7 +196,13 @@ extern FILE *yyin, *yyout;
 		YY_DO_BEFORE_ACTION; /* set up yytext again */ \
 		} \
 	while ( 0 )
+
 #define unput(c) yyunput( c, (yytext_ptr)  )
+
+#ifndef YY_TYPEDEF_YY_SIZE_T
+#define YY_TYPEDEF_YY_SIZE_T
+typedef size_t yy_size_t;
+#endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
@@ -192,7 +216,7 @@ struct yy_buffer_state
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
 	 */
-	int yy_buf_size;
+	yy_size_t yy_buf_size;
 
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
@@ -220,7 +244,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-
+    
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -248,7 +272,7 @@ struct yy_buffer_state
 /* Stack of input buffers. */
 static size_t yy_buffer_stack_top = 0; /**< index of top of stack. */
 static size_t yy_buffer_stack_max = 0; /**< capacity of stack. */
-static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
+static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 
 /* We provide macros for accessing buffer states in case in the
  * future we want to put the buffer states in a more general
@@ -259,6 +283,7 @@ static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
 #define YY_CURRENT_BUFFER ( (yy_buffer_stack) \
                           ? (yy_buffer_stack)[(yy_buffer_stack_top)] \
                           : NULL)
+
 /* Same as previous macro, but useful when we know that the buffer stack is not
  * NULL or when we need an lvalue. For internal use only.
  */
@@ -270,7 +295,7 @@ static int yy_n_chars;		/* number of characters read into yy_ch_buf */
 int yyleng;
 
 /* Points to current character in buffer. */
-static char *yy_c_buf_p = NULL;
+static char *yy_c_buf_p = (char *) 0;
 static int yy_init = 0;		/* whether we need to initialize */
 static int yy_start = 0;	/* start state number */
 
@@ -279,80 +304,90 @@ static int yy_start = 0;	/* start state number */
  */
 static int yy_did_buffer_switch_on_eof;
 
-void yyrestart ( FILE *input_file  );
-void yy_switch_to_buffer ( YY_BUFFER_STATE new_buffer  );
-YY_BUFFER_STATE yy_create_buffer ( FILE *file, int size  );
-void yy_delete_buffer ( YY_BUFFER_STATE b  );
-void yy_flush_buffer ( YY_BUFFER_STATE b  );
-void yypush_buffer_state ( YY_BUFFER_STATE new_buffer  );
-void yypop_buffer_state ( void );
+void yyrestart (FILE *input_file  );
+void yy_switch_to_buffer (YY_BUFFER_STATE new_buffer  );
+YY_BUFFER_STATE yy_create_buffer (FILE *file,int size  );
+void yy_delete_buffer (YY_BUFFER_STATE b  );
+void yy_flush_buffer (YY_BUFFER_STATE b  );
+void yypush_buffer_state (YY_BUFFER_STATE new_buffer  );
+void yypop_buffer_state (void );
 
-static void yyensure_buffer_stack ( void );
-static void yy_load_buffer_state ( void );
-static void yy_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
-#define YY_FLUSH_BUFFER yy_flush_buffer( YY_CURRENT_BUFFER )
+static void yyensure_buffer_stack (void );
+static void yy_load_buffer_state (void );
+static void yy_init_buffer (YY_BUFFER_STATE b,FILE *file  );
 
-YY_BUFFER_STATE yy_scan_buffer ( char *base, yy_size_t size  );
-YY_BUFFER_STATE yy_scan_string ( const char *yy_str  );
-YY_BUFFER_STATE yy_scan_bytes ( const char *bytes, int len  );
+#define YY_FLUSH_BUFFER yy_flush_buffer(YY_CURRENT_BUFFER )
 
-void *yyalloc ( yy_size_t  );
-void *yyrealloc ( void *, yy_size_t  );
-void yyfree ( void *  );
+YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size  );
+YY_BUFFER_STATE yy_scan_string (yyconst char *yy_str  );
+YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,int len  );
+
+void *yyalloc (yy_size_t  );
+void *yyrealloc (void *,yy_size_t  );
+void yyfree (void *  );
 
 #define yy_new_buffer yy_create_buffer
+
 #define yy_set_interactive(is_interactive) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){ \
         yyensure_buffer_stack (); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            yy_create_buffer( yyin, YY_BUF_SIZE ); \
+            yy_create_buffer(yyin,YY_BUF_SIZE ); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
 	}
+
 #define yy_set_bol(at_bol) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){\
         yyensure_buffer_stack (); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            yy_create_buffer( yyin, YY_BUF_SIZE ); \
+            yy_create_buffer(yyin,YY_BUF_SIZE ); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
 	}
+
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
-typedef flex_uint8_t YY_CHAR;
 
-FILE *yyin = NULL, *yyout = NULL;
+typedef unsigned char YY_CHAR;
+
+FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 
 typedef int yy_state_type;
 
+#define YY_FLEX_LEX_COMPAT
 extern int yylineno;
+
 int yylineno = 1;
 
-extern char *yytext;
-#ifdef yytext_ptr
-#undef yytext_ptr
-#endif
-#define yytext_ptr yytext
+extern char yytext[];
 
-static yy_state_type yy_get_previous_state ( void );
-static yy_state_type yy_try_NUL_trans ( yy_state_type current_state  );
-static int yy_get_next_buffer ( void );
-static void yynoreturn yy_fatal_error ( const char* msg  );
+static yy_state_type yy_get_previous_state (void );
+static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );
+static int yy_get_next_buffer (void );
+static void yy_fatal_error (yyconst char msg[]  );
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up yytext.
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	yyleng = (int) (yy_cp - yy_bp); \
+	yyleng = (size_t) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
+	if ( yyleng + (yy_more_offset) >= YYLMAX ) \
+		YY_FATAL_ERROR( "token too large, exceeds YYLMAX" ); \
+	yy_flex_strncpy( &yytext[(yy_more_offset)], (yytext_ptr), yyleng + 1 ); \
+	yyleng += (yy_more_offset); \
+	(yy_prev_more_offset) = (yy_more_offset); \
+	(yy_more_offset) = 0; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 13
-#define YY_END_OF_BUFFER 14
+
+#define YY_NUM_RULES 11
+#define YY_END_OF_BUFFER 12
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -360,32 +395,39 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[56] =
+static yyconst flex_int16_t yy_acclist[40] =
     {   0,
-       11,   11,   14,   12,    4,    1,    2,   12,   12,   12,
-        5,   11,   11,   12,    4,    0,    0,    0,    5,    0,
-        5,   11,    9,    0,    0,    0,    0,    0,    7,    0,
-        8,    3,    3,    0,    0,    6,    0,    0,    7,    0,
-        0,    0,    0,    6,    0,    6,    0,    0,    8,    0,
-        0,    6,   10,    0,    0
+       12,   10,   11,    1,   10,   11,    1,   11,   10,   11,
+       10,   11,   10,   11,   10,   11,    6,   10,   11,   10,
+       11,    4,   10,   11,    1,    5,    6,    9,    8,    2,
+        4,    8,    9,    7,    9,    8,    8,    9,    3
     } ;
 
-static const YY_CHAR yy_ec[256] =
+static yyconst flex_int16_t yy_accept[44] =
+    {   0,
+        1,    1,    1,    2,    4,    7,    9,   11,   13,   15,
+       17,   20,   22,   25,   26,   26,   26,   27,   27,   28,
+       29,   30,   30,   31,   32,   32,   32,   34,   34,   34,
+       35,   35,   35,   36,   36,   36,   37,   37,   37,   39,
+       39,   40,   40
+    } ;
+
+static yyconst flex_int32_t yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        1,    1,    4,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    5,    1,    1,    1,    6,    1,
-        1,    1,    7,    1,    7,    8,    1,    9,    9,    9,
-        9,    9,    9,    9,    9,    9,    9,    1,    1,    1,
-        1,    1,    1,    1,   10,   10,   10,   10,   11,   10,
-       10,   10,   10,   10,   10,   12,   10,   10,   10,   10,
-       10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
-        1,    1,    1,    1,   10,    1,   10,   10,   10,   13,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    2,    1,    1,    4,    1,    1,    1,    5,    1,
+        1,    1,    6,    1,    6,    7,    1,    8,    8,    8,
+        8,    8,    8,    8,    8,    8,    8,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    9,    1,
+        1,    1,    1,    1,    1,   10,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,   11,   11,   11,   12,
 
-       14,   15,   10,   10,   16,   10,   10,   10,   10,   17,
-       10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
-       10,   10,   18,    1,   19,    1,    1,    1,    1,    1,
+       13,   14,   11,   11,   15,   11,   11,   11,   11,   16,
+       11,   11,   11,   11,   11,   11,   11,   11,   11,   11,
+       11,   11,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -402,161 +444,215 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[20] =
+static yyconst flex_int32_t yy_meta[17] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
-        2,    2,    2,    2,    2,    2,    2,    1,    1
+        1,    1,    1,    1,    1,    1,    1,    2,    2,    1,
+        3,    3,    4,    3,    3,    3
     } ;
 
-static const flex_int16_t yy_base[64] =
+static yyconst flex_int16_t yy_base[48] =
     {   0,
-        0,    0,   88,   89,   85,   89,   89,   73,   79,   75,
-       12,    0,   74,    4,   80,   67,   74,   73,   69,   68,
-       16,    0,   67,    8,   56,   10,   59,   67,   66,   65,
-       21,   15,   89,   54,   63,   62,   61,   60,   59,   29,
-       47,   57,   56,   55,   54,   53,   52,   48,   47,   41,
-       48,   47,   89,   31,   89,   38,   29,   40,   42,   44,
-       46,   48,   50
+        0,    0,   73,   74,   15,   17,   60,   66,   14,   62,
+       16,   61,    0,   24,   55,   62,   61,   57,    0,   56,
+       55,   22,   54,    0,   47,   25,   52,   26,   51,   50,
+       42,   48,   47,   29,   46,   45,   35,   40,   37,   23,
+       74,   74,   37,   39,   42,   45,   48
     } ;
 
-static const flex_int16_t yy_def[64] =
+static yyconst flex_int16_t yy_def[48] =
     {   0,
-       55,    1,   55,   55,   55,   55,   55,   55,   56,   55,
-       55,   57,   57,   58,   55,   55,   59,   55,   55,   55,
-       55,   57,   55,   58,   55,   58,   55,   60,   55,   61,
-       55,   58,   55,   55,   60,   55,   62,   63,   55,   55,
-       55,   62,   62,   55,   63,   55,   63,   55,   55,   55,
-       62,   55,   55,   63,    0,   55,   55,   55,   55,   55,
-       55,   55,   55
+       42,    1,   42,   42,   42,   42,   42,   43,   42,   42,
+       42,   42,   44,   42,   42,   43,   42,   42,   11,   45,
+       46,   42,   42,   44,   42,   42,   47,   42,   42,   42,
+       42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
+       42,    0,   42,   42,   42,   42,   42
     } ;
 
-static const flex_int16_t yy_nxt[109] =
+static yyconst flex_int16_t yy_nxt[91] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,    4,   11,   12,
-       12,   13,   12,   12,   12,   12,   12,   14,    4,   20,
-       21,   25,   26,   20,   21,   25,   32,   25,   26,   31,
-       22,   40,   25,   26,   40,   48,   52,   49,   17,   17,
-       24,   24,   28,   28,   35,   35,   38,   38,   43,   43,
-       45,   45,   54,   46,   53,   49,   49,   52,   51,   46,
-       42,   46,   44,   50,   47,   46,   44,   42,   36,   41,
-       39,   37,   36,   34,   33,   23,   31,   19,   30,   29,
-       27,   15,   23,   19,   18,   16,   15,   55,    3,   55,
-       55,   55,   55,   55,   55,   55,   55,   55,   55,   55,
-
-       55,   55,   55,   55,   55,   55,   55,   55
+        4,    5,    6,    7,    8,    9,   10,   11,    4,   12,
+       13,   13,   13,   13,   13,   13,   14,   14,   14,   14,
+       18,   19,   21,   19,   22,   14,   14,   29,   22,   30,
+       32,   35,   33,   36,   38,   41,   39,   16,   16,   16,
+       16,   24,   24,   26,   39,   26,   28,   39,   28,   34,
+       40,   34,   36,   36,   33,   33,   37,   30,   30,   27,
+       31,   23,   27,   20,   20,   16,   17,   25,   23,   20,
+       17,   15,   42,    3,   42,   42,   42,   42,   42,   42,
+       42,   42,   42,   42,   42,   42,   42,   42,   42,   42
     } ;
 
-static const flex_int16_t yy_chk[109] =
+static yyconst flex_int16_t yy_chk[91] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,   11,
-       11,   14,   14,   21,   21,   24,   24,   26,   26,   31,
-       57,   31,   32,   32,   31,   40,   54,   40,   56,   56,
-       58,   58,   59,   59,   60,   60,   61,   61,   62,   62,
-       63,   63,   52,   51,   50,   49,   48,   47,   46,   45,
-       44,   43,   42,   41,   39,   38,   37,   36,   35,   34,
-       30,   29,   28,   27,   25,   23,   20,   19,   18,   17,
-       16,   15,   13,   10,    9,    8,    5,    3,   55,   55,
-       55,   55,   55,   55,   55,   55,   55,   55,   55,   55,
-
-       55,   55,   55,   55,   55,   55,   55,   55
+        1,    1,    1,    1,    1,    1,    5,    5,    6,    6,
+        9,    9,   11,   11,   11,   14,   14,   22,   11,   22,
+       26,   28,   26,   28,   34,   40,   34,   43,   43,   43,
+       43,   44,   44,   45,   39,   45,   46,   38,   46,   47,
+       37,   47,   36,   35,   33,   32,   31,   30,   29,   27,
+       25,   23,   21,   20,   18,   17,   16,   15,   12,   10,
+        8,    7,    3,   42,   42,   42,   42,   42,   42,   42,
+       42,   42,   42,   42,   42,   42,   42,   42,   42,   42
     } ;
 
-static yy_state_type yy_last_accepting_state;
-static char *yy_last_accepting_cpos;
+/* Table of booleans, true if rule could match eol. */
+static yyconst flex_int32_t yy_rule_can_match_eol[12] =
+    {   0,
+1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,     };
 
 extern int yy_flex_debug;
 int yy_flex_debug = 0;
 
-/* The intent behind this definition is that it'll catch
- * any uses of REJECT which flex missed.
- */
-#define REJECT reject_used_but_not_detected
-#define yymore() yymore_used_but_not_detected
+static yy_state_type *yy_state_buf=0, *yy_state_ptr=0;
+static char *yy_full_match;
+static int yy_lp;
+#define REJECT \
+{ \
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */ \
+yy_cp = (yy_full_match); /* restore poss. backed-over text */ \
+++(yy_lp); \
+goto find_rule; \
+}
+
+static int yy_more_offset = 0;
+static int yy_prev_more_offset = 0;
+#define yymore() ((yy_more_offset) = yy_flex_strlen( yytext ))
+#define YY_NEED_STRLEN
 #define YY_MORE_ADJ 0
-#define YY_RESTORE_YY_MORE_OFFSET
-char *yytext;
-#line 1 "p04lex.l"
-#line 2 "p04lex.l"
-//--------------------------------------------------------------------
-// File p04lex.l defines a prototype scanner for the pasm language.
-// The scanner definition is a lex specification.
-//-------------------------------------------------------------------
-// Team Identification Block
-// Author 1: 	Daniel L. Tomei
-// Student ID: 	*20491050
-// E-Mail: 	dtomei@uco.edu
-// CRN: 	13855, Fall, 2020
-// Author 2: 	Aditi Panvelkar
-// Student ID: 	*20490610
-// E-Mail: 	apanvelkar@uco.edu
-// CRN: 	13855, Fall, 2020
-// Course: 	CMSC 5023 – Programming Languages
-// Project: 	p04
-// Due: 	December 10, 2020
-// Project Account Number: tt162
-//--------------------------------------------------------------------
-// Standard C and C++ Library Include Files
-//--------------------------------------------------------------------
+#define YY_RESTORE_YY_MORE_OFFSET \
+	{ \
+	(yy_more_offset) = (yy_prev_more_offset); \
+	yyleng -= (yy_more_offset); \
+	}
+#ifndef YYLMAX
+#define YYLMAX 8192
+#endif
+
+char yytext[YYLMAX];
+char *yytext_ptr;
+#line 1 "PasmScanner.l"
+#line 2 "PasmScanner.l"
+//-----------------------//----------------------------------------------------------------------------
+//File PasmLabel.cpp implements member functions of class PasmLabel
+//----------------------------------------------------------------------------
+//Author: 
+//E-Mail: 
+//Date:   
+//----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+//This will include c lib files
+//----------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <string>
 #include <cstdio>
 #include <map>
+//----------------------------------------------------------------------------
+//This will include app files
+//----------------------------------------------------------------------------
+#include "pasmlabl.h"
+#include "PasmFiles.h"
+//#include "PasmScanner.h"
+//#include "PasmList.h"
+//----------------------------------------------------------------------------
+//This will include using of Namespaces
+//----------------------------------------------------------------------------
+#include "y.tab.h"
+extern PasmFiles F;
 using namespace std;
 //--------------------------------------------------------------------
-// Application Includes
-//--------------------------------------------------------------------
-#include "p04lex.h"
-#include "p04tkn.h"
-//--------------------------------------------------------------------
-//Externals
-//--------------------------------------------------------------------
-extern ofstream tfs;    //Trace file stream tfs
-//--------------------------------------------------------------------
-//Global Variables
-//--------------------------------------------------------------------
-static map<string,int> RW;      //RW - Reserve Words
-                                //RW is a table of reserve words
-                                //and their corresponding
-                                //token codes.
-static map<int,string> TokenName;
-int line=1;                     //Current line number
-int col=1;                      //Current column number
-//--------------------------------------------------------------------
-//Functions
-//--------------------------------------------------------------------
-int TokenMgr(int t);                //Token post processing
-int ReserveWord(char* s);           //Determines if string s is
-                                    //a reserve word
-void TokenTrace(int t);             //Records token t in the trace file
-void PopulateRWMap(void);           //Create the table of reserve
-                                    //words and their token codes.
-void PopulateTokenNameMap(void);    //Create a table of names for tokens
-                                    //to be printed in the TokenTrace
-void ToLower(char* d,char* s);      //Coerce the characters of string s
-                                    //to lower case. Put the result
-                                    //in string d.
-//--------------------------------------------------------------------
-//Exceptions
-//--------------------------------------------------------------------
-//A BadCharacterException is thrown when a character outside the
-//defined set of characters for the Pascal language appears in the
-//source.
-//--------------------------------------------------------------------
-struct BadCharacterException{    
-    BadCharacterException(char p,int l,int c)
-    {
-        cout << endl;
-        cout << "line(" << l << ") col (" << c << ")" ;
-        cout << "Lexical error: ";
-        cout << "Illegal character |" << p << "| ASCII code=" << (int)p;
-        cout << endl;
-    }
-};
-#line 559 "lex.yy.c"
-#line 560 "lex.yy.c"
+//----------------------------------------------------------------------------
+//This pasmlabl will take the attributes 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//Constructor will be calling
+//----------------------------------------------------------------------------
+pasmlabl::pasmlabl():label(""),address(-1),resolved(false){}
+//----------------------------------------------------------------------------
+//Constructor will be calling
+//----------------------------------------------------------------------------
+pasmlabl::pasmlabl(char* id)
+    :label(id),address(-1),resolved(false){}
+//----------------------------------------------------------------------------
+//Destructor will be calling
+//----------------------------------------------------------------------------
+pasmlabl::~pasmlabl(){}
+//----------------------------------------------------------------------------
+// This will determine the if the lable and id matches 
+//----------------------------------------------------------------------------
+bool pasmlabl::IsMatch(char* id)
+{
+    return id==label;
+}
+//----------------------------------------------------------------------------
+//Function Title prints 
+//----------------------------------------------------------------------------
+void pasmlabl::Title(ostream& o)
+{
+    o << endl;
+    o << setw(8) << "Label";
+    o << " ";
+    o << setw(8) << "Address";
+    o << " ";
+    o << setw(8) << "Resolved";
+    o << " ";
+    o << "Reference List";
+}
+//----------------------------------------------------------------------------
+//Function Print ,prints a label
+//----------------------------------------------------------------------------
+void pasmlabl::Print(ostream& o)
+{
+    o << setw(8) << label;
+    o << " ";
+    o << setw(8) << address;
+    o << " ";
+    o << setw(8) << boolalpha << resolved;
+    o << " ";
+    //reference.Print(o);
+}
+//----------------------------------------------------------------------------
+//This Function "InsertReference" inserts reference
+//----------------------------------------------------------------------------
+//void pasmlabl::InsertReference(int v)
+//{
+//    reference.Insert(v);
+//}
+//----------------------------------------------------------------------------
+//Function Define defines a label.  Integer parameter v is assigned to the
+//label.
+//----------------------------------------------------------------------------
+void pasmlabl::Define(int v)
+{
+    address=v;
+    resolved=true;
+}
+//----
+//void pasmlabl::ResolveReferences(pasmpcod& IA)
+//{
+//    for (reference.First();!reference.IsEol();reference.Next()) {
+//        IA.StoreR2(reference.Member(),address);
+//    }
+//}
+
+//----------------------------------------------------------------------------
+void pasmlabl::ResolveAReference(pasmpcod& IA,int v)
+{
+    IA.StoreR2(v,address);
+}
+//----------------------------------------------------------------------------
+//isresolved determines if the label is resolved or not
+//----------------------------------------------------------------------------
+bool pasmlabl::IsResolved(void)
+{
+    return resolved;
+}
+
+
+int TokenMgr(int t,const char* s);  //Token post processing
+static map<string,int> RW;          //Reserve Words
+#line 574 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -572,36 +668,36 @@ struct BadCharacterException{
 #define YY_EXTRA_TYPE void *
 #endif
 
-static int yy_init_globals ( void );
+static int yy_init_globals (void );
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int yylex_destroy ( void );
+int yylex_destroy (void );
 
-int yyget_debug ( void );
+int yyget_debug (void );
 
-void yyset_debug ( int debug_flag  );
+void yyset_debug (int debug_flag  );
 
-YY_EXTRA_TYPE yyget_extra ( void );
+YY_EXTRA_TYPE yyget_extra (void );
 
-void yyset_extra ( YY_EXTRA_TYPE user_defined  );
+void yyset_extra (YY_EXTRA_TYPE user_defined  );
 
-FILE *yyget_in ( void );
+FILE *yyget_in (void );
 
-void yyset_in  ( FILE * _in_str  );
+void yyset_in  (FILE * in_str  );
 
-FILE *yyget_out ( void );
+FILE *yyget_out (void );
 
-void yyset_out  ( FILE * _out_str  );
+void yyset_out  (FILE * out_str  );
 
-			int yyget_leng ( void );
+int yyget_leng (void );
 
-char *yyget_text ( void );
+char *yyget_text (void );
 
-int yyget_lineno ( void );
+int yyget_lineno (void );
 
-void yyset_lineno ( int _line_number  );
+void yyset_lineno (int line_number  );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -609,31 +705,28 @@ void yyset_lineno ( int _line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int yywrap ( void );
+extern "C" int yywrap (void );
 #else
-extern int yywrap ( void );
+extern int yywrap (void );
 #endif
 #endif
 
-#ifndef YY_NO_UNPUT
+    static void yyunput (int c,char *buf_ptr  );
     
-    static void yyunput ( int c, char *buf_ptr  );
-    
-#endif
-
 #ifndef yytext_ptr
-static void yy_flex_strncpy ( char *, const char *, int );
+static void yy_flex_strncpy (char *,yyconst char *,int );
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen ( const char * );
+static int yy_flex_strlen (yyconst char * );
 #endif
 
 #ifndef YY_NO_INPUT
+
 #ifdef __cplusplus
-static int yyinput ( void );
+static int yyinput (void );
 #else
-static int input ( void );
+static int input (void );
 #endif
 
 #endif
@@ -653,7 +746,7 @@ static int input ( void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( yytext, (size_t) yyleng, 1, yyout )) {} } while (0)
+#define ECHO do { if (fwrite( yytext, yyleng, 1, yyout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -664,7 +757,7 @@ static int input ( void );
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
 		{ \
 		int c = '*'; \
-		int n; \
+		size_t n; \
 		for ( n = 0; n < max_size && \
 			     (c = getc( yyin )) != EOF && c != '\n'; ++n ) \
 			buf[n] = (char) c; \
@@ -677,7 +770,7 @@ static int input ( void );
 	else \
 		{ \
 		errno=0; \
-		while ( (result = (int) fread(buf, 1, (yy_size_t) max_size, yyin)) == 0 && ferror(yyin)) \
+		while ( (result = fread(buf, 1, max_size, yyin))==0 && ferror(yyin)) \
 			{ \
 			if( errno != EINTR) \
 				{ \
@@ -732,7 +825,7 @@ extern int yylex (void);
 
 /* Code executed at the end of each rule. */
 #ifndef YY_BREAK
-#define YY_BREAK /*LINTED*/break;
+#define YY_BREAK break;
 #endif
 
 #define YY_RULE_SETUP \
@@ -742,10 +835,14 @@ extern int yylex (void);
  */
 YY_DECL
 {
-	yy_state_type yy_current_state;
-	char *yy_cp, *yy_bp;
-	int yy_act;
+	register yy_state_type yy_current_state;
+	register char *yy_cp, *yy_bp;
+	register int yy_act;
     
+#line 41 "PasmScanner.l"
+
+#line 763 "lex.yy.c"
+
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -753,6 +850,12 @@ YY_DECL
 #ifdef YY_USER_INIT
 		YY_USER_INIT;
 #endif
+
+        /* Create the reject buffer large enough to save one state per allowed character. */
+        if ( ! (yy_state_buf) )
+            (yy_state_buf) = (yy_state_type *)yyalloc(YY_STATE_BUF_SIZE  );
+            if ( ! (yy_state_buf) )
+                YY_FATAL_ERROR( "out of dynamic memory in yylex()" );
 
 		if ( ! (yy_start) )
 			(yy_start) = 1;	/* first start state */
@@ -766,18 +869,13 @@ YY_DECL
 		if ( ! YY_CURRENT_BUFFER ) {
 			yyensure_buffer_stack ();
 			YY_CURRENT_BUFFER_LVALUE =
-				yy_create_buffer( yyin, YY_BUF_SIZE );
+				yy_create_buffer(yyin,YY_BUF_SIZE );
 		}
 
-		yy_load_buffer_state(  );
+		yy_load_buffer_state( );
 		}
 
-	{
-#line 80 "p04lex.l"
-
-#line 779 "lex.yy.c"
-
-	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
+	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = (yy_c_buf_p);
 
@@ -790,127 +888,121 @@ YY_DECL
 		yy_bp = yy_cp;
 
 		yy_current_state = (yy_start);
+
+		(yy_state_ptr) = (yy_state_buf);
+		*(yy_state_ptr)++ = yy_current_state;
+
 yy_match:
 		do
 			{
-			YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
-			if ( yy_accept[yy_current_state] )
-				{
-				(yy_last_accepting_state) = yy_current_state;
-				(yy_last_accepting_cpos) = yy_cp;
-				}
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 56 )
-					yy_c = yy_meta[yy_c];
+				if ( yy_current_state >= 43 )
+					yy_c = yy_meta[(unsigned int) yy_c];
 				}
-			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+			*(yy_state_ptr)++ = yy_current_state;
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 89 );
+		while ( yy_base[yy_current_state] != 74 );
 
 yy_find_action:
-		yy_act = yy_accept[yy_current_state];
-		if ( yy_act == 0 )
-			{ /* have to back up */
-			yy_cp = (yy_last_accepting_cpos);
-			yy_current_state = (yy_last_accepting_state);
-			yy_act = yy_accept[yy_current_state];
+		yy_current_state = *--(yy_state_ptr);
+		(yy_lp) = yy_accept[yy_current_state];
+find_rule: /* we branch to this label when backing up */
+		for ( ; ; ) /* until we find what rule we matched */
+			{
+			if ( (yy_lp) && (yy_lp) < yy_accept[yy_current_state + 1] )
+				{
+				yy_act = yy_acclist[(yy_lp)];
+					{
+					(yy_full_match) = yy_cp;
+					break;
+					}
+				}
+			--yy_cp;
+			yy_current_state = *--(yy_state_ptr);
+			(yy_lp) = yy_accept[yy_current_state];
 			}
 
 		YY_DO_BEFORE_ACTION;
+
+		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
+			{
+			int yyl;
+			for ( yyl = (yy_prev_more_offset); yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					   
+    yylineno++;
+;
+			}
 
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
-			case 0: /* must back up */
-			/* undo the effects of YY_DO_BEFORE_ACTION */
-			*yy_cp = (yy_hold_char);
-			yy_cp = (yy_last_accepting_cpos);
-			yy_current_state = (yy_last_accepting_state);
-			goto yy_find_action;
-
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 81 "p04lex.l"
-{
-                        line++;
-                        col=1;
-                    }
+#line 42 "PasmScanner.l"
+;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 85 "p04lex.l"
-;
+#line 43 "PasmScanner.l"
+return TokenMgr(LABEL,yytext);
 	YY_BREAK
 case 3:
-/* rule 3 can match eol */
 YY_RULE_SETUP
-#line 86 "p04lex.l"
-;
+#line 44 "PasmScanner.l"
+return TokenMgr(DEFINE,yytext);
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 87 "p04lex.l"
-{
-                        col+=yyleng;
-                    }
+#line 45 "PasmScanner.l"
+return TokenMgr(ID,yytext);
 	YY_BREAK
 case 5:
+/* rule 5 can match eol */
 YY_RULE_SETUP
-#line 90 "p04lex.l"
-return TokenMgr(INTLIT);
+#line 46 "PasmScanner.l"
+return TokenMgr(CHRLIT,yytext);
 	YY_BREAK
 case 6:
-/* rule 6 can match eol */
 YY_RULE_SETUP
-#line 91 "p04lex.l"
-return TokenMgr(STRLIT);
+#line 47 "PasmScanner.l"
+return TokenMgr(INTLIT,yytext);
 	YY_BREAK
 case 7:
-/* rule 7 can match eol */
 YY_RULE_SETUP
-#line 92 "p04lex.l"
-return TokenMgr(CHRLIT);
+#line 48 "PasmScanner.l"
+return TokenMgr(REALIT,yytext);
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 93 "p04lex.l"
-return TokenMgr(REALIT);
+#line 49 "PasmScanner.l"
+return TokenMgr(REALIT,yytext);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 94 "p04lex.l"
-return TokenMgr(LABEL);
+#line 50 "PasmScanner.l"
+return TokenMgr(REALIT,yytext);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 95 "p04lex.l"
-return TokenMgr(DEFINE);
+#line 51 "PasmScanner.l"
+return TokenMgr(ERROR,yytext);
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 96 "p04lex.l"
-return TokenMgr(ID);
-	YY_BREAK
-case 12:
-YY_RULE_SETUP
-#line 97 "p04lex.l"
-{
-                    throw BadCharacterException(*yytext, line, col);
-                }
-	YY_BREAK
-case 13:
-YY_RULE_SETUP
-#line 100 "p04lex.l"
+#line 52 "PasmScanner.l"
 ECHO;
 	YY_BREAK
-#line 912 "lex.yy.c"
-case YY_STATE_EOF(INITIAL):
-	yyterminate();
+#line 922 "lex.yy.c"
+			case YY_STATE_EOF(INITIAL):
+				yyterminate();
 
 	case YY_END_OF_BUFFER:
 		{
@@ -986,7 +1078,7 @@ case YY_STATE_EOF(INITIAL):
 				{
 				(yy_did_buffer_switch_on_eof) = 0;
 
-				if ( yywrap(  ) )
+				if ( yywrap( ) )
 					{
 					/* Note: because we've taken care in
 					 * yy_get_next_buffer() to have set up
@@ -1039,7 +1131,6 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
-	} /* end of user's declarations */
 } /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer
@@ -1051,9 +1142,9 @@ case YY_STATE_EOF(INITIAL):
  */
 static int yy_get_next_buffer (void)
 {
-    	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
-	char *source = (yytext_ptr);
-	int number_to_move, i;
+    	register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
+	register char *source = (yytext_ptr);
+	register int number_to_move, i;
 	int ret_val;
 
 	if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
@@ -1082,7 +1173,7 @@ static int yy_get_next_buffer (void)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr) - 1);
+	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr)) - 1;
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -1101,38 +1192,8 @@ static int yy_get_next_buffer (void)
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
 
-			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE;
-
-			int yy_c_buf_p_offset =
-				(int) ((yy_c_buf_p) - b->yy_ch_buf);
-
-			if ( b->yy_is_our_buffer )
-				{
-				int new_size = b->yy_buf_size * 2;
-
-				if ( new_size <= 0 )
-					b->yy_buf_size += b->yy_buf_size / 8;
-				else
-					b->yy_buf_size *= 2;
-
-				b->yy_ch_buf = (char *)
-					/* Include room in for 2 EOB chars. */
-					yyrealloc( (void *) b->yy_ch_buf,
-							 (yy_size_t) (b->yy_buf_size + 2)  );
-				}
-			else
-				/* Can't grow it, we don't own it. */
-				b->yy_ch_buf = NULL;
-
-			if ( ! b->yy_ch_buf )
-				YY_FATAL_ERROR(
-				"fatal error - scanner input buffer overflow" );
-
-			(yy_c_buf_p) = &b->yy_ch_buf[yy_c_buf_p_offset];
-
-			num_to_read = YY_CURRENT_BUFFER_LVALUE->yy_buf_size -
-						number_to_move - 1;
+			YY_FATAL_ERROR(
+"input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
 
 			}
 
@@ -1141,7 +1202,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), num_to_read );
+			(yy_n_chars), (size_t) num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1151,7 +1212,7 @@ static int yy_get_next_buffer (void)
 		if ( number_to_move == YY_MORE_ADJ )
 			{
 			ret_val = EOB_ACT_END_OF_FILE;
-			yyrestart( yyin  );
+			yyrestart(yyin  );
 			}
 
 		else
@@ -1165,15 +1226,12 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
-		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc(
-			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size  );
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
-		/* "- 2" to take care of EOB's */
-		YY_CURRENT_BUFFER_LVALUE->yy_buf_size = (int) (new_size - 2);
 	}
 
 	(yy_n_chars) += number_to_move;
@@ -1189,26 +1247,25 @@ static int yy_get_next_buffer (void)
 
     static yy_state_type yy_get_previous_state (void)
 {
-	yy_state_type yy_current_state;
-	char *yy_cp;
+	register yy_state_type yy_current_state;
+	register char *yy_cp;
     
 	yy_current_state = (yy_start);
 
+	(yy_state_ptr) = (yy_state_buf);
+	*(yy_state_ptr)++ = yy_current_state;
+
 	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
 		{
-		YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
-		if ( yy_accept[yy_current_state] )
-			{
-			(yy_last_accepting_state) = yy_current_state;
-			(yy_last_accepting_cpos) = yy_cp;
-			}
+		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 56 )
-				yy_c = yy_meta[yy_c];
+			if ( yy_current_state >= 43 )
+				yy_c = yy_meta[(unsigned int) yy_c];
 			}
-		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+		*(yy_state_ptr)++ = yy_current_state;
 		}
 
 	return yy_current_state;
@@ -1221,32 +1278,26 @@ static int yy_get_next_buffer (void)
  */
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )
 {
-	int yy_is_jam;
-    	char *yy_cp = (yy_c_buf_p);
-
-	YY_CHAR yy_c = 1;
-	if ( yy_accept[yy_current_state] )
-		{
-		(yy_last_accepting_state) = yy_current_state;
-		(yy_last_accepting_cpos) = yy_cp;
-		}
+	register int yy_is_jam;
+    
+	register YY_CHAR yy_c = 1;
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 56 )
-			yy_c = yy_meta[yy_c];
+		if ( yy_current_state >= 43 )
+			yy_c = yy_meta[(unsigned int) yy_c];
 		}
-	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 55);
+	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+	yy_is_jam = (yy_current_state == 42);
+	if ( ! yy_is_jam )
+		*(yy_state_ptr)++ = yy_current_state;
 
-		return yy_is_jam ? 0 : yy_current_state;
+	return yy_is_jam ? 0 : yy_current_state;
 }
 
-#ifndef YY_NO_UNPUT
-
-    static void yyunput (int c, char * yy_bp )
+    static void yyunput (int c, register char * yy_bp )
 {
-	char *yy_cp;
+	register char *yy_cp;
     
     yy_cp = (yy_c_buf_p);
 
@@ -1256,10 +1307,10 @@ static int yy_get_next_buffer (void)
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		int number_to_move = (yy_n_chars) + 2;
-		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+		register int number_to_move = (yy_n_chars) + 2;
+		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		char *source =
+		register char *source =
 				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
 
 		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
@@ -1268,7 +1319,7 @@ static int yy_get_next_buffer (void)
 		yy_cp += (int) (dest - source);
 		yy_bp += (int) (dest - source);
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
 
 		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 			YY_FATAL_ERROR( "flex scanner push-back overflow" );
@@ -1276,12 +1327,14 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
+    if ( c == '\n' ){
+        --yylineno;
+    }
+
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
 }
-
-#endif
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
@@ -1307,7 +1360,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			int offset = (int) ((yy_c_buf_p) - (yytext_ptr));
+			int offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1324,14 +1377,14 @@ static int yy_get_next_buffer (void)
 					 */
 
 					/* Reset buffer status. */
-					yyrestart( yyin );
+					yyrestart(yyin );
 
 					/*FALLTHROUGH*/
 
 				case EOB_ACT_END_OF_FILE:
 					{
-					if ( yywrap(  ) )
-						return 0;
+					if ( yywrap( ) )
+						return EOF;
 
 					if ( ! (yy_did_buffer_switch_on_eof) )
 						YY_NEW_FILE;
@@ -1353,6 +1406,11 @@ static int yy_get_next_buffer (void)
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
 
+	if ( c == '\n' )
+		   
+    yylineno++;
+;
+
 	return c;
 }
 #endif	/* ifndef YY_NO_INPUT */
@@ -1368,11 +1426,11 @@ static int yy_get_next_buffer (void)
 	if ( ! YY_CURRENT_BUFFER ){
         yyensure_buffer_stack ();
 		YY_CURRENT_BUFFER_LVALUE =
-            yy_create_buffer( yyin, YY_BUF_SIZE );
+            yy_create_buffer(yyin,YY_BUF_SIZE );
 	}
 
-	yy_init_buffer( YY_CURRENT_BUFFER, input_file );
-	yy_load_buffer_state(  );
+	yy_init_buffer(YY_CURRENT_BUFFER,input_file );
+	yy_load_buffer_state( );
 }
 
 /** Switch to a different input buffer.
@@ -1400,7 +1458,7 @@ static int yy_get_next_buffer (void)
 		}
 
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
-	yy_load_buffer_state(  );
+	yy_load_buffer_state( );
 
 	/* We don't actually know whether we did this switch during
 	 * EOF (yywrap()) processing, but the only time this flag
@@ -1428,7 +1486,7 @@ static void yy_load_buffer_state  (void)
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) yyalloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -1437,13 +1495,13 @@ static void yy_load_buffer_state  (void)
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) yyalloc( (yy_size_t) (b->yy_buf_size + 2)  );
+	b->yy_ch_buf = (char *) yyalloc(b->yy_buf_size + 2  );
 	if ( ! b->yy_ch_buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
 	b->yy_is_our_buffer = 1;
 
-	yy_init_buffer( b, file );
+	yy_init_buffer(b,file );
 
 	return b;
 }
@@ -1462,11 +1520,15 @@ static void yy_load_buffer_state  (void)
 		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
 	if ( b->yy_is_our_buffer )
-		yyfree( (void *) b->yy_ch_buf  );
+		yyfree((void *) b->yy_ch_buf  );
 
-	yyfree( (void *) b  );
+	yyfree((void *) b  );
 }
 
+#ifndef __cplusplus
+extern int isatty (int );
+#endif /* __cplusplus */
+    
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a yyrestart() or at EOF.
@@ -1476,7 +1538,7 @@ static void yy_load_buffer_state  (void)
 {
 	int oerrno = errno;
     
-	yy_flush_buffer( b );
+	yy_flush_buffer(b );
 
 	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
@@ -1519,7 +1581,7 @@ static void yy_load_buffer_state  (void)
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
 	if ( b == YY_CURRENT_BUFFER )
-		yy_load_buffer_state(  );
+		yy_load_buffer_state( );
 }
 
 /** Pushes the new state onto the stack. The new state becomes
@@ -1550,7 +1612,7 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
 
 	/* copied from yy_switch_to_buffer. */
-	yy_load_buffer_state(  );
+	yy_load_buffer_state( );
 	(yy_did_buffer_switch_on_eof) = 1;
 }
 
@@ -1569,7 +1631,7 @@ void yypop_buffer_state (void)
 		--(yy_buffer_stack_top);
 
 	if (YY_CURRENT_BUFFER) {
-		yy_load_buffer_state(  );
+		yy_load_buffer_state( );
 		(yy_did_buffer_switch_on_eof) = 1;
 	}
 }
@@ -1579,7 +1641,7 @@ void yypop_buffer_state (void)
  */
 static void yyensure_buffer_stack (void)
 {
-	yy_size_t num_to_alloc;
+	int num_to_alloc;
     
 	if (!(yy_buffer_stack)) {
 
@@ -1587,15 +1649,15 @@ static void yyensure_buffer_stack (void)
 		 * scanner will even need a stack. We use 2 instead of 1 to avoid an
 		 * immediate realloc on the next call.
          */
-      num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
+		num_to_alloc = 1;
 		(yy_buffer_stack) = (struct yy_buffer_state**)yyalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
 		if ( ! (yy_buffer_stack) )
 			YY_FATAL_ERROR( "out of dynamic memory in yyensure_buffer_stack()" );
-
+								  
 		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-
+				
 		(yy_buffer_stack_max) = num_to_alloc;
 		(yy_buffer_stack_top) = 0;
 		return;
@@ -1604,7 +1666,7 @@ static void yyensure_buffer_stack (void)
 	if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1){
 
 		/* Increase the buffer to prepare for a possible push. */
-		yy_size_t grow_size = 8 /* arbitrary grow size */;
+		int grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = (yy_buffer_stack_max) + grow_size;
 		(yy_buffer_stack) = (struct yy_buffer_state**)yyrealloc
@@ -1624,7 +1686,7 @@ static void yyensure_buffer_stack (void)
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
  * 
- * @return the newly allocated buffer state object.
+ * @return the newly allocated buffer state object. 
  */
 YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
 {
@@ -1634,23 +1696,23 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
 		/* They forgot to leave room for the EOB's. */
-		return NULL;
+		return 0;
 
-	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) yyalloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_buffer()" );
 
-	b->yy_buf_size = (int) (size - 2);	/* "- 2" to take care of EOB's */
+	b->yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
 	b->yy_buf_pos = b->yy_ch_buf = base;
 	b->yy_is_our_buffer = 0;
-	b->yy_input_file = NULL;
+	b->yy_input_file = 0;
 	b->yy_n_chars = b->yy_buf_size;
 	b->yy_is_interactive = 0;
 	b->yy_at_bol = 1;
 	b->yy_fill_buffer = 0;
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
-	yy_switch_to_buffer( b  );
+	yy_switch_to_buffer(b  );
 
 	return b;
 }
@@ -1663,10 +1725,10 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
  * @note If you want to scan bytes that may contain NUL values, then use
  *       yy_scan_bytes() instead.
  */
-YY_BUFFER_STATE yy_scan_string (const char * yystr )
+YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )
 {
     
-	return yy_scan_bytes( yystr, (int) strlen(yystr) );
+	return yy_scan_bytes(yystr,strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to yylex() will
@@ -1676,7 +1738,7 @@ YY_BUFFER_STATE yy_scan_string (const char * yystr )
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
+YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
@@ -1684,8 +1746,8 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
 	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = (yy_size_t) (_yybytes_len + 2);
-	buf = (char *) yyalloc( n  );
+	n = _yybytes_len + 2;
+	buf = (char *) yyalloc(n  );
 	if ( ! buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
 
@@ -1694,7 +1756,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
 
 	buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-	b = yy_scan_buffer( buf, n );
+	b = yy_scan_buffer(buf,n );
 	if ( ! b )
 		YY_FATAL_ERROR( "bad buffer in yy_scan_bytes()" );
 
@@ -1710,9 +1772,9 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
 #define YY_EXIT_FAILURE 2
 #endif
 
-static void yynoreturn yy_fatal_error (const char* msg )
+static void yy_fatal_error (yyconst char* msg )
 {
-			fprintf( stderr, "%s\n", msg );
+    	(void) fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
 }
 
@@ -1740,7 +1802,7 @@ static void yynoreturn yy_fatal_error (const char* msg )
  */
 int yyget_lineno  (void)
 {
-    
+        
     return yylineno;
 }
 
@@ -1778,29 +1840,29 @@ char *yyget_text  (void)
 }
 
 /** Set the current line number.
- * @param _line_number line number
+ * @param line_number
  * 
  */
-void yyset_lineno (int  _line_number )
+void yyset_lineno (int  line_number )
 {
     
-    yylineno = _line_number;
+    yylineno = line_number;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
- * @param _in_str A readable stream.
+ * @param in_str A readable stream.
  * 
  * @see yy_switch_to_buffer
  */
-void yyset_in (FILE *  _in_str )
+void yyset_in (FILE *  in_str )
 {
-        yyin = _in_str ;
+        yyin = in_str ;
 }
 
-void yyset_out (FILE *  _out_str )
+void yyset_out (FILE *  out_str )
 {
-        yyout = _out_str ;
+        yyout = out_str ;
 }
 
 int yyget_debug  (void)
@@ -1808,9 +1870,9 @@ int yyget_debug  (void)
         return yy_flex_debug;
 }
 
-void yyset_debug (int  _bdebug )
+void yyset_debug (int  bdebug )
 {
-        yy_flex_debug = _bdebug ;
+        yy_flex_debug = bdebug ;
 }
 
 static int yy_init_globals (void)
@@ -1819,20 +1881,28 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
-    (yy_buffer_stack) = NULL;
+    /* We do not touch yylineno unless the option is enabled. */
+    yylineno =  1;
+    
+    (yy_buffer_stack) = 0;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
-    (yy_c_buf_p) = NULL;
+    (yy_c_buf_p) = (char *) 0;
     (yy_init) = 0;
     (yy_start) = 0;
+
+    (yy_state_buf) = 0;
+    (yy_state_ptr) = 0;
+    (yy_full_match) = 0;
+    (yy_lp) = 0;
 
 /* Defined in main.c */
 #ifdef YY_STDINIT
     yyin = stdin;
     yyout = stdout;
 #else
-    yyin = NULL;
-    yyout = NULL;
+    yyin = (FILE *) 0;
+    yyout = (FILE *) 0;
 #endif
 
     /* For future reference: Set errno on error, since we are called by
@@ -1847,7 +1917,7 @@ int yylex_destroy  (void)
     
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
-		yy_delete_buffer( YY_CURRENT_BUFFER  );
+		yy_delete_buffer(YY_CURRENT_BUFFER  );
 		YY_CURRENT_BUFFER_LVALUE = NULL;
 		yypop_buffer_state();
 	}
@@ -1855,6 +1925,9 @@ int yylex_destroy  (void)
 	/* Destroy the stack itself. */
 	yyfree((yy_buffer_stack) );
 	(yy_buffer_stack) = NULL;
+
+    yyfree ( (yy_state_buf) );
+    (yy_state_buf)  = NULL;
 
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
      * yylex() is called, initialization will occur. */
@@ -1868,19 +1941,18 @@ int yylex_destroy  (void)
  */
 
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char* s1, const char * s2, int n )
+static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
 {
-		
-	int i;
+	register int i;
 	for ( i = 0; i < n; ++i )
 		s1[i] = s2[i];
 }
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (const char * s )
+static int yy_flex_strlen (yyconst char * s )
 {
-	int n;
+	register int n;
 	for ( n = 0; s[n]; ++n )
 		;
 
@@ -1890,12 +1962,11 @@ static int yy_flex_strlen (const char * s )
 
 void *yyalloc (yy_size_t  size )
 {
-			return malloc(size);
+	return (void *) malloc( size );
 }
 
 void *yyrealloc  (void * ptr, yy_size_t  size )
 {
-		
 	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
 	 * that use void* generic pointers.  It works with the latter
@@ -1903,284 +1974,296 @@ void *yyrealloc  (void * ptr, yy_size_t  size )
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return realloc(ptr, size);
+	return (void *) realloc( (char *) ptr, size );
 }
 
 void yyfree (void * ptr )
 {
-			free( (char *) ptr );	/* see yyrealloc() for (char *) cast */
+	free( (char *) ptr );	/* see yyrealloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
 
-#line 100 "p04lex.l"
+#line 52 "PasmScanner.l"
+
 
 //--------------------------------------------------------------------
-//Class Lexer implementation
+//Class PasmScanner implementation
 //--------------------------------------------------------------------
-//Function ReserveWord determines if the input string is a reserve
-//word and if it is the function returns the corresponding tokencode.
-//Otherwise it returns the tokencode ID.
+//Function TokenName returns the name of the token
 //--------------------------------------------------------------------
-int ReserveWord(char* s)
+const char* TokenName(int t)
 {
-    int t=RW[(string)s];
-    if (t>0) return t; 
-    else return ID;
+    switch (t) {
+        case LABEL:             return "LABEL";
+        case DEFINE:            return "DEFINE";
+        case INTLIT:            return "INTLIT";
+        case CHRLIT:            return "CHRLIT";
+        case STRLIT:            return "STRLIT";
+        case REALIT:            return "REALIT";
+        case ID:                return "ID"; 
+        case PCODEMNEMONIC:     return "PCODEMNENOMIC";
+        // {"cup","csp","ent","mst","rtn"
+        case CUP_O:             return "CUP_O";
+        case CSP_O:             return "CSP_O"; 
+        case ENT_O:             return "ENT_O"; 
+        case MST_O:             return "MST_O"; 
+        case RTN_O:             return "RTN_O"; 
+
+        // ,"equ","neq","grt","geq","les"
+        case EQU_O:             return "EQU_O"; 
+        case NEQ_O:             return "NEQ_O"; 
+        case GRT_O:             return "GRT_O"; 
+        case GEQ_O:             return "GEQ_O"; 
+        case LES_O:             return "LES_O";   
+
+        // ,"leq","adi","sbi","ngi","mpi"
+        case LEQ_O:             return "LEQ_O"; 
+        case ADI_O:             return "ADI_O"; 
+        case SBI_O:             return "SBI_O"; 
+        case NGI_O:             return "NGI_O"; 
+        case MPI_O:             return "MPI_O"; 
+
+        // ,"dvi","mod","abi","sqi","inc" 
+        case DVI_O:             return "DVI_O"; 
+        case MOD_O:             return "MOD_O"; 
+        case ABI_O:             return "ABI_O"; 
+        case SQI_O:             return "SQI_O"; 
+        case INC_O:             return "INC_O"; 
+
+        // ,"dec","adr","sqr","ior","and"
+        case DEC_O:             return "DEC_O"; 
+        case ADR_O:             return "ADR_O"; 
+        case SQR_O:             return "SQR_O"; 
+        case IOR_O:             return "IOR_O"; 
+        case AND_O:             return "AND_O"; 
+
+        // ,"xor","not","inn","uni","int"
+        case XOR_O:             return "XOR_O"; 
+        case NOT_O:             return "NOT_O"; 
+        case INN_O:             return "INN_O"; 
+        case UNI_O:             return "UNI_O"; 
+        case INT_O:             return "INT_O"; 
+       
+        // ,"dif","cmp","sgs","ujp","xjp"
+        case DIF_O:             return "DIF_O"; 
+        case CMP_O:             return "CMP_O"; 
+        case SGS_O:             return "SGS_O"; 
+        case UJP_O:             return "UJP_O"; 
+        case XJP_O:             return "XJP_O"; 
+        
+        // ,"fjp","tjp","flt","flo" "trc"
+        case FJP_O:             return "FJP_O"; 
+        case TJP_O:             return "TJP_O"; 
+        case FLT_O:             return "FLT_O"; 
+        case FLO_O:             return "FLO_O"; 
+        case TRC_O:             return "TRC_O"; 
+
+        // ,"rnd","chr","ord","stp","lda"
+        case RND_O:             return "RND_O"; 
+        case CHR_O:             return "CHR_O"; 
+        case ORD_O:             return "ORD_O"; 
+        case STP_O:             return "STP_O"; 
+        case LDA_O:             return "LDA_O"; 
+
+        // ,"ldc","ldi","lva","lvb","lvc"
+        case LDC_O:             return "LDC_O"; 
+        case LDI_O:             return "LDI_O"; 
+        case LVA_O:             return "LVA_O"; 
+        case LVB_O:             return "LVB_O"; 
+        case LVC_O:             return "LVC_O"; 
+
+        // ,"lvi","lvr","lvs","sti","ixa"
+        case LVI_O:             return "LVI_O"; 
+        case LVR_O:             return "LVR_O"; 
+        case LVS_O:             return "LVS_O"; 
+        case STI_O:             return "STI_O"; 
+        case IXA_O:             return "IXA_O"; 
+
+        case PCODETYPE:         return "PCODETYPE";
+        case A_T:               return "A_T"; 
+        case B_T:               return "B_T"; 
+        case C_T:               return "C_T"; 
+        case I_T:               return "I_T"; 
+        case R_T:               return "R_T"; 
+        case S_T:               return "S_T"; 
+        case T_T:               return "T_T"; 
+        case P_T:               return "P_T";                 
+        case X_T:               return "X_T";
+        case PCODEREGISTER:     return "PCODEREGISTER";
+        case SP_R:              return "SP_R"; 
+        case EP_R:              return "EP_R"; 
+        case MP_R:              return "MP_R"; 
+        case PC_R:              return "PC_R"; 
+        case NP_R:              return "SN_R"; 
+        case PCODEFUNCTION:     return "PCODEFUNTION"; 
+        case RDB_F:             return "RDB_F"; 
+        case RDC_F:             return "RDC_F"; 
+        case RDI_F:             return "RDI_F"; 
+        case RDR_F:             return "RDR_F"; 
+        case RLN_F:             return "RLN_F"; 
+        case WRB_F:             return "WRB_F"; 
+        case WRC_F:             return "WRC_F"; 
+        case WRI_F:             return "WRI_F"; 
+        case WRE_F:             return "WRE_F"; 
+        case WRF_F:             return "WRF_F"; 
+        case WRS_F:             return "WRS_F"; 
+        case WLN_F:             return "WLN_F"; 
+        case SQT_F:             return "SQT_F"; 
+        case LN_F:              return "LN_F"; 
+        case EXP_F:             return "EXP_F"; 
+        default:                return "ERROR";
+    }
 }
 //--------------------------------------------------------------------
-//Function ToLower coerces the characters of string s to lower case
-//and stores the result in string d.
+//Function TokenTrace prints every token
 //--------------------------------------------------------------------
-void ToLower(char* d,char* s)
-{
-    strcpy(d,s);
-    for (int a=0;a<strlen(d);a++) d[a]=tolower(d[a]);
+void TokenTrace(int t,const char* s)
+{   F.t << endl;
+    F.t << "Token=";
+    F.t << "(" << t << "," << TokenName(t) << "," << s << ")";
 }
+//--------------------------------------------------------------------
+//Function yywrap
+//--------------------------------------------------------------------
+int yywrap(){return 1;}
 //--------------------------------------------------------------------
 //Function TokenMgr processes the token after it has been recognized
 //--------------------------------------------------------------------
-int TokenMgr(int t)
-{
-    col+=yyleng;    //Add the length of the current
-                    //Token to the column position
-    if (t==ID) {
-        char* s = new char[yyleng];     //Create storage for a lower case
-                                        //version of the token
-        ToLower(s,yytext);      //Coerce the token to lower case
-        yylval.token= new string(s);    //yylval is the yacc variable
-                                        //associated with the %union
-                                        //directive.  Member token was
-                                        //declared to have the semantic
-                                        //value for tokens.
-        t=ReserveWord(s);   //Determine if the ID is a reserve word
+int TokenMgr(int t,const char* s)
+{   
+    int T=t==ID?RW[s]:t;
+    if (PCODEMNEMONIC<T && T<PCODETYPE)    {
+       yylval.opcode=T-PCODEMNEMONIC-1;
     }
-    TokenTrace(t);      //Record the current token in the trace file
-    return t;
+    if (PCODETYPE    <T && T<PCODEREGISTER){
+       yylval.ptype=T-PCODETYPE-1;
+    }
+    if (PCODEREGISTER<T && T<PCODEFUNCTION){
+       yylval.preg=T-PCODEREGISTER-1;
+    }
+    if (PCODEFUNCTION<T && T<ERROR)        {
+       yylval.stdfunc=T-PCODEFUNCTION-1;
+    }
+    if (T==LABEL)                          {
+       yylval.label=new char[strlen(yytext)+1];
+       strcpy(yylval.label,yytext);
+    }
+    if (T==INTLIT) {
+       int i;
+       sscanf(yytext,"%d",&i);
+       yylval.intlit=i;
+    }
+    if (T==REALIT) {
+       double d;
+       sscanf(yytext,"%lf",&d);
+       yylval.realit=d;
+    }
+    //---------------------------------------------------------------
+    //Return CHRLIT if it is a single character.
+    //Return STRLIT if it contains more than one character.
+    //Strip the leading and trailing apostrophe.
+    //Remove the first of two apostrophes indicating a single apostrophe
+    //---------------------------------------------------------------
+    if (T==CHRLIT) { 
+        F.t << endl << "CHRLIT s=\"" << s << "\"" ;
+        F.t << endl << "yyleng=" << yyleng;
+        char* t=new char[yyleng];       //Storage for new edited string
+        int a=0;
+        int b=0;
+        while (a<yyleng) {
+            if (a==0) a++;
+            if (s[a]=='\'') a++;
+            if (a>=yyleng) break;
+            t[b]=s[a];
+            b++;
+            a++;
+        }
+        t[b]=0;
+        if (strlen(t)>1) {
+            T=STRLIT; 
+            yylval.strlit=t;
+        } else {
+            T=CHRLIT;
+            yylval.chrlit=t[0];
+        }
+    }
+    TokenTrace(T,s);
+    return T;
 }
 //--------------------------------------------------------------------
-//-----------------------------------------------------------------------
-//Function TokenTrace records the attributes of the input token t
-//in the trace file.
-//-----------------------------------------------------------------------
-void TokenTrace(int tkn)
-{
-    tfs << endl;
-    tfs << "Token:Code=" << tkn;
-    tfs << " Name=" << setw(10) << TokenName[tkn];
-    tfs << " line =" << setw(4) << line;
-    tfs << " col =" << setw(4) << col-yyleng;
-    tfs << " Spelling=\"" << yytext << "\"";
-}
-//--------------------------------------------------------------------
-//Function PopulateRWMap assigns values to the map, RW, such that each
-//reserve word is given its associated tokencode.
-//--------------------------------------------------------------------
-void PopulateRWMap(void)
-{
-    RW["cup"    ]=CUP_O;
-    RW["csp"    ]=CSP_O;
-    RW["ent"    ]=ENT_O;
-    RW["mst"    ]=MST_O;
-    RW["rtn"    ]=RTN_O;
-    RW["equ"    ]=EQU_O;
-    RW["neq"    ]=NEQ_O;
-    RW["grt"    ]=GRT_O;
-    RW["geq"    ]=GEQ_O;
-    RW["les"    ]=LES_O;
-    RW["leq"    ]=LEQ_O;
-    RW["adi"    ]=ADI_O;
-    RW["sbi"    ]=SBI_O;
-    RW["ngi"    ]=NGI_O;
-    RW["mpi"    ]=MPI_O;
-    RW["dvi"    ]=DVI_O;
-    RW["mod"    ]=MOD_O;
-    RW["abi"    ]=ABI_O;
-    RW["sqi"    ]=SQI_O;
-    RW["inc"    ]=INC_O;
-    RW["dec"    ]=DEC_O;
-    RW["adr"    ]=ADR_O;
-    RW["sbr"    ]=SBR_O;
-    RW["ngr"    ]=NGR_O;
-    RW["mpr"    ]=MPR_O;
-    RW["dvr"    ]=DVR_O;
-    RW["abr"    ]=ABR_O;
-    RW["sqr"    ]=SQR_O;
-    RW["ior"    ]=IOR_O;
-    RW["and"    ]=AND_O;
-    RW["xor"    ]=XOR_O;
-    RW["not"    ]=NOT_O;
-    RW["inn"    ]=INN_O;
-    RW["uni"    ]=UNI_O;
-    RW["int"    ]=NTR_O;
-    RW["dif"    ]=DIF_O;
-    RW["cmp"    ]=CMP_O;
-    RW["sgs"    ]=SGS_O;
-    RW["ujp"    ]=UJP_O;
-    RW["xjp"    ]=XJP_O;
-    RW["fjp"    ]=FJP_O;
-    RW["tjp"    ]=TJP_O;
-    RW["flt"    ]=FLT_O;
-    RW["flo"    ]=FLO_O;
-    RW["trc"    ]=TRC_O;
-    RW["rnd"    ]=RND_O;
-    RW["chr"    ]=CHR_O;
-    RW["ord"    ]=ORD_O;
-    RW["stp"    ]=STP_O;
-    RW["lda"    ]=LDA_O;
-    RW["ldc"    ]=LDC_O;
-    RW["ldi"    ]=LDI_O;
-    RW["lva"    ]=LVA_O;
-    RW["lvb"    ]=LVB_O;
-    RW["lvc"    ]=LVC_O;
-    RW["lvi"    ]=LVI_O;
-    RW["lvr"    ]=LVR_O;
-    RW["lvs"    ]=LVS_O;
-    RW["lvt"    ]=LVT_O;
-    RW["sti"    ]=STI_O;
-    RW["ixa"    ]=IXA_O;
-    RW["rdb"    ]=RDB_F;
-    RW["rdc"    ]=RDC_F;
-    RW["rdi"    ]=RDI_F;
-    RW["rdr"    ]=RDR_F;
-    RW["rln"    ]=RLN_F;
-    RW["wrb"    ]=WRB_F;
-    RW["wrc"    ]=WRC_F;
-    RW["wri"    ]=WRI_F;
-    RW["wre"    ]=WRE_F;
-    RW["wrf"    ]=WRF_F;
-    RW["wrs"    ]=WRS_F;
-    RW["wrt"    ]=WRT_F;
-    RW["wln"    ]=WLN_F;
-    RW["sqt"    ]=SQT_F;
-    RW["ln"     ]=LN_F;
-    RW["exp"    ]=EXP_F;
-    RW["sp"     ]=SP_R;
-    RW["ep"     ]=EP_R;
-    RW["mp"     ]=MP_R;
-    RW["pc"     ]=PC_R;
-    RW["np"     ]=NP_R;
-    RW["a"      ]=A_T;
-    RW["b"      ]=B_T;
-    RW["c"      ]=C_T;
-    RW["i"      ]=I_T;
-    RW["r"      ]=R_T;
-    RW["s"      ]=S_T;
-    RW["t"      ]=T_T;
-    RW["p"      ]=P_T;
-    RW["x"      ]=X_T;
-}
-
-void PopulateTokenNameMap(void)
-{
-    TokenName[CUP_O     ] = "CUP_O";
-    TokenName[CSP_O     ] = "CSP_O";
-    TokenName[ENT_O     ] = "ENT_O";
-    TokenName[MST_O     ] = "MST_O";
-    TokenName[RTN_O     ] = "RTN_O";
-    TokenName[EQU_O     ] = "EQU_O";
-    TokenName[NEQ_O     ] = "NEQ_O";
-    TokenName[GRT_O     ] = "GRT_O";
-    TokenName[GEQ_O     ] = "GEQ_O";
-    TokenName[LES_O     ] = "LES_O";
-    TokenName[LEQ_O     ] = "LEQ_O";
-    TokenName[ADI_O     ] = "ADI_O";
-    TokenName[SBI_O     ] = "SBI_O";
-    TokenName[NGI_O     ] = "NGI_O";
-    TokenName[MPI_O     ] = "MPI_O";
-    TokenName[DVI_O     ] = "DVI_O";
-    TokenName[MOD_O     ] = "MOD_O";
-    TokenName[ABI_O     ] = "ABI_O";
-    TokenName[SQI_O     ] = "SQI_O";
-    TokenName[INC_O     ] = "INC_O";
-    TokenName[DEC_O     ] = "DEC_O";
-    TokenName[ADR_O     ] = "ADR_O";
-    TokenName[SBR_O     ] = "SBR_O";
-    TokenName[NGR_O     ] = "NGR_O";
-    TokenName[MPR_O     ] = "MPR_O";
-    TokenName[DVR_O     ] = "DVR_O";
-    TokenName[ABR_O     ] = "ABR_O";
-    TokenName[SQR_O     ] = "SQR_O";
-    TokenName[IOR_O     ] = "IOR_O";
-    TokenName[AND_O     ] = "AND_O";
-    TokenName[XOR_O     ] = "XOR_O";
-    TokenName[NOT_O     ] = "NOT_O";
-    TokenName[INN_O     ] = "INN_O";
-    TokenName[UNI_O     ] = "UNI_O";
-    TokenName[NTR_O     ] = "NTR_O";
-    TokenName[DIF_O     ] = "DIF_O";
-    TokenName[CMP_O     ] = "CMP_O";
-    TokenName[SGS_O     ] = "SGS_O";
-    TokenName[UJP_O     ] = "UJP_O";
-    TokenName[XJP_O     ] = "XJP_O";
-    TokenName[FJP_O     ] = "FJP_O";
-    TokenName[TJP_O     ] = "TJP_O";
-    TokenName[FLT_O     ] = "FLT_O";
-    TokenName[FLO_O     ] = "FLO_O";
-    TokenName[TRC_O     ] = "TRC_O";
-    TokenName[RND_O     ] = "RND_O";
-    TokenName[CHR_O     ] = "CHR_O";
-    TokenName[ORD_O     ] = "ORD_O";
-    TokenName[STP_O     ] = "STP_O";
-    TokenName[LDA_O     ] = "LDA_O";
-    TokenName[LDC_O     ] = "LDC_O";
-    TokenName[LDI_O     ] = "LDI_O";
-    TokenName[LVA_O     ] = "LVA_O";
-    TokenName[LVB_O     ] = "LVB_O";
-    TokenName[LVC_O     ] = "LVC_O";
-    TokenName[LVI_O     ] = "LVI_O";
-    TokenName[LVR_O     ] = "LVR_O";
-    TokenName[LVS_O     ] = "LVS_O";
-    TokenName[LVT_O     ] = "LVT_O";
-    TokenName[STI_O     ] = "STI_O";
-    TokenName[IXA_O     ] = "IXA_O";
-    TokenName[RDB_F     ] = "RDB_F";
-    TokenName[RDC_F     ] = "RDC_F";
-    TokenName[RDI_F     ] = "RDI_F";
-    TokenName[RDR_F     ] = "RDR_F";
-    TokenName[RLN_F     ] = "RLN_F";
-    TokenName[WRB_F     ] = "WRB_F";
-    TokenName[WRC_F     ] = "WRC_F";
-    TokenName[WRI_F     ] = "WRI_F";
-    TokenName[WRE_F     ] = "WRE_F";
-    TokenName[WRF_F     ] = "WRF_F";
-    TokenName[WRS_F     ] = "WRS_F";
-    TokenName[WRT_F     ] = "WRT_F";
-    TokenName[WLN_F     ] = "WLN_F";
-    TokenName[SQT_F     ] = "SQT_F";
-    TokenName[LN_F      ] = "LN_F";
-    TokenName[EXP_F     ] = "EXP_F";
-    TokenName[SP_R      ] = "SP_R";
-    TokenName[EP_R      ] = "EP_R";
-    TokenName[MP_R      ] = "MP_R";
-    TokenName[PC_R      ] = "PC_R";
-    TokenName[NP_R      ] = "NP_R";
-    TokenName[A_T       ] = "A_T";
-    TokenName[B_T       ] = "B_T";
-    TokenName[C_T       ] = "C_T";
-    TokenName[I_T       ] = "I_T";
-    TokenName[R_T       ] = "R_T";
-    TokenName[S_T       ] = "S_T";
-    TokenName[T_T       ] = "T_T";
-    TokenName[P_T       ] = "P_T";
-    TokenName[X_T       ] = "X_T";
-    TokenName[DEFINE    ] = "DEFINE";
-    TokenName[LABEL     ] = "LABEL";
-    TokenName[INTLIT    ] = "INTLIT";
-    TokenName[REALIT    ] = "REALIT";
-    TokenName[CHRLIT    ] = "CHRLIT";
-    TokenName[STRLIT    ] = "STRLIT";
-    TokenName[ID        ] = "ID";
-    TokenName[ERROR     ] = "ERROR";
-}
-//--------------------------------------------------------------------
-//Constructor Lexer is used to redirect the input file stream from the
+//Constructor PasmScanner is used to redirect the input file stream from the
 //keyboard to input file stream i.
+//Constructor PasmScanner also initializes the reserve word map RW.
 //--------------------------------------------------------------------
-Lexer::Lexer(FILE* i)
-{
-    yyin=i;
-    PopulateRWMap();
-    PopulateTokenNameMap();
+pasmlabl::pasmlabl(FILE* i) 
+{   yyin=i; 
+    static string pcodemnemonic[60] = 
+        {"cup","csp","ent","mst","rtn"
+        ,"equ","neq","grt","geq","les"
+        ,"leq","adi","sbi","ngi","mpi"
+        ,"dvi","mod","abi","sqi","inc"
+        ,"dec","adr","sbr","ngr","mpr"
+        ,"dvr","abr","sqr","ior","and"
+        ,"xor","not","inn","uni","int"
+        ,"dif","cmp","sgs","ujp","xjp"
+        ,"fjp","tjp","flt","flo","trc"
+        ,"rnd","chr","ord","stp","lda"
+        ,"ldc","ldi","lva","lvb","lvc"
+        ,"lvi","lvr","lvs","sti","ixa"
+        };
+//  for (P.Start();!P.IsEol();P.Next()) RW[P.Mnemonic()]=P.OpCode();
+
+    for (int a=0;a<60;a++) RW[pcodemnemonic[a]]=a+PCODEMNEMONIC+1;
+
+    static string pcodetype[9] =
+        {"a","b","c","i","r","s","t","p","x"
+        };
+    for (int a=0;a<9;a++) RW[pcodetype[a]]=a+PCODETYPE+1;
+
+    static string pcoderegister[5] =
+        {"sp","ep","mp","pc","np"
+        };
+    for (int a=0;a<5;a++) RW[pcoderegister[a]]=a+PCODEREGISTER+1;
+
+    static string pcodefunction[15] =
+        {"rdb","rdc","rdi","rdr","rln"
+        ,"wrb","wrc","wri","wre","wrf"
+        ,"wrs","wln","sqt","ln" ,"exp"
+        };
+    for (int a=0;a<15;a++) RW[pcodefunction[a]]=a+PCODEFUNCTION+1;
 }
-//-----------------------End of Lex Definition-----------------------
+//--------------------------------------------------------------------
+//Function Lex calls yylex
+//--------------------------------------------------------------------
+int pasmlabl::Lex(void)
+{   tokencode=yylex();
+    return tokencode;
+}
+//--------------------------------------------------------------------
+//Function FetchSpelling returns a pointer to the spelling of the most
+//recent token.
+//--------------------------------------------------------------------
+char* pasmlabl::FetchSpelling(void)
+{
+    return (char*)yytext;
+} 
+//--------------------------------------------------------------------
+//Function FetchTokenCode returns the code of the most recent token 
+//--------------------------------------------------------------------
+int pasmlabl::FetchTokenCode(void)
+{  return tokencode;
+}
+//--------------------------------------------------------------------
+//Function StoreTokenCode records the most recent token code
+//--------------------------------------------------------------------
+void pasmlabl::StoreTokenCode(int T)
+{  tokencode=T;
+}
+//-----------------------End of Lex Definition------------------------
+     
+
+
+
+
+
