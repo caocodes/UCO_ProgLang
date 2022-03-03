@@ -29,7 +29,7 @@ class Stack():
 			return self.items[-1]
 
 	def is_empty(self):
-		return self.items == []
+		return len(self.items) == 0
 
 	def size(self):
 		return len(self.items)
