@@ -30,6 +30,7 @@ using namespace std;
 //---------------------------------------------------------------------
 #include "pasmlex.h"
 #include "pasmpar.h"
+#include "pasm_instruction.h"
 //---------------------------------------------------------------------
 //Externals
 //---------------------------------------------------------------------
@@ -459,7 +460,9 @@ class2_operation:
     CSP_O stdfunction
     {
       output << endl << "#059 class2_operation -> CSP_O stdfunction";
-      
+      PasmInstruction instruction($1);
+      output << endl << "OPCODE=" << $1;
+      // instruction.print(output);
     }
 class2_operation:
     UJP_O LABEL

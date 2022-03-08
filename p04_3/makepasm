@@ -19,7 +19,8 @@
 #----------------------------------------------------------------------
 obj		=		pasmpar.o \
 				pasmlex.o \
-				pasm.o		
+				pasm.o \
+				pasm_instruction.o	
 #----------------------------------------------------------------------
 # Bind the subset Pascal Scanner using the linkage editor
 #----------------------------------------------------------------------
@@ -50,6 +51,11 @@ pasmpar.cpp:		pasmpar.y
 #----------------------------------------------------------------
 # Compile the parser pasmpar.o
 #----------------------------------------------------------------
-pasmpar.o:		pasmpar.cpp pasmpar.h
+pasmpar.o:		pasmpar.cpp pasmpar.h pasm_instruction.h
 				g++ -c -g pasmpar.cpp
+#----------------------------------------------------------------------
+#
+#----------------------------------------------------------------------
+pasm_instruction.o:	pasm_instruction.cpp pasm_instruction.h
+			g++ -c -g pasm_instruction.cpp
 #----------------------------------------------------------------------
