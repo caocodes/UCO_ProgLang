@@ -44,6 +44,11 @@ map<int, string> tokenSpelling;
 //--------------------------------------------------------------------
 //Function prototypes, class fields
 //--------------------------------------------------------------------
+int real(void);
+int chrlit(void);
+int label(void);
+int intlit(void);
+int strlit(void);
 int tokenMgr(int token);
 
 %}
@@ -440,13 +445,13 @@ int tokenMgr(int token);
 	return(tokenMgr(X_T));
 }
 
-[L][0-9]+       							return tokenMgr(LABEL);
+[L][0-9]+       							return tokenMgr(label());
 "#define"       							return tokenMgr(DEFINE);
-[+\-]?[0-9]+ 								return tokenMgr(INTLIT);
-[+\-]?[0-9]+(\.[0-9]+)([eE][+\-]?[0-9]+)?	return tokenMgr(REALIT);
-[+\-]?[0-9]+([eE][+\-]?[0-9]+)				return tokenMgr(REALIT);
-'([^']|(''))'                    			return tokenMgr(CHRLIT);
-'([^']|('')){2,}'                   		return tokenMgr(STRLIT);
+[+\-]?[0-9]+ 								return tokenMgr(intlit());
+[+\-]?[0-9]+(\.[0-9]+)([eE][+\-]?[0-9]+)?	return tokenMgr(real());
+[+\-]?[0-9]+([eE][+\-]?[0-9]+)				return tokenMgr(real());
+'([^']|(''))'                    			return tokenMgr(chrlit());
+'([^']|('')){2,}'                   		return tokenMgr(strlit());
 [a-z]+										return tokenMgr(ID);
 
 . {
@@ -609,3 +614,31 @@ int Lexer::getLine(void){
 int Lexer::getColumn(void){	
 	return columnCount - strlen(yytext);
 }
+
+int real(void)
+{   yylval.realit = atof(yytext);
+    return REALIT;
+}
+
+int label(void) {
+	yylval.strlit = strdup(yytext);
+	return LABEL;
+}
+
+int intlit(void) {
+	yylval.intlit = atoi(yytext);
+	return INTLIT;
+}
+
+int chrlit(void) {
+	yylval.chrlit = yytext[0]-'a';
+	return CHRLIT;
+}
+
+int strlit(void) {
+	yylval.strlit = strdup(yytext);
+	return STRLIT;
+}
+
+
+

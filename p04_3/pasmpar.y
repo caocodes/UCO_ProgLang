@@ -163,7 +163,10 @@ void yyerror(const char* m);
 %token ID 98
 %token ERROR 99
 
+%type <opcode>  operation
+%type <ptype> type
 %type <pregister> register
+%type <stdfunc> stdfunction
 
 %%
 program:
@@ -461,7 +464,7 @@ class2_operation:
     {
       output << endl << "#059 class2_operation -> CSP_O stdfunction";
       PasmInstruction instruction($1);
-      output << endl << "OPCODE=" << $1;
+      // output << endl << "OPCODE=" << $1;
       // instruction.print(output);
     }
 class2_operation:
@@ -513,6 +516,7 @@ class3_operation:
     LDC_O type REALIT
     {
       output << endl << "#069 class3_operation -> LDC_O type REALIT";
+      output << endl << "OPCODE=" << $3;
     }
 class3_operation:
     LDC_O type CHRLIT
