@@ -23,6 +23,7 @@
 #include <iomanip>
 #include <string>
 #include <cstdio>
+#include <map>
 using namespace std;
 
 //---------------------------------------------------------------------
@@ -37,6 +38,7 @@ using namespace std;
 extern ofstream output;
 extern int lineCount;
 extern int columnCount;
+extern map<int, string> tokenSpelling;
 //---------------------------------------------------------------------
 //Global Variables
 //---------------------------------------------------------------------
@@ -48,11 +50,11 @@ void yyerror(const char* m);
 
 %}
 %union {
-    int opcode;
-    int stdfunc;
-    int pregister;
-    int ptype;
-    char* label;
+    int opcode = 0;
+    int stdfunc = 0;
+    int pregister = 0;
+    int ptype = 0;
+    char* label = null;
     int intlit;
     double realit;
     char chrlit;
@@ -463,9 +465,8 @@ class2_operation:
     CSP_O stdfunction
     {
       output << endl << "#059 class2_operation -> CSP_O stdfunction";
-      PasmInstruction instruction($1);
-      // output << endl << "OPCODE=" << $1;
-      // instruction.print(output);
+      PasmInstruction instruction(CSP_O);
+      instruction.print(output);
     }
 class2_operation:
     UJP_O LABEL

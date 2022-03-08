@@ -27,6 +27,6 @@ class PasmInstruction {
     char operand2;
 
     public:
-        PasmInstruction(char opc = 0, char op1 = 0, char op2 = 0);
+        PasmInstruction(int opc = 0, char op1 = 0, char op2 = 0);
         void print(ostream& o); 
 };
