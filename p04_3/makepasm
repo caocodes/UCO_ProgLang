@@ -1,0 +1,55 @@
+#------------------------------------------------------------------
+# File makepasm contains instructions for program pasm. 
+# Instructions are written for the UNIX utility make.
+#------------------------------------------------------------------
+# Author 1:	Prantosh Neupane
+# Student ID: *20514054
+# E-Mail:	pneupane4@uco.edu
+# CRN:		21808, Spring 2022
+# Author 2:	Cao Truong
+# Student ID: *20500231
+# E-Mail:	ctruong3@uco.edu
+# CRN:		22708, Spring 2022
+# Course:	CMSC 5023 – Programming Languages
+# Project:	p04.3
+# Due:		March 8, 2022
+# Project Account Number: tt035
+#----------------------------------------------------------------------
+# Object files
+#----------------------------------------------------------------------
+obj		=		pasmpar.o \
+				pasmlex.o \
+				pasm.o		
+#----------------------------------------------------------------------
+# Bind the subset Pascal Scanner using the linkage editor
+#----------------------------------------------------------------------
+pasm:			${obj}
+				g++ -o pasm ${obj} -lm -ll
+#----------------------------------------------------------------------
+# File pasm.cpp processes command line arguments
+#----------------------------------------------------------------------
+pasm.o:		pasm.cpp pasmlex.h pasmpar.h
+			g++ -c -g pasm.cpp
+#----------------------------------------------------------------------
+# File pasmlex.cpp is the lex-generated scanner
+#----------------------------------------------------------------------
+pasmlex.cpp:		pasmlex.l pasmlex.h pasmtkn.h
+				lex pasmlex.l
+				mv lex.yy.c pasmlex.cpp
+#----------------------------------------------------------------------
+pasmlex.o:		pasmlex.cpp pasmlex.h pasmtkn.h
+				g++ -c -g pasmlex.cpp
+#----------------------------------------------------------------------
+# Create files pasmpar.cpp and pasmtkn.h from file pasmpar.y
+#----------------------------------------------------------------------
+pasmtkn.h		\
+pasmpar.cpp:		pasmpar.y
+				yacc -d -v pasmpar.y
+				mv y.tab.c pasmpar.cpp
+				cat pasmtkn_prolog.h y.tab.h pasmtkn_epilog.h > pasmtkn.h
+#----------------------------------------------------------------
+# Compile the parser pasmpar.o
+#----------------------------------------------------------------
+pasmpar.o:		pasmpar.cpp pasmpar.h
+				g++ -c -g pasmpar.cpp
+#----------------------------------------------------------------------
