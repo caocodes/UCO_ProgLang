@@ -30,7 +30,7 @@ PasmInstruction::PasmInstruction(int opc, int op1, int op2)
 void PasmInstruction::print(ostream &output)
 {
     
-    output << endl << tokenSpelling.at(opcode);
+    output << endl << "\t" << tokenSpelling.at(opcode);
     output << "(";
     output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
     output << ")";
