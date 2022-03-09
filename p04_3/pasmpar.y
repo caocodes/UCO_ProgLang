@@ -50,11 +50,11 @@ void yyerror(const char* m);
 
 %}
 %union {
-    int opcode = 0;
-    int stdfunc = 0;
-    int pregister = 0;
-    int ptype = 0;
-    char* label = null;
+    int opcode;
+    int stdfunc;
+    int pregister;
+    int ptype;
+    char* label;
     int intlit;
     double realit;
     char chrlit;
@@ -465,7 +465,7 @@ class2_operation:
     CSP_O stdfunction
     {
       output << endl << "#059 class2_operation -> CSP_O stdfunction";
-      PasmInstruction instruction(CSP_O);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class2_operation:

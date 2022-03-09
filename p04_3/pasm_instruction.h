@@ -22,11 +22,11 @@
 using namespace std;
 
 class PasmInstruction {
-    char opcode;
-    char operand1;
-    char operand2;
+    int opcode;
+    int operand1;
+    int operand2;
 
     public:
-        PasmInstruction(int opc = 0, char op1 = 0, char op2 = 0);
+        PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0);
         void print(ostream& o); 
 };

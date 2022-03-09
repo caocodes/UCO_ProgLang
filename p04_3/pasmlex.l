@@ -41,6 +41,7 @@ int lineCount = 1;
 int columnCount = 1;
 map<int, string> tokenMap;
 map<int, string> tokenSpelling;
+map<string, int> keywords;
 //--------------------------------------------------------------------
 //Function prototypes, class fields
 //--------------------------------------------------------------------
@@ -463,6 +464,16 @@ int tokenMgr(int token);
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
+	if(0 < t && t <= 61) {
+		yylval.opcode = t;
+	} else if(61 < t && t <= 77) {
+		yylval.stdfunc = t;
+	} else if(77 < t && t <= 82) {
+		yylval.pregister = t;
+	} else if(82 < t && t <= 91) {
+		yylval.ptype = t;
+	}
+
 	output << endl;
 	output << setw(15) << "Token Code: " << t;
 	output << "\t  Name: " << tokenMap.at(t);
@@ -470,9 +481,9 @@ int tokenMgr(int t)
 	output << "\t  Column: " << columnCount;
 
 	string spelling((char*)yytext);
-	if (tokenSpelling.find(t) == tokenSpelling.end()) {
+	/* if (tokenSpelling.find(t) == tokenSpelling.end()) {
 		tokenSpelling[t] = spelling;
-	}
+	} */
 	output << "\t  Spelling: " << spelling;
 	
 	columnCount += strlen(yytext);
@@ -587,6 +598,101 @@ Lexer::Lexer(FILE* i){
 		{STRLIT, "STRLIT"},
 		{ID, "ID"},
 		{ERROR, "ERROR"},
+	};
+
+
+	tokenSpelling = {
+		{CUP_O,"cup"},
+		{CSP_O,"csp"},
+		{ENT_O,"ent"},
+		{MST_O,"mst"},
+		{RTN_O,"rtn"},
+		{EQU_O,"equ"},
+		{NEQ_O,"neq"},
+		{GRT_O,"grt"},
+		{GEQ_O,"geq"},
+		{LES_O,"les"},
+		{LEQ_O,"leq"},
+		{ADI_O,"adi"},
+		{SBI_O,"sbi"},
+		{NGI_O,"ngi"},
+		{MPI_O,"mpi"},
+		{DVI_O,"dvi"},
+		{MOD_O,"mod"},
+		{ABI_O,"abi"},
+		{SQI_O,"sqi"},
+		{INC_O,"inc"},
+		{DEC_O,"dec"},
+		{ADR_O,"adr"},
+		{SBR_O,"sbr"},
+		{NGR_O,"ngr"},
+		{MPR_O,"mpr"},
+		{DVR_O,"dvr"},
+		{ABR_O,"abr"},
+		{SQR_O,"sqr"},
+		{IOR_O,"ior"},
+		{AND_O,"and"},
+		{XOR_O,"xor"},
+		{NOT_O,"not"},
+		{INN_O,"inn"},
+		{UNI_O,"uni"},
+		{NTR_O,"ntr"},
+		{DIF_O,"dif"},
+		{CMP_O,"cmp"},
+		{SGS_O,"sgs"},
+		{UJP_O,"ujp"},
+		{XJP_O,"xjp"},
+		{FJP_O,"fjp"},
+		{TJP_O,"tjp"},
+		{FLT_O,"flt"},
+		{FLO_O,"flo"},
+		{TRC_O,"trc"},
+		{RND_O,"rnd"},
+		{CHR_O,"chr"},
+		{ORD_O,"ord"},
+		{STP_O,"stp"},
+		{LDA_O,"lda"},
+		{LDC_O,"ldc"},
+		{LDI_O,"ldi"},
+		{LVA_O,"lva"},
+		{LVB_O,"lvb"},
+		{LVC_O,"lvc"},
+		{LVI_O,"lvi"},
+		{LVR_O,"lvr"},
+		{LVS_O,"lvs"},
+		{LVT_O,"lvt"},
+		{STI_O,"sti"},
+		{IXA_O,"ixa"},
+		{RDB_F,"rdb"},
+		{RDC_F,"rdc"},
+		{RDI_F,"rdi"},
+		{RDR_F,"rdr"},
+		{RLN_F,"rln"},
+		{WRB_F,"wrb"},
+		{WRC_F,"wrc"},
+		{WRI_F,"wri"},
+		{WRE_F,"wre"},
+		{WRF_F,"wrf"},
+		{WRS_F,"wrs"},
+		{WRT_F,"wrt"},
+		{WLN_F,"wln"},
+		{SQT_F,"sqt"},
+		{LN_F,"ln"},
+		{EXP_F,"exp"},
+		{SP_R,"sp"},
+		{EP_R,"ep"},
+		{MP_R,"mp"},
+		{PC_R,"pc"},
+		{NP_R,"np"},
+		{A_T,"a"},
+		{B_T,"b"},
+		{C_T,"c"},
+		{I_T,"i"},
+		{R_T,"r"},
+		{S_T,"s"},
+		{T_T,"t"},
+		{P_T,"p"},
+		{X_T,"x"},
 	};
 }
 //--------------------------------------------------------------------
