@@ -245,141 +245,197 @@ class0_operation:
     ADI_O
     {
       output << endl << "#015 class0_operation -> ADI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     SBI_O
     {
       output << endl << "#016 class0_operation -> SBI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     NGI_O
     {
       output << endl << "#017 class0_operation -> NGI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     MPI_O
     {
       output << endl << "#018 class0_operation -> MPI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     DVI_O
     {
       output << endl << "#019 class0_operation -> DVI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     MOD_O
     {
       output << endl << "#020 class0_operation -> MOD_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     ABI_O
     {
       output << endl << "#021 class0_operation -> ABI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     SQI_O
     {
       output << endl << "#022 class0_operation -> SQI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     ADR_O
     {
       output << endl << "#023 class0_operation -> ADR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     SBR_O
     {
       output << endl << "#024 class0_operation -> SBR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     NGR_O
     {
       output << endl << "#025 class0_operation -> NGR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     MPR_O
     {
       output << endl << "#026 class0_operation -> MPR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     DVR_O
     {
       output << endl << "#027 class0_operation -> DVR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     ABR_O
     {
       output << endl << "#028 class0_operation -> ABR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     SQR_O
     {
       output << endl << "#029 class0_operation -> SQR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     IOR_O
     {
       output << endl << "#030 class0_operation -> IOR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     XOR_O
     {
       output << endl << "#031 class0_operation -> XOR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     AND_O
     {
       output << endl << "#032 class0_operation -> AND_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     NOT_O
     {
       output << endl << "#033 class0_operation -> NOT_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     INN_O
     {
       output << endl << "#034 class0_operation -> INN_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     UNI_O
     {
       output << endl << "#035 class0_operation -> UNI_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     NTR_O
     {
       output << endl << "#036 class0_operation -> NTR_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     DIF_O
     {
       output << endl << "#037 class0_operation -> DIF_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     CMP_O
     {
       output << endl << "#038 class0_operation -> CMP_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     SGS_O
     {
       output << endl << "#039 class0_operation -> SGS_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     FLT_O
     {
       output << endl << "#040 class0_operation -> FLT_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     FLO_O
     {
       output << endl << "#041 class0_operation -> FLO_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     TRC_O
     {
       output << endl << "#042 class0_operation -> TRC_O";
+      PasmInstruction instruction($1);
+      instruction.print(output);
     }
 class0_operation:
     RND_O
