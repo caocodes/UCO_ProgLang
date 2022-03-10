@@ -21,6 +21,7 @@ using namespace std;
 
 #include "pasmlex.h"
 #include "pasm_instruction.h"
+#include "pasmtkn.h"
 
 extern map<int, string> tokenSpelling;
 
@@ -47,6 +48,14 @@ void PasmInstruction::printOPCode(ostream& output) {
 
 void PasmInstruction::printOP1(ostream& output) {
     string spelling = "0";
+    int t = opcode + 1;
+    if(
+        (RTN_O <= t && t <= LEQ_O)||
+        (ENT_O == t)||(LDC_O == t)||(LDI_O == t)||(STI_O == t)) {
+		spelling = tokenSpelling[opcode];
+	} else {
+        spelling = to_string(operand1);
+    }
     output << "  " << spelling;
     output << "(";
     output << setw(2) << hex << setfill('0') << operand1;
@@ -55,6 +64,12 @@ void PasmInstruction::printOP1(ostream& output) {
 
 void PasmInstruction::printOP2(ostream& output) {
     string spelling = "0";
+    int t = opcode + 1;
+    if(CSP_O == t) {
+		spelling = tokenSpelling[opcode];
+	} else {
+        spelling = to_string(operand2);
+    }
     output << "  " << spelling;
     output << "(";
     output << setw(4) << hex << setfill('0') << operand2;

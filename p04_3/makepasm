@@ -56,6 +56,6 @@ pasmpar.o:		pasmpar.cpp pasmpar.h pasm_instruction.h
 #----------------------------------------------------------------------
 #
 #----------------------------------------------------------------------
-pasm_instruction.o:	pasm_instruction.cpp pasm_instruction.h
+pasm_instruction.o:	pasm_instruction.cpp pasm_instruction.h pasmtkn.h
 			g++ -c -g pasm_instruction.cpp
 #----------------------------------------------------------------------

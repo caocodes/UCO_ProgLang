@@ -100,8 +100,9 @@ void PasmInstruction::PrintOP(ostream& o)
 //----------------------------------------------------------------------------
 void PasmInstruction::PrintR1(ostream& o)
 {   switch (OP) {
-        case  rtn_O: case equ_O: case neq_O: case grt_O: case geq_O: 
-	case  les_O: case leq_O: case ldc_O: case ldi_O: case sti_O:
+    case  rtn_O: case equ_O: case neq_O: 
+    case grt_O: case geq_O: case  les_O: case leq_O: 
+    case ldc_O: case ldi_O: case sti_O:
 	    o << setw(3) << setfill(' ') << PC.Mnemonic2((int)R1);
 	    break;
 	case  ent_O:
