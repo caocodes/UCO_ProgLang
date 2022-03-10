@@ -17,11 +17,12 @@
 #include <cstdio>
 #include <iomanip>
 #include <map>
-using namespace std;
 
 #include "pasmlex.h"
 #include "pasm_instruction.h"
 #include "pasmtkn.h"
+
+using namespace std;
 
 extern map<int, string> tokenSpelling;
 
