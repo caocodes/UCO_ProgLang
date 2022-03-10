@@ -623,70 +623,70 @@ class3_operation:
     LDC_O type REALIT
     {
       output << endl << "#069 class3_operation -> LDC_O type REALIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LDC_O type CHRLIT
     {
       output << endl << "#070 class3_operation -> LDC_O type CHRLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,0);
       instruction.print(output);
     }
 class3_operation:
     LDC_O type STRLIT
     {
       output << endl << "#071 class3_operation -> LDC_O type STRLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,0);
       instruction.print(output);
     }
 class3_operation:
     LVA_O INTLIT INTLIT
     {
       output << endl << "#072 class3_operation -> LVA_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LVB_O INTLIT INTLIT
     {
       output << endl << "#073 class3_operation -> LVB_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LVC_O INTLIT INTLIT
     {
       output << endl << "#074 class3_operation -> LVC_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LVI_O INTLIT INTLIT
     {
       output << endl << "#075 class3_operation -> LVI_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LVR_O INTLIT INTLIT
     {
       output << endl << "#076 class3_operation -> LVR_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LVS_O INTLIT INTLIT
     {
       output << endl << "#077 class3_operation -> LVS_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LVT_O INTLIT INTLIT
     {
       output << endl << "#078 class3_operation -> LVT_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 type:
