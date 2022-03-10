@@ -29,9 +29,34 @@ PasmInstruction::PasmInstruction(int opc, int op1, int op2)
 
 void PasmInstruction::print(ostream &output)
 {
-    
-    output << endl << "\t" << tokenSpelling.at(opcode);
+    printOPCode(output);
+    printOP1(output);
+    printOP2(output);
+}
+
+void PasmInstruction::printOPCode(ostream& output) {
+    string spelling = "0";
+    if (tokenSpelling.find(opcode) != tokenSpelling.end()) {
+		spelling = tokenSpelling[opcode];
+	}
+    output << endl << "\t" << spelling;
     output << "(";
     output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
+    output << ")";
+}
+
+void PasmInstruction::printOP1(ostream& output) {
+    string spelling = "0";
+    output << "  " << spelling;
+    output << "(";
+    output << setw(2) << hex << setfill('0') << operand1;
+    output << ")";
+}
+
+void PasmInstruction::printOP2(ostream& output) {
+    string spelling = "0";
+    output << "  " << spelling;
+    output << "(";
+    output << setw(4) << hex << setfill('0') << operand2;
     output << ")";
 }

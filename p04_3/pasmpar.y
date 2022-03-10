@@ -245,7 +245,7 @@ class0_operation:
     ADI_O
     {
       output << endl << "#015 class0_operation -> ADI_O";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, 0, 0);
       instruction.print(output);
     }
 class0_operation:

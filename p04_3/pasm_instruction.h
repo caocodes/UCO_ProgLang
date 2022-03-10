@@ -28,5 +28,8 @@ class PasmInstruction {
 
     public:
         PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0);
-        void print(ostream& o); 
+        void print(ostream& output); 
+        void printOPCode(ostream& output);
+        void printOP1(ostream& output);
+        void printOP2(ostream& output);
 };

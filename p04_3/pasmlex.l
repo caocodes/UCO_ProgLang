@@ -464,14 +464,14 @@ int tokenMgr(int token);
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
-	if(0 < t && t <= 61) {
-		yylval.opcode = t;
-	} else if(61 < t && t <= 77) {
-		yylval.stdfunc = t;
-	} else if(77 < t && t <= 82) {
-		yylval.pregister = t;
-	} else if(82 < t && t <= 91) {
-		yylval.ptype = t;
+	if(0 < t && t <= IXA_O) {
+		yylval.opcode = t - 1;
+	} else if(IXA_O < t && t <= EXP_F) {
+		yylval.stdfunc = t - 1;
+	} else if(EXP_F < t && t <= NP_R) {
+		yylval.pregister = t - 1;
+	} else if(NP_R < t && t <= X_T) {
+		yylval.ptype = t - 1;
 	}
 
 	output << endl;
@@ -481,9 +481,6 @@ int tokenMgr(int t)
 	output << "\t  Column: " << columnCount;
 
 	string spelling((char*)yytext);
-	/* if (tokenSpelling.find(t) == tokenSpelling.end()) {
-		tokenSpelling[t] = spelling;
-	} */
 	output << "\t  Spelling: " << spelling;
 	
 	columnCount += strlen(yytext);
