@@ -28,25 +28,6 @@ class PasmInstruction {
     int operand2;
     char* alpha;
     
-    const map<int, int> stdfuncOPMap = {
-        {RDB_F, 0},
-        {RDC_F, 1},
-        {RDI_F, 2},
-        {RDR_F, 3},
-        {RLN_F, 4},
-        {WRB_F, 5},
-        {WRC_F, 6},
-        {WRI_F, 7},
-        {WRE_F, 8},
-        {WRF_F, 9},
-        {WRS_F, 10},
-        {WRT_F, 11},
-        {WLN_F, 12},
-        {SQT_F, 13},
-        {LN_F, 14},
-        {EXP_F, 15},
-    };
-
     public:
         PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0, char* a = NULL);
         void print(ostream& output); 

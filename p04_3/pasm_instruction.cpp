@@ -56,7 +56,6 @@ void PasmInstruction::printOP1(ostream &output)
     int t = opcode + CUP_O;
 
     if ((RTN_O <= t && t <= LEQ_O) ||
-        (INC_O == t) || (DEC_O == t) ||
         (LDI_O == t) || (STI_O == t) ||
         (LDC_O == t))
     {
@@ -87,8 +86,8 @@ void PasmInstruction::printOP2(ostream &output)
     int opcodeToken = opcode + CUP_O;
     if (CSP_O == opcodeToken)
     {
-        int operandToken = operand2 + RDB_F;
-        spelling = tokenSpelling[operandToken];
+        int stdfuncToken = operand2 + RDB_F;
+        spelling = tokenSpelling[stdfuncToken];
     }
     else
     {
