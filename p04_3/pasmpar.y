@@ -588,35 +588,35 @@ class2_operation:
     IXA_O INTLIT
     {
       output << endl << "#064 class2_operation -> IXA_O INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,0,$2);
       instruction.print(output);
     }
 class3_operation:
     CUP_O INTLIT LABEL
     {
       output << endl << "#065 class3_operation -> CUP_O INTLIT LABEL";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2);
       instruction.print(output);
     }
 class3_operation:
     ENT_O register LABEL
     {
       output << endl << "#066 class3_operation -> ENT_O register LABEL";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2);
       instruction.print(output);
     }
 class3_operation:
     LDA_O INTLIT INTLIT
     {
       output << endl << "#067 class3_operation -> LDA_O INTLIT INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
     LDC_O type INTLIT
     {
       output << endl << "#068 class3_operation -> LDC_O type INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1,$2,$3);
       instruction.print(output);
     }
 class3_operation:
