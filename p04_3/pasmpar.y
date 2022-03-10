@@ -553,7 +553,7 @@ class2_operation:
     CSP_O stdfunction
     {
       output << endl << "#059 class2_operation -> CSP_O stdfunction";
-      PasmInstruction instruction($1, $2);
+      PasmInstruction instruction($1, 0, $2);
       instruction.print(output);
     }
 class2_operation:

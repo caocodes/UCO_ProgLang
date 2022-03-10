@@ -67,12 +67,10 @@ void PasmInstruction::printOP2(ostream& output) {
     string spelling = "0";
     int t = opcode + 1;
     if(CSP_O == t) {
-		spelling = tokenSpelling[t];
+		spelling = tokenSpelling[operand2+1];
 	} else {
         spelling = to_string(operand2);
     }
-
-
 
     output << "  " << spelling;
     output << "(";
