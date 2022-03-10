@@ -475,7 +475,7 @@ int tokenMgr(int t)
 	}
 
 	output << endl;
-	output << setw(15) << "Token Code: " << t;
+	output << setfill(' ') << dec << "Token Code: " << t;
 	output << "\t  Name: " << tokenMap.at(t);
 	output << "\t  Line: " << lineCount;
 	output << "\t  Column: " << columnCount;

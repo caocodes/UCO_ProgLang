@@ -469,35 +469,35 @@ class1_operation:
     MST_O INTLIT
     {
       output << endl << "#047 class1_operation -> MST_O INTLIT";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     RTN_O type
     {
       output << endl << "#048 class1_operation -> RTN_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     EQU_O type
     {
       output << endl << "#049 class1_operation -> EQU_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     NEQ_O type
     {
       output << endl << "#050 class1_operation -> NEQ_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     LES_O type
     {
       output << endl << "#051 class1_operation -> LES_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:

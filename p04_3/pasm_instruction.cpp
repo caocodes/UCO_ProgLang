@@ -37,8 +37,9 @@ void PasmInstruction::print(ostream &output)
 
 void PasmInstruction::printOPCode(ostream& output) {
     string spelling = "0";
-    if (tokenSpelling.find(opcode) != tokenSpelling.end()) {
-		spelling = tokenSpelling[opcode];
+    int t = opcode + 1;
+    if (tokenSpelling.find(t) != tokenSpelling.end()) {
+		spelling = tokenSpelling[t];
 	}
     output << endl << "\t" << spelling;
     output << "(";
@@ -52,7 +53,7 @@ void PasmInstruction::printOP1(ostream& output) {
     if(
         (RTN_O <= t && t <= LEQ_O)||
         (ENT_O == t)||(LDC_O == t)||(LDI_O == t)||(STI_O == t)) {
-		spelling = tokenSpelling[opcode];
+		spelling = tokenSpelling[t];
 	} else {
         spelling = to_string(operand1);
     }
@@ -66,7 +67,7 @@ void PasmInstruction::printOP2(ostream& output) {
     string spelling = "0";
     int t = opcode + 1;
     if(CSP_O == t) {
-		spelling = tokenSpelling[opcode];
+		spelling = tokenSpelling[t];
 	} else {
         spelling = to_string(operand2);
     }
