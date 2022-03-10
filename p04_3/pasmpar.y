@@ -57,7 +57,7 @@ void yyerror(const char* m);
     char* label;
     int intlit;
     double realit;
-    char chrlit;
+    char* chrlit;
     char* strlit;
 }
 
@@ -630,14 +630,14 @@ class3_operation:
     LDC_O type CHRLIT
     {
       output << endl << "#070 class3_operation -> LDC_O type CHRLIT";
-      PasmInstruction instruction($1,$2,0);
+      PasmInstruction instruction($1,$2,0,$3);
       instruction.print(output);
     }
 class3_operation:
     LDC_O type STRLIT
     {
       output << endl << "#071 class3_operation -> LDC_O type STRLIT";
-      PasmInstruction instruction($1,$2,0);
+      PasmInstruction instruction($1,$2,0,$3);
       instruction.print(output);
     }
 class3_operation:

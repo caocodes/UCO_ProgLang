@@ -25,8 +25,8 @@ using namespace std;
 
 extern map<int, string> tokenSpelling;
 
-PasmInstruction::PasmInstruction(int opc, int op1, int op2)
-    : opcode(opc), operand1(op1), operand2(op2) {}
+PasmInstruction::PasmInstruction(int opc, int op1, int op2, char* a)
+    : opcode(opc), operand1(op1), operand2(op2), alpha(a) {}
 
 void PasmInstruction::print(ostream &output)
 {
@@ -71,8 +71,16 @@ void PasmInstruction::printOP2(ostream& output) {
 	} else {
         spelling = to_string(operand2);
     }
+
+
+
     output << "  " << spelling;
     output << "(";
-    output << setw(4) << hex << setfill('0') << operand2;
+    if(alpha != NULL) {
+        output << alpha;
+    } else {
+        output << setw(4) << hex << setfill('0') << operand2;
+    }
+   
     output << ")";
 }
