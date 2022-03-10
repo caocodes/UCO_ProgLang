@@ -504,49 +504,49 @@ class1_operation:
     LEQ_O type
     {
       output << endl << "#052 class1_operation -> LEQ_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     GRT_O type
     {
       output << endl << "#053 class1_operation -> GRT_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     GEQ_O type
     {
       output << endl << "#054 class1_operation -> GEQ_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     LDI_O type
     {
       output << endl << "#055 class1_operation -> LDI_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     STI_O type
     {
       output << endl << "#056 class1_operation -> STI_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     INC_O type
     {
       output << endl << "#057 class1_operation -> INC_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class1_operation:
     DEC_O type
     {
       output << endl << "#058 class1_operation -> DEC_O type";
-      PasmInstruction instruction($1);
+      PasmInstruction instruction($1, $2);
       instruction.print(output);
     }
 class2_operation:

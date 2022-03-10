@@ -475,11 +475,8 @@ int tokenMgr(int t)
 	}
 
 	output << endl;
-	output << setfill(' ') << dec << "Token Code: " << t;
-	output << "\t  Name: " << tokenMap.at(t);
-	output << "\t  Line: " << lineCount;
-	output << "\t  Column: " << columnCount;
-
+	output << setfill(' ') << dec << "Token: " <<  tokenMap.at(t) << "(" << t << ")";
+	output << "\t  Line: " << lineCount << ", Col: " << columnCount;
 	string spelling((char*)yytext);
 	output << "\t  Spelling: " << spelling;
 	
