@@ -107,21 +107,41 @@ L00020   csp                 wrf
          rnd
          chr
          ord     
-         lda       2         13
-         ldc       b         0
-         ldc       b         1
-         ldc       c         'a'
-         ldc       c         '!'
-         ldc       c         ''''
-         ldc       i         54
-         ldc       i         -17
-         ldc       r         1.0
-         ldc       r         2e10
-         ldc       r         -1.602e-19
-         ldc       s         'Mary had a little lamb.'
-         ldc       s         'a'
-         lvi       0         5
-         lvr       1         12
-         lvs       2         13
-         lvt       6         5
-
+ stp
+ lda 2 13
+ ldc b 0
+ ldc b 1
+ ldc c 'a'
+ ldc c '!'
+ ldc c ''''
+ ldc i 54
+ ldc i -17
+ ldc r 1.0
+ ldc r 2e10
+ ldc r -1.602e-19
+ ldc s 'Mary had a little lamb.'
+ ldc s 'a'
+ ldi a
+ ldi b
+ ldi c
+ ldi i
+ ldi r
+ ldi s
+ ldi t
+ lva 0 12
+ lvb 1 5
+ lvc 2 10
+ lvi 0 5
+ lvr 1 12
+ lvs 2 13
+ lvt 6 5
+ sti a
+ sti b
+ sti c
+ sti i
+ sti r
+ sti s
+ sti t
+ ixa 4
+ ixa 16
+ ixa 1

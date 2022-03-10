@@ -1,3 +1,7 @@
+//--------------------------------------------------------------------
+// File pasm_instruction.cpp is the implementation of the
+// PasmInstruction utility class for processing P-Code instructions
+//--------------------------------------------------------------------
 // Author 1: Prantosh Neupane
 // Student ID: *20514054
 // E-Mail:	pneupane4@uco.edu
@@ -8,7 +12,7 @@
 // CRN:		22708, Spring 2022
 // Course:	CMSC 5023 – Programming Languages
 // Project:	p04.3
-// Due:		March 8, 2022
+// Due:		March 10, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 
@@ -73,8 +77,6 @@ void PasmInstruction::printOP1(ostream &output)
         spelling = to_string(operand1);
     }
 
-    //  (ENT_O == t)||
-    // ENT_O register
     output << "  " << spelling;
     output << "(";
     output << setw(2) << hex << setfill('0') << operand1;
