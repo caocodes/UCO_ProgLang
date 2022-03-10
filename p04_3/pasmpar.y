@@ -40,10 +40,6 @@ extern int lineCount;
 extern int columnCount;
 extern map<int, string> tokenSpelling;
 //---------------------------------------------------------------------
-//Global Variables
-//---------------------------------------------------------------------
-double varTable[26];
-//---------------------------------------------------------------------
 //Functions
 //---------------------------------------------------------------------
 void yyerror(const char* m);
@@ -561,28 +557,24 @@ class2_operation:
     {
       output << endl << "#060 class2_operation -> UJP_O LABEL";
       PasmInstruction instruction($1);
-      instruction.print(output);
     }
 class2_operation:
     FJP_O LABEL
     {
       output << endl << "#061 class2_operation -> FJP_O LABEL";
       PasmInstruction instruction($1);
-      instruction.print(output);
     }
 class2_operation:
     TJP_O LABEL
     {
       output << endl << "#062 class2_operation -> TJP_O LABEL";
       PasmInstruction instruction($1);
-      instruction.print(output);
     }
 class2_operation:
     XJP_O LABEL
     {
       output << endl << "#063 class2_operation -> XJP_O LABEL";
       PasmInstruction instruction($1);
-      instruction.print(output);
     }
 class2_operation:
     IXA_O INTLIT
@@ -596,14 +588,12 @@ class3_operation:
     {
       output << endl << "#065 class3_operation -> CUP_O INTLIT LABEL";
       PasmInstruction instruction($1,$2);
-      instruction.print(output);
     }
 class3_operation:
     ENT_O register LABEL
     {
       output << endl << "#066 class3_operation -> ENT_O register LABEL";
       PasmInstruction instruction($1,$2);
-      instruction.print(output);
     }
 class3_operation:
     LDA_O INTLIT INTLIT
@@ -617,28 +607,24 @@ class3_operation:
     {
       output << endl << "#068 class3_operation -> LDC_O type INTLIT";
       PasmInstruction instruction($1,$2,$3);
-      instruction.print(output);
     }
 class3_operation:
     LDC_O type REALIT
     {
       output << endl << "#069 class3_operation -> LDC_O type REALIT";
       PasmInstruction instruction($1,$2,$3);
-      instruction.print(output);
     }
 class3_operation:
     LDC_O type CHRLIT
     {
       output << endl << "#070 class3_operation -> LDC_O type CHRLIT";
       PasmInstruction instruction($1,$2,0,$3);
-      instruction.print(output);
     }
 class3_operation:
     LDC_O type STRLIT
     {
       output << endl << "#071 class3_operation -> LDC_O type STRLIT";
       PasmInstruction instruction($1,$2,0,$3);
-      instruction.print(output);
     }
 class3_operation:
     LVA_O INTLIT INTLIT

@@ -464,18 +464,18 @@ int tokenMgr(int token);
 //--------------------------------------------------------------------
 int tokenMgr(int t)
 { 	
-	if(0 < t && t <= IXA_O) {
-		yylval.opcode = t - 1;
-	} else if(IXA_O < t && t <= EXP_F) {
-		yylval.stdfunc = t - 1;
-	} else if(EXP_F < t && t <= NP_R) {
-		yylval.pregister = t - 1;
-	} else if(NP_R < t && t <= X_T) {
-		yylval.ptype = t - 1;
+	if(CUP_O <= t && t <= IXA_O) {
+		yylval.opcode = t - CUP_O;
+	} else if(RDB_F <= t && t <= EXP_F) {
+		yylval.stdfunc = t - RDB_F;
+	} else if(SP_R <= t && t <= NP_R) {
+		yylval.pregister = t - SP_R;
+	} else if(A_T <= t && t <= X_T) {
+		yylval.ptype = t - A_T;
 	}
 
 	output << endl;
-	output << setfill(' ') << dec << "Token: " <<  tokenMap.at(t) << "(" << t << ")";
+	output << setfill(' ') << dec << "Token: " <<  tokenMap.at(t) << " (" << t << ")";
 	output << "\t  Line: " << lineCount << ", Col: " << columnCount;
 	string spelling((char*)yytext);
 	output << "\t  Spelling: " << spelling;

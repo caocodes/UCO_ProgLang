@@ -25,7 +25,7 @@ using namespace std;
 
 extern map<int, string> tokenSpelling;
 
-PasmInstruction::PasmInstruction(int opc, int op1, int op2, char* a)
+PasmInstruction::PasmInstruction(int opc, int op1, int op2, char *a)
     : opcode(opc), operand1(op1), operand2(op2), alpha(a) {}
 
 void PasmInstruction::print(ostream &output)
@@ -35,52 +35,76 @@ void PasmInstruction::print(ostream &output)
     printOP2(output);
 }
 
-void PasmInstruction::printOPCode(ostream& output) {
+void PasmInstruction::printOPCode(ostream &output)
+{
     string spelling = "0";
     int t = opcode + 1;
-    if (tokenSpelling.find(t) != tokenSpelling.end()) {
-		spelling = tokenSpelling[t];
-	}
-    output << endl << "\t" << spelling;
+    if (tokenSpelling.find(t) != tokenSpelling.end())
+    {
+        spelling = tokenSpelling[t];
+    }
+    output << endl
+           << "\t" << spelling;
     output << "(";
     output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
     output << ")";
 }
 
-void PasmInstruction::printOP1(ostream& output) {
+void PasmInstruction::printOP1(ostream &output)
+{
     string spelling = "0";
-    int t = opcode + 1;
-    if(
-        (RTN_O <= t && t <= LEQ_O)||
-        (ENT_O == t)||(LDC_O == t)||(LDI_O == t)||(STI_O == t)) {
-		int t1 = operand1 + 1;
-        spelling = tokenSpelling[t1];
-	} else {
+    int t = opcode + CUP_O;
+
+    if ((RTN_O <= t && t <= LEQ_O) ||
+        (INC_O == t) || (DEC_O == t) ||
+        (LDI_O == t) || (STI_O == t) ||
+        (LDC_O == t))
+    {
+        int typeToken = operand1 + A_T;
+        spelling = tokenSpelling[typeToken];
+    }
+    else if (ENT_O == t)
+    {
+        int registerToken = operand1 + SP_R;
+        spelling = tokenSpelling[registerToken];
+    }
+    else
+    {
         spelling = to_string(operand1);
     }
+
+    //  (ENT_O == t)||
+    // ENT_O register
     output << "  " << spelling;
     output << "(";
     output << setw(2) << hex << setfill('0') << operand1;
     output << ")";
 }
 
-void PasmInstruction::printOP2(ostream& output) {
+void PasmInstruction::printOP2(ostream &output)
+{
     string spelling = "0";
-    int t = opcode + 1;
-    if(CSP_O == t) {
-        int t2 = operand2+1;
-		spelling = tokenSpelling[t2];
-	} else {
+    int opcodeToken = opcode + CUP_O;
+    if (CSP_O == opcodeToken)
+    {
+        int operandToken = operand2 + RDB_F;
+        spelling = tokenSpelling[operandToken];
+    }
+    else
+    {
         spelling = to_string(operand2);
     }
 
     output << "  " << spelling;
     output << "(";
-    if(alpha != NULL) {
+    if (alpha != NULL)
+    {
         output << alpha;
-    } else {
+    }
+    else
+    {
         output << setw(4) << hex << setfill('0') << operand2;
     }
-   
+
     output << ")";
 }
