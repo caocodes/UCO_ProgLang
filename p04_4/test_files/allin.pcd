@@ -1,0 +1,147 @@
+         cup       0         L00000
+         cup       5         L00001
+         csp                 rdb
+         csp                 rdc
+         csp                 rdi
+         csp                 rdr
+         csp                 rln
+         csp                 wrb
+L00019   
+         csp                 wrc
+         csp                 wri
+         csp                 wre
+L00020   csp                 wrf
+         csp                 wrs
+         csp                 wln
+         csp                 sqt
+         csp                 ln
+         csp                 exp
+         ent       sp        L00002
+         ent       ep        L00003
+         #define   L00002    5
+         #define   L00003    17
+         mst                 0
+         mst                 5
+         mst                 1
+         rtn       b
+         rtn       c
+         rtn       i
+         rtn       r
+         rtn       p
+         equ       b
+         equ       c
+         equ       i
+         equ       r
+         equ       s
+         equ       t
+         neq       b
+         neq       c
+         neq       i
+         neq       r
+         neq       s
+         neq       t
+         grt       b
+         grt       c
+         grt       i
+         grt       r
+         grt       s
+         grt       t
+         geq       b
+         geq       c
+         geq       i
+         geq       r
+         geq       s
+         geq       t
+         les       b
+         les       c
+         les       i
+         les       r
+         les       s
+         les       t
+         leq       b
+         leq       c
+         leq       i
+         leq       r
+         leq       s
+         leq       t
+         adi
+         sbi
+         ngi
+         mpi
+         dvi
+         mod
+         abi
+         sqi
+         inc       a
+         inc       b
+         inc       c
+         inc       i
+         dec       a
+         dec       b
+         dec       c
+         dec       i
+         adr
+         sbr
+         ngr
+         mpr
+         dvr
+         abr
+         sqr
+         ior
+         and
+         xor
+         not
+         inn
+         uni
+         ntr
+         dif
+         cmp
+         sgs
+         ujp                 L00005
+         xjp                 L00006
+         fjp                 L00007
+         tjp                 L00008
+         flt
+         flo
+         trc
+         rnd
+         chr
+         ord     
+ stp
+ lda 2 13
+ ldc b 0
+ ldc b 1
+ ldc c 'a'
+ ldc c '!'
+ ldc c ''''
+ ldc i 54
+ ldc i -17
+ ldc r 1.0
+ ldc r 2e10
+ ldc r -1.602e-19
+ ldc s 'Mary had a little lamb.'
+ ldc s 'a'
+ ldi a
+ ldi b
+ ldi c
+ ldi i
+ ldi r
+ ldi s
+ ldi t
+ lva 0 12
+ lvb 1 5
+ lvc 2 10
+ lvi 0 5
+ lvr 1 12
+ lvs 2 13
+ lvt 6 5
+ sti a
+ sti b
+ sti c
+ sti i
+ sti r
+ sti s
+ sti t
+ ixa 4
+ ixa 16
+ ixa 1

@@ -1,0 +1,25 @@
+#------------------------------------------------------------------
+# File mkpasm is a Unix script file that removes old file
+# created in the last creation of executable file pas and
+# invokes file makepasm to create a new executable file
+# pasm. 
+#------------------------------------------------------------------
+# Author 1:	Prantosh Neupane
+# Student ID: *20514054
+# E-Mail:	pneupane4@uco.edu
+# CRN:		21808, Spring 2022
+# Author 2:	Cao Truong
+# Student ID: *20500231
+# E-Mail:	ctruong3@uco.edu
+# CRN:		22708, Spring 2022
+# Course:	CMSC 5023 – Programming Languages
+# Project:	p04.4
+# Due:		March 24, 2022
+# Project Account Number: tt035
+#----------------------------------------------------------------------
+
+rm pasm
+rm pasmpar.cpp
+rm pasmlex.cpp
+rm *.o
+make -f makepasm
