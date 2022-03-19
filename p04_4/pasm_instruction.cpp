@@ -40,7 +40,7 @@ void PasmInstruction::print(ostream &trace)
     printOP2(trace);
 }
 
-void PasmInstruction::printOPCode(ostream &output)
+void PasmInstruction::printOPCode(ostream &trace)
 {
     string spelling = "0";
     int t = opcode + 1;
@@ -48,14 +48,14 @@ void PasmInstruction::printOPCode(ostream &output)
     {
         spelling = tokenSpelling[t];
     }
-    output << endl
-           << "\t" << spelling;
-    output << "(";
-    output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
-    output << ")";
+    trace << endl
+          << "\t" << spelling;
+    trace << "(";
+    trace << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
+    trace << ")";
 }
 
-void PasmInstruction::printOP1(ostream &output)
+void PasmInstruction::printOP1(ostream &trace)
 {
     string spelling = "0";
     int t = opcode + CUP_O;
@@ -77,10 +77,10 @@ void PasmInstruction::printOP1(ostream &output)
         spelling = to_string(operand1);
     }
 
-    output << "  " << spelling;
-    output << "(";
-    output << setw(2) << hex << setfill('0') << operand1;
-    output << ")";
+    trace << "  " << spelling;
+    trace << "(";
+    trace << setw(2) << hex << setfill('0') << operand1;
+    trace << ")";
 }
 
 void PasmInstruction::printOP2(ostream &output)

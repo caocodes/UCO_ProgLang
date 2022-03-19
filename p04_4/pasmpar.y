@@ -607,24 +607,28 @@ class3_operation:
     {
       trace << endl << "#068 class3_operation -> LDC_O type INTLIT";
       PasmInstruction instruction($1,$2,$3);
+      instruction.print(trace);
     }
 class3_operation:
     LDC_O type REALIT
     {
       trace << endl << "#069 class3_operation -> LDC_O type REALIT";
       PasmInstruction instruction($1,$2,$3);
+      instruction.print(trace);
     }
 class3_operation:
     LDC_O type CHRLIT
     {
       trace << endl << "#070 class3_operation -> LDC_O type CHRLIT";
       PasmInstruction instruction($1,$2,0,$3);
+      instruction.print(trace);
     }
 class3_operation:
     LDC_O type STRLIT
     {
       trace << endl << "#071 class3_operation -> LDC_O type STRLIT";
       PasmInstruction instruction($1,$2,0,$3);
+      instruction.print(trace);
     }
 class3_operation:
     LVA_O INTLIT INTLIT

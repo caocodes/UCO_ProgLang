@@ -1,0 +1,240 @@
+
+Token=(258,LABEL,L00001)
+label_list-> LABEL
+L00001 0
+Token=(268,ENT_O,ent)
+Token=(337,SP_R,sp)
+register->SP_R
+Token=(258,LABEL,L00002)
+ent-instruction->ENT register LABEL
+Before inserting instruction 0
+After inserting instruction 1
+ent(02)  sp(00)     0(0000)  L00002 0
+instruction->ent-instruction
+labeled-instruction-> label_list instruction
+statement->labeled-instruction
+statement-list->statement
+Token=(268,ENT_O,ent)
+Token=(338,EP_R,ep)
+register->EP_R
+Token=(258,LABEL,L00003)
+ent-instruction->ENT register LABEL
+Before inserting instruction 1
+After inserting instruction 2
+ent(02)  ep(01)     0(0000)  L00003 1
+instruction->ent-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(316,LDC_O,ldc)
+Token=(332,S_T,s)
+type->S_T
+CHRLIT s="'Hello, I love you.'"
+yyleng=20
+Token=(262,STRLIT,'Hello, I love you.')
+constant->STRLIT              "Hello, I love you."
+ldc-instruction->LDC type constant
+$1=50, $2=5, $3=0ldc(32)   s(05)     0(0000) 
+instruction->ldc-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(267,CSP_O,csp)
+Token=(353,WRS_F,wrs)
+function->WRS
+csp-instruction->CSP functioncsp(01)   0(00)   wrs(000a) 
+instruction->csp-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(267,CSP_O,csp)
+Token=(354,WLN_F,wln)
+function->WLN
+csp-instruction->CSP functioncsp(01)   0(00)   wln(000b) 
+instruction->csp-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(315,LDA_O,lda)
+load-op->LDA
+Token=(260,INTLIT,0)
+Token=(260,INTLIT,5)
+load-instruction->load-op INTLIT INTLIT
+49 0 5
+lda(31)   0(00)     5(0005) 
+instruction->load-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(316,LDC_O,ldc)
+Token=(328,B_T,b)
+type->B_T
+Token=(260,INTLIT,1)
+constant->INTLIT              1
+ldc-instruction->LDC type constant
+$1=50, $2=1, $3=0ldc(32)   b(01)     0(0000) 
+instruction->ldc-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(324,STI_O,sti)
+type-op->STI
+type-op=58
+Token=(328,B_T,b)
+type->B_T
+type-instruction->type-op typesti(3a)   b(01)     0(0000) 
+instruction->type-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(315,LDA_O,lda)
+load-op->LDA
+Token=(260,INTLIT,0)
+Token=(260,INTLIT,6)
+load-instruction->load-op INTLIT INTLIT
+49 0 6
+lda(31)   0(00)     6(0006) 
+instruction->load-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(316,LDC_O,ldc)
+Token=(329,C_T,c)
+type->C_T
+CHRLIT s="'a'"
+yyleng=3
+Token=(263,CHRLIT,'a')
+constant->CHRLIT              'a'
+ldc-instruction->LDC type constant
+$1=50, $2=2, $3=97ldc(32)   c(02)    97(0061) 
+instruction->ldc-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(324,STI_O,sti)
+type-op->STI
+type-op=58
+Token=(329,C_T,c)
+type->C_T
+type-instruction->type-op typesti(3a)   c(02)     0(0000) 
+instruction->type-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(315,LDA_O,lda)
+load-op->LDA
+Token=(260,INTLIT,0)
+Token=(260,INTLIT,7)
+load-instruction->load-op INTLIT INTLIT
+49 0 7
+lda(31)   0(00)     7(0007) 
+instruction->load-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(316,LDC_O,ldc)
+Token=(330,I_T,i)
+type->I_T
+Token=(260,INTLIT,20)
+constant->INTLIT             20
+ldc-instruction->LDC type constant
+$1=50, $2=3, $3=1ldc(32)   i(03)     1(0001) 
+instruction->ldc-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(324,STI_O,sti)
+type-op->STI
+type-op=58
+Token=(330,I_T,i)
+type->I_T
+type-instruction->type-op typesti(3a)   i(03)     0(0000) 
+instruction->type-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(315,LDA_O,lda)
+load-op->LDA
+Token=(260,INTLIT,0)
+Token=(260,INTLIT,8)
+load-instruction->load-op INTLIT INTLIT
+49 0 8
+lda(31)   0(00)     8(0008) 
+instruction->load-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(316,LDC_O,ldc)
+Token=(331,R_T,r)
+type->R_T
+Token=(261,REALIT,1.602e-19)
+constant->REALIT   1.602000e-19
+ldc-instruction->LDC type constant
+$1=50, $2=4, $3=0ldc(32)   r(04)     0(0000) 
+instruction->ldc-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(324,STI_O,sti)
+type-op->STI
+type-op=58
+Token=(331,R_T,r)
+type->R_T
+type-instruction->type-op typesti(3a)   r(04)     0(0000) 
+instruction->type-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(270,RTN_O,rtn)
+type-op->RTN
+type-op=4
+Token=(334,P_T,p)
+type->P_T
+type-instruction->type-op typertn(04)   p(07)     0(0000) 
+instruction->type-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(259,DEFINE,#define)
+Token=(258,LABEL,L00002)
+Token=(260,INTLIT,8)
+definition->DEFINE LABEL INTLIT
+Label="L00002"
+INTLIT= 8
+statement->definition
+statement-list->statement-list statement
+
+Token=(259,DEFINE,#define)
+Token=(258,LABEL,L00003)
+Token=(260,INTLIT,2)
+definition->DEFINE LABEL INTLIT
+Label="L00003"
+INTLIT= 2
+statement->definition
+statement-list->statement-list statement
+
+Token=(269,MST_O,mst)
+Token=(260,INTLIT,0)
+mst-instruction->MST INTLITmst(03)   0(00)     0(0000) 
+instruction->mst-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(266,CUP_O,cup)
+Token=(260,INTLIT,0)
+Token=(258,LABEL,L00001)
+cup-instruction->CUP INTLIT LABEL L00001
+instruction->cup-instruction
+statement->instruction
+statement-list->statement-list statement
+
+Token=(314,STP_O,stp)
+op-only-op->STP
+op-code=48
+op-only-instruction->op-only-op
+op-code=48stp(30)   0(00)     0(0000) 
+instruction->op-only-instruction
+statement->instruction
+statement-list->statement-list statement
+
+program->statement-list
