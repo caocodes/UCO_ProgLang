@@ -54,8 +54,13 @@ pasmpar.cpp:		pasmpar.y
 pasmpar.o:		pasmpar.cpp pasmpar.h pasm_instruction.h
 				g++ -c -g pasmpar.cpp
 #----------------------------------------------------------------------
-#
+# Compile the utility class pasm_instruction.o
 #----------------------------------------------------------------------
 pasm_instruction.o:	pasm_instruction.cpp pasm_instruction.h pasmtkn.h
 			g++ -c -g pasm_instruction.cpp
+#----------------------------------------------------------------------
+# Compile the utility class pasm_constants.o
+#----------------------------------------------------------------------
+pasm_constants.o:	pasm_constants.cpp pasm_constants.h pasm_instruction.h
+			g++ -c -g pasm_constants.cpp
 #----------------------------------------------------------------------

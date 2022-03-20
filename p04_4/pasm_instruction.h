@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------
 // File pasm_instruction.h contains the interface for the 
-// PasmInstruction utility class for process P-Code instructions
+// PasmInstruction utility class for processing P-Code instructions
 //--------------------------------------------------------------------
 // Author 1: Prantosh Neupane
 // Student ID: *20514054
