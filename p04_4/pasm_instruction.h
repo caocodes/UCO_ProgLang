@@ -26,12 +26,12 @@ class PasmInstruction {
     int opcode;
     int operand1;
     int operand2;
-    char* alpha;
+    int index = 0;
     
     public:
-        PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0, char* a = NULL);
-        void print(ostream& trace); 
-        void printOPCode(ostream& trace);
-        void printOP1(ostream& trace);
-        void printOP2(ostream& trace);
+        PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0);
+        void print(ostream& output); 
+        void printOPCode(ostream& output);
+        void printOP1(ostream& output);
+        void printOP2(ostream& output);
 };

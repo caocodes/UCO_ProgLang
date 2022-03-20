@@ -731,7 +731,7 @@ int intlit(void) {
 }
 
 int chrlit(void) {
-	yylval.chrlit = strdup(yytext);
+	yylval.chrlit = yytext[0];
 	return CHRLIT;
 }
 

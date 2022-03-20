@@ -1,0 +1,12 @@
+ ldc b 0
+ ldc b 1
+ ldc c 'a'
+ ldc c '!'
+ ldc c ''''
+ ldc i 54
+ ldc i -17
+ ldc r 1.0
+ ldc r 2e10
+ ldc r -1.602e-19
+ ldc s 'Mary had a little lamb.'
+ ldc s 'a'

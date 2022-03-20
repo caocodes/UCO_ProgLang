@@ -30,8 +30,8 @@ using namespace std;
 
 extern map<int, string> tokenSpelling;
 
-PasmInstruction::PasmInstruction(int opc, int op1, int op2, char *a)
-    : opcode(opc), operand1(op1), operand2(op2), alpha(a) {}
+PasmInstruction::PasmInstruction(int opc, int op1, int op2)
+    : opcode(opc), operand1(op1), operand2(op2) {}
 
 void PasmInstruction::print(ostream &trace)
 {
@@ -40,7 +40,7 @@ void PasmInstruction::print(ostream &trace)
     printOP2(trace);
 }
 
-void PasmInstruction::printOPCode(ostream &trace)
+void PasmInstruction::printOPCode(ostream &output)
 {
     string spelling = "0";
     int t = opcode + 1;
@@ -48,14 +48,14 @@ void PasmInstruction::printOPCode(ostream &trace)
     {
         spelling = tokenSpelling[t];
     }
-    trace << endl
+    output << endl
           << "\t" << spelling;
-    trace << "(";
-    trace << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
-    trace << ")";
+    output << "(";
+    output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
+    output << ")";
 }
 
-void PasmInstruction::printOP1(ostream &trace)
+void PasmInstruction::printOP1(ostream &output)
 {
     string spelling = "0";
     int t = opcode + CUP_O;
@@ -77,10 +77,10 @@ void PasmInstruction::printOP1(ostream &trace)
         spelling = to_string(operand1);
     }
 
-    trace << "  " << spelling;
-    trace << "(";
-    trace << setw(2) << hex << setfill('0') << operand1;
-    trace << ")";
+    output << "  " << spelling;
+    output << "(";
+    output << setw(2) << hex << setfill('0') << operand1;
+    output << ")";
 }
 
 void PasmInstruction::printOP2(ostream &output)
@@ -91,6 +91,9 @@ void PasmInstruction::printOP2(ostream &output)
     {
         int stdfuncToken = operand2 + RDB_F;
         spelling = tokenSpelling[stdfuncToken];
+    } else if (LDC_O == opcodeToken)
+    {
+        spelling = to_string(index);
     }
     else
     {
@@ -99,14 +102,10 @@ void PasmInstruction::printOP2(ostream &output)
 
     output << "  " << spelling;
     output << "(";
-    if (alpha != NULL)
-    {
-        output << alpha;
-    }
-    else
-    {
+    if(LDC_O == opcodeToken) {
+        output << setw(4) << hex << setfill('0') << index;
+    } else {
         output << setw(4) << hex << setfill('0') << operand2;
     }
-
     output << ")";
 }
