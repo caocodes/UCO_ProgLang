@@ -96,27 +96,21 @@ int main(int argc, char *argv[])
 		if (!strstr(inputFile, ".pcd"))
 			throw ExtException(inputFile);
 
-		// create trace file
+		// create trace, listing files
 		strcpy(traceFile, ((string)inputFile).replace(((string)inputFile).size() - 4, 4, ".atrc").c_str());
-		
-		// create listing file
 		strcpy(listingFile, ((string)inputFile).replace(((string)inputFile).size() - 4, 4, ".alst").c_str());
 
-		// opens input file
+		// open files
 		FILE *inputPointer = fopen(inputFile, "r");
 		if (!inputPointer)
 			throw FileException(inputFile);
-
-		// opens trace file
 		trace.open(traceFile);
 		if (!trace)
 			throw FileException(traceFile);
-
-		// opens listing file
 		listing.open(listingFile);
 		if (!listing)
 			throw FileException(listingFile);
-			
+		
 		// parse input file
 		Parser p(inputPointer);
 		int rc = p.parse();

@@ -15,6 +15,8 @@
 // Due:		March 24, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
+#ifndef pasm_constants_h
+#define pasm_constants_h
 
 #include <iostream>
 #include <vector>
@@ -33,3 +35,5 @@ class PasmConstants {
         void print(ostream& listing); 
         void addInstruction(PasmInstruction instruction);
 };
+
+#endif

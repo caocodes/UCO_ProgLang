@@ -15,6 +15,9 @@
 // Due:		March 24, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
+#ifndef pasm_instruction_h
+#define pasm_instruction_h
+
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -35,3 +38,5 @@ class PasmInstruction {
         void printOP1(ostream& output);
         void printOP2(ostream& output);
 };
+
+#endif

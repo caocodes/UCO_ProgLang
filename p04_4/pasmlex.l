@@ -30,6 +30,7 @@ using namespace std;
 //--------------------------------------------------------------------
 #include "pasmlex.h"
 #include "pasmtkn.h"
+#include "pasm_constants.h"
 //--------------------------------------------------------------------
 //Externals 
 //--------------------------------------------------------------------
@@ -42,6 +43,7 @@ int columnCount = 1;
 map<int, string> tokenMap;
 map<int, string> tokenSpelling;
 map<string, int> keywords;
+PasmConstants pasmConstants;
 //--------------------------------------------------------------------
 //Function prototypes, class fields
 //--------------------------------------------------------------------
@@ -593,7 +595,6 @@ Lexer::Lexer(FILE* i){
 		{ID, "ID"},
 		{ERROR, "ERROR"},
 	};
-
 
 	tokenSpelling = {
 		{CUP_O,"cup"},

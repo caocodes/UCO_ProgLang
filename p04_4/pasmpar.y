@@ -32,6 +32,7 @@ using namespace std;
 #include "pasmlex.h"
 #include "pasmpar.h"
 #include "pasm_instruction.h"
+#include "pasm_constants.h"
 //---------------------------------------------------------------------
 //Externals
 //---------------------------------------------------------------------
@@ -39,6 +40,7 @@ extern ofstream trace;
 extern int lineCount;
 extern int columnCount;
 extern map<int, string> tokenSpelling;
+extern PasmConstants pasmConstants;
 //---------------------------------------------------------------------
 //Functions
 //---------------------------------------------------------------------
