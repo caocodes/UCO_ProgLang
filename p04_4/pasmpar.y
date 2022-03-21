@@ -57,7 +57,7 @@ vector<PasmInstruction> instructions;
 //Functions
 //---------------------------------------------------------------------
 void yyerror(const char* m);
-int addInstruction(PasmInstruction instruction, double realit, char chrlit, char* strlit);
+int addInstruction(PasmInstruction& instruction, double realit, char chrlit, char* strlit);
 
 %}
 %union {
@@ -622,7 +622,7 @@ class3_operation:
     {
       trace << endl << "#068 class3_operation -> LDC_O type INTLIT";
       PasmInstruction instruction($1,$2,$3);
-      instruction.setIndex(addInstruction(instruction, 0.0, '\0', NULL));
+      addInstruction(instruction, 0.0, '\0', NULL);
       instruction.print(trace);
     }
 class3_operation:
@@ -630,6 +630,7 @@ class3_operation:
     {
       trace << endl << "#069 class3_operation -> LDC_O type REALIT";
       PasmInstruction instruction($1,$2,0);
+      addInstruction(instruction, $3, '\0', NULL);
       instruction.print(trace);
     }
 class3_operation:
@@ -637,6 +638,7 @@ class3_operation:
     {
       trace << endl << "#070 class3_operation -> LDC_O type CHRLIT";
       PasmInstruction instruction($1,$2,0);
+      addInstruction(instruction, 0.0, $3, NULL);
       instruction.print(trace);
     }
 class3_operation:
@@ -644,6 +646,7 @@ class3_operation:
     {
       trace << endl << "#071 class3_operation -> LDC_O type STRLIT";
       PasmInstruction instruction($1,$2,0);
+      addInstruction(instruction, 0.0, '\0', $3);
       instruction.print(trace);
     }
 class3_operation:
@@ -856,7 +859,7 @@ void yyerror(const char* m)
     cout << endl;
 }
 
-int addInstruction(PasmInstruction instruction, double realit, char chrlit, char* strlit)
+int addInstruction(PasmInstruction& instruction, double realit, char chrlit, char* strlit)
 {
     int typeToken = instruction.getOperand1() + A_T;
     int index;
@@ -875,18 +878,25 @@ int addInstruction(PasmInstruction instruction, double realit, char chrlit, char
         index = chrlit;
         break;
     case S_T: 
-        strConstants.push_back(strlit);
-        index =  strConstants.size() - 1;
+        if(strlit != NULL) {
+          strConstants.push_back(strlit);
+          index =  strConstants.size() - 1;
+        } else {
+          charConstants.push_back(chrlit);
+          index = chrlit;
+        }
         break;
     default:
         break;
     }
 
     instruction.setIndex(index);
+    instructions.push_back(instruction);
     return index;
 }
 
 void Parser::printListing()
 {
-    cout << "Parser print" << endl;
+    listing << "String Constants" << endl;
+    
 }

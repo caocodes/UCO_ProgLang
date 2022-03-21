@@ -732,7 +732,7 @@ int intlit(void) {
 }
 
 int chrlit(void) {
-	yylval.chrlit = yytext[0];
+	yylval.chrlit = yytext[1];
 	return CHRLIT;
 }
 
