@@ -17,6 +17,8 @@
 //--------------------------------------------------------------------
 
 #include "pasm_constants.h"
+#include "pasmtkn.h"
+
 using namespace std;
 
 void PasmConstants::print(ostream& listing)
@@ -24,7 +26,34 @@ void PasmConstants::print(ostream& listing)
     
 }
 
-void PasmConstants::addInstruction(PasmInstruction instruction)
+int PasmConstants::addInstruction(PasmInstruction instruction)
 {
+    int operand2 = instruction.getOperand2();
+    switch (instruction.getOperand1())
+    {
+    case B_T: 
+        cout << "boolean" << endl;
+        cout << operand2 << endl;
+        break;
+    case C_T: 
+        cout << "char" << endl;
+        cout << operand2 << endl;
+        break;
+    case I_T: 
+        cout << "int" << endl;
+        cout << operand2 << endl;
+        break;
+    case R_T: 
+        cout << "real" << endl;
+        cout << operand2 << endl;
+        break;
+    case S_T: 
+        cout << "string" << endl;
+        cout << operand2 << endl;
+        break;
+    default:
+        break;
+    }
 
+    return 0;
 }

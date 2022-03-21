@@ -109,3 +109,20 @@ void PasmInstruction::printOP2(ostream &output)
     }
     output << ")";
 }
+
+
+int PasmInstruction::getOpCode() {
+    return opcode;
+}
+
+int PasmInstruction::getOperand1() {
+    return operand1;
+}
+
+int PasmInstruction::getOperand2() {
+    return operand2;
+}
+
+void PasmInstruction::setIndex(int i) {
+    index = i;
+}

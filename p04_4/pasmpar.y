@@ -24,6 +24,7 @@
 #include <string>
 #include <cstdio>
 #include <map>
+#include <vector>
 using namespace std;
 
 //---------------------------------------------------------------------
@@ -37,14 +38,26 @@ using namespace std;
 //Externals
 //---------------------------------------------------------------------
 extern ofstream trace;
+extern ofstream listing;
 extern int lineCount;
 extern int columnCount;
 extern map<int, string> tokenSpelling;
-extern PasmConstants pasmConstants;
+
+//---------------------------------------------------------------------
+//Global Variables
+//---------------------------------------------------------------------
+vector<char> charConstants;
+vector<char*> stringConstants;
+vector<int> intConstants;
+vector<double> realConstants;
+vector<int> setConstants;
+vector<PasmInstruction> instructions;
+
 //---------------------------------------------------------------------
 //Functions
 //---------------------------------------------------------------------
 void yyerror(const char* m);
+int addInstruction(PasmInstruction instruction);
 
 %}
 %union {
@@ -608,7 +621,8 @@ class3_operation:
     LDC_O type INTLIT
     {
       trace << endl << "#068 class3_operation -> LDC_O type INTLIT";
-      PasmInstruction instruction($1,$2,0);
+      PasmInstruction instruction($1,$2,$3);
+      addInstruction(instruction);
       instruction.print(trace);
     }
 class3_operation:
@@ -840,4 +854,44 @@ void yyerror(const char* m)
     cout << endl
         << "line(" << lineCount << ") col(" << columnCount << ") " << m;
     cout << endl;
+}
+
+int addInstruction(PasmInstruction instruction)
+{
+    int operand2 = instruction.getOperand2();
+    int typeToken = instruction.getOperand1() + A_T;
+    switch (typeToken)
+    {
+    case B_T: 
+        cout << "boolean" << endl;
+        cout << operand2 << endl;
+        intConstants.push_back(operand2);
+        return intConstants.size();
+    case I_T: 
+        cout << "int" << endl;
+        cout << operand2 << endl;
+        intConstants.push_back(operand2);
+        return intConstants.size();
+    case R_T: 
+        cout << "real" << endl;
+        cout << operand2 << endl;
+        break;
+    case C_T: 
+        cout << "char" << endl;
+        cout << operand2 << endl;
+        break;
+    case S_T: 
+        cout << "string" << endl;
+        cout << operand2 << endl;
+        break;
+    default:
+        break;
+    }
+
+    return 0;
+}
+
+void Parser::printListing()
+{
+    cout << "Parser print" << endl;
 }

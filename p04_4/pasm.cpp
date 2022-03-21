@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
 		// parse input file
 		Parser p(inputPointer);
 		int rc = p.parse();
+		p.printListing();
 		
 		// close resources
 		trace << endl;

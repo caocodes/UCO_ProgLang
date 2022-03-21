@@ -19,8 +19,6 @@
 // Project Account Number: tt035
 //---------------------------------------------------------------------
 
-#include "pasmlex.h"
-
 #ifdef __cplusplus
 extern "C"
 #endif
@@ -30,6 +28,7 @@ class Parser: public Lexer
   public:
     Parser(FILE* i):Lexer(i){}
     int parse(void) { return yyparse(); }
+    void printListing();
 };
 #endif
 

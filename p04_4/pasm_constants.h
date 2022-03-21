@@ -33,7 +33,7 @@ class PasmConstants {
     
     public:
         void print(ostream& listing); 
-        void addInstruction(PasmInstruction instruction);
+        int addInstruction(PasmInstruction instruction);
 };
 
 #endif

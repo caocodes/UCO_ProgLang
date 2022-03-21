@@ -37,6 +37,10 @@ class PasmInstruction {
         void printOPCode(ostream& output);
         void printOP1(ostream& output);
         void printOP2(ostream& output);
+        int getOpCode();
+        int getOperand1();
+        int getOperand2();
+        void setIndex(int i);
 };
 
 #endif
