@@ -33,11 +33,12 @@ extern map<int, string> tokenSpelling;
 PasmInstruction::PasmInstruction(int opc, int op1, int op2)
     : opcode(opc), operand1(op1), operand2(op2) {}
 
-void PasmInstruction::print(ostream &trace)
+void PasmInstruction::print(ostream &output)
 {
-    printOPCode(trace);
-    printOP1(trace);
-    printOP2(trace);
+    output << endl << "\t";
+    printOPCode(output);
+    printOP1(output);
+    printOP2(output);
 }
 
 void PasmInstruction::printOPCode(ostream &output)
@@ -48,8 +49,7 @@ void PasmInstruction::printOPCode(ostream &output)
     {
         spelling = tokenSpelling[t];
     }
-    output << endl
-          << "\t" << spelling;
+    output << spelling;
     output << "(";
     output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(opcode);
     output << ")";

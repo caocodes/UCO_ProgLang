@@ -897,6 +897,58 @@ int addInstruction(PasmInstruction& instruction, double realit, char chrlit, cha
 
 void Parser::printListing()
 {
+    int i = 0;
     listing << "String Constants" << endl;
-    
+    listing << left << "Index" << "\t";
+    listing << setw(40) << left << "Constant" << endl;
+    for(char* str: strConstants) {
+      listing << setw(5) << right << setfill(' ') << i << "\t";
+      listing << setw(40) << left << setfill(' ') << str << endl;
+      i++;
+    }
+    listing << endl;
+
+    i = 0;
+    listing << "Set Constants" << endl;
+    listing << left << "Index" << "\t";
+    listing << left << "Constant" << endl << endl;
+
+    i = 0;
+    listing << "Integer Constants" << endl;
+    listing << setw(6) << left << "Index" << "\t";
+    listing << setw(40) << left << "Constant" << endl;
+    for(int intlit: intConstants) {
+      listing << setw(5) << right << setfill(' ') << i << "\t";
+      listing << setw(10) << left << setfill(' ') << intlit << endl;
+      i++;
+    }
+    listing << endl;
+
+    i = 0;
+    listing << "Real Constants" << endl;
+    listing << left << "Index" << "\t";
+    listing << left << "Constant" << endl;
+    for(double realit: realConstants) {
+      listing << setw(5) << right << setfill(' ') << i << "\t";
+      listing << setw(25) << left << setfill(' ') << scientific << realit << endl;
+      i++;
+    }
+    listing << endl;
+
+    i = 0;
+    listing << "P-Code Instruction Array" << endl;
+    listing << setw(3) << left << "PC ";
+    listing << setw(9) << left << "OP ";
+    listing << setw(7) << left << "R1 ";
+    listing << setw(10) << left << "R2 " << endl;
+
+    for(PasmInstruction pi: instructions) {
+      listing << dec << setw(2) << right << setfill(' ') << i << " ";
+      pi.printOPCode(listing);
+      pi.printOP1(listing);
+      pi.printOP2(listing);
+      listing << endl;
+      i++;
+    }
+    listing << endl;
 }
