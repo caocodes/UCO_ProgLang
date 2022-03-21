@@ -25,7 +25,7 @@ using namespace std;
 
 class PasmConstants {
     vector<char> charConstants;
-    vector<char*> stringConstants;
+    vector<char*> strConstants;
     vector<int> intConstants;
     vector<double> realConstants;
     vector<int> setConstants;

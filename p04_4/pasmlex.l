@@ -43,6 +43,7 @@ int columnCount = 1;
 map<int, string> tokenMap;
 map<int, string> tokenSpelling;
 map<string, int> keywords;
+
 //--------------------------------------------------------------------
 //Function prototypes, class fields
 //--------------------------------------------------------------------

@@ -47,7 +47,7 @@ extern map<int, string> tokenSpelling;
 //Global Variables
 //---------------------------------------------------------------------
 vector<char> charConstants;
-vector<char*> stringConstants;
+vector<char*> strConstants;
 vector<int> intConstants;
 vector<double> realConstants;
 vector<int> setConstants;
@@ -57,7 +57,7 @@ vector<PasmInstruction> instructions;
 //Functions
 //---------------------------------------------------------------------
 void yyerror(const char* m);
-int addInstruction(PasmInstruction instruction);
+int addInstruction(PasmInstruction instruction, double realit, char chrlit, char* strlit);
 
 %}
 %union {
@@ -622,7 +622,7 @@ class3_operation:
     {
       trace << endl << "#068 class3_operation -> LDC_O type INTLIT";
       PasmInstruction instruction($1,$2,$3);
-      addInstruction(instruction);
+      instruction.setIndex(addInstruction(instruction, 0.0, '\0', NULL));
       instruction.print(trace);
     }
 class3_operation:
@@ -856,39 +856,34 @@ void yyerror(const char* m)
     cout << endl;
 }
 
-int addInstruction(PasmInstruction instruction)
+int addInstruction(PasmInstruction instruction, double realit, char chrlit, char* strlit)
 {
-    int operand2 = instruction.getOperand2();
     int typeToken = instruction.getOperand1() + A_T;
+    int index;
     switch (typeToken)
     {
-    case B_T: 
-        cout << "boolean" << endl;
-        cout << operand2 << endl;
-        intConstants.push_back(operand2);
-        return intConstants.size();
-    case I_T: 
-        cout << "int" << endl;
-        cout << operand2 << endl;
-        intConstants.push_back(operand2);
-        return intConstants.size();
+    case B_T: case I_T: 
+        intConstants.push_back(instruction.getOperand2());
+        index = intConstants.size() - 1;
+        break;
     case R_T: 
-        cout << "real" << endl;
-        cout << operand2 << endl;
+        realConstants.push_back(realit);
+        index = realConstants.size() - 1;
         break;
     case C_T: 
-        cout << "char" << endl;
-        cout << operand2 << endl;
+        charConstants.push_back(chrlit);
+        index = chrlit;
         break;
     case S_T: 
-        cout << "string" << endl;
-        cout << operand2 << endl;
+        strConstants.push_back(strlit);
+        index =  strConstants.size() - 1;
         break;
     default:
         break;
     }
 
-    return 0;
+    instruction.setIndex(index);
+    return index;
 }
 
 void Parser::printListing()
