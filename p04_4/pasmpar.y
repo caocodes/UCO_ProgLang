@@ -21,6 +21,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <string.h>
 #include <string>
 #include <cstdio>
 #include <map>
@@ -53,6 +54,7 @@ vector<double> realConstants;
 vector<int> setConstants;
 vector<PasmInstruction> instructions;
 
+int strIndex = 0;
 //---------------------------------------------------------------------
 //Functions
 //---------------------------------------------------------------------
@@ -865,22 +867,32 @@ int addInstruction(PasmInstruction& instruction, double realit, char chrlit, cha
     int index;
     switch (typeToken)
     {
-    case B_T: case I_T: 
+    case B_T: 
+        // The Boolean value, either a 0 – false or a 1 – true is stored in operand 2.
+        index = instruction.getOperand2();
+        break;
+    case I_T: 
+        // The integer value, a 32-bit, twos complement integer, is stored in a table
+        // of integer constants. The index of the integer constant is placed in operand 2.
         intConstants.push_back(instruction.getOperand2());
         index = intConstants.size() - 1;
         break;
     case R_T: 
+        //The real value, a 64-bit, IEEE double precision binary value, is stored in a
+        // table of real constants. The index of the real constant is placed in operand 2.
         realConstants.push_back(realit);
         index = realConstants.size() - 1;
         break;
     case C_T: 
+        //The character value, an 8-bit ASCII character code, is store in operand 2.
         charConstants.push_back(chrlit);
         index = chrlit;
         break;
     case S_T: 
         if(strlit != NULL) {
+          index = strIndex;
           strConstants.push_back(strlit);
-          index =  strConstants.size() - 1;
+          strIndex += strlen(strlit) + 1; // + 1 to account for '\0'
         } else {
           charConstants.push_back(chrlit);
           index = chrlit;
@@ -890,7 +902,7 @@ int addInstruction(PasmInstruction& instruction, double realit, char chrlit, cha
         break;
     }
 
-    instruction.setIndex(index);
+    instruction.setOperand2(index);
     instructions.push_back(instruction);
     return index;
 }

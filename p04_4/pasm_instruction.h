@@ -40,6 +40,7 @@ class PasmInstruction {
         int getOpCode();
         int getOperand1();
         int getOperand2();
+        void setOperand2(int value);
         void setIndex(int i);
 };
 

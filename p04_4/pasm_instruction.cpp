@@ -91,9 +91,6 @@ void PasmInstruction::printOP2(ostream &output)
     {
         int stdfuncToken = operand2 + RDB_F;
         spelling = tokenSpelling[stdfuncToken];
-    } else if (LDC_O == opcodeToken)
-    {
-        spelling = to_string(index);
     }
     else
     {
@@ -102,11 +99,7 @@ void PasmInstruction::printOP2(ostream &output)
 
     output << "  " << spelling;
     output << "(";
-    if(LDC_O == opcodeToken) {
-        output << setw(4) << hex << setfill('0') << index;
-    } else {
-        output << setw(4) << hex << setfill('0') << operand2;
-    }
+    output << setw(4) << hex << setfill('0') << operand2;
     output << ")";
 }
 
@@ -123,6 +116,6 @@ int PasmInstruction::getOperand2() {
     return operand2;
 }
 
-void PasmInstruction::setIndex(int i) {
-    index = i;
+void PasmInstruction::setOperand2(int value) {
+    operand2 = value;
 }

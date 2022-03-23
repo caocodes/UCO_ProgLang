@@ -18,6 +18,7 @@
 // C++ Library Include Files
 //--------------------------------------------------------------------
 #include <string>
+#include <string.h>
 #include <cstdio>
 #include <cstdlib>
 #include <iomanip>
@@ -737,7 +738,10 @@ int chrlit(void) {
 }
 
 int strlit(void) {
-	yylval.strlit = strdup(yytext);
+	// removes first and last char
+	char* result = strdup(yytext) + 1; 
+  	result[strlen(result)-1] = '\0';
+	yylval.strlit = result;
 	return STRLIT;
 }
 
