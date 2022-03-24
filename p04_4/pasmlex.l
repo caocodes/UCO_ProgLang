@@ -722,7 +722,7 @@ int real(void)
 }
 
 int label(void) {
-	yylval.strlit = strdup(yytext);
+	yylval.label = strdup(yytext);
 	return LABEL;
 }
 
