@@ -34,7 +34,7 @@ pasm.o:		pasm.cpp pasmlex.h pasmpar.h
 #----------------------------------------------------------------------
 # File pasmlex.cpp is the lex-generated scanner
 #----------------------------------------------------------------------
-pasmlex.cpp:		pasmlex.l pasmlex.h pasmtkn.h
+pasmlex.cpp:		pasmlex.l pasmlex.h pasmtkn.h pasm_constants.h
 				lex pasmlex.l
 				mv lex.yy.c pasmlex.cpp
 #----------------------------------------------------------------------
@@ -51,11 +51,16 @@ pasmpar.cpp:		pasmpar.y
 #----------------------------------------------------------------
 # Compile the parser pasmpar.o
 #----------------------------------------------------------------
-pasmpar.o:		pasmpar.cpp pasmpar.h pasm_instruction.h
+pasmpar.o:		pasmpar.cpp pasmpar.h pasm_instruction.h pasm_constants.h
 				g++ -c -g pasmpar.cpp
 #----------------------------------------------------------------------
 # Compile the utility class pasm_instruction.o
 #----------------------------------------------------------------------
 pasm_instruction.o:	pasm_instruction.cpp pasm_instruction.h pasmtkn.h
 			g++ -c -g pasm_instruction.cpp
+#----------------------------------------------------------------------
+# Compile the utility class pasm_constants.o
+#----------------------------------------------------------------------
+pasm_constants.o:	pasm_constants.cpp pasm_constants.h pasm_instruction.h
+			g++ -c -g pasm_constants.cpp
 #----------------------------------------------------------------------

@@ -29,8 +29,7 @@ class PasmInstruction {
     int opcode;
     int operand1;
     int operand2;
-    int index = 0;
-    
+
     public:
         PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0);
         void print(ostream& output); 
@@ -41,7 +40,6 @@ class PasmInstruction {
         int getOperand1();
         int getOperand2();
         void setOperand2(int value);
-        void setIndex(int i);
 };
 
 #endif

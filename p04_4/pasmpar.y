@@ -34,7 +34,6 @@ using namespace std;
 #include "pasmlex.h"
 #include "pasmpar.h"
 #include "pasm_instruction.h"
-#include "pasm_constants.h"
 //---------------------------------------------------------------------
 //Externals
 //---------------------------------------------------------------------
@@ -907,8 +906,7 @@ int addInstruction(PasmInstruction& instruction, double realit, char chrlit, cha
     return index;
 }
 
-void Parser::printListing()
-{
+void printStrConstants() {
     int i = 0;
     listing << "String Constants" << endl;
     listing << left << "Index" << "\t";
@@ -919,13 +917,16 @@ void Parser::printListing()
       i++;
     }
     listing << endl;
+}
 
-    i = 0;
+void printSetConstants() {
     listing << "Set Constants" << endl;
     listing << left << "Index" << "\t";
     listing << left << "Constant" << endl << endl;
+}
 
-    i = 0;
+void printIntConstants() {
+    int i = 0;
     listing << "Integer Constants" << endl;
     listing << setw(6) << left << "Index" << "\t";
     listing << setw(40) << left << "Constant" << endl;
@@ -935,8 +936,10 @@ void Parser::printListing()
       i++;
     }
     listing << endl;
+}
 
-    i = 0;
+void printRealConstants() {
+    int i = 0;
     listing << "Real Constants" << endl;
     listing << left << "Index" << "\t";
     listing << left << "Constant" << endl;
@@ -946,8 +949,10 @@ void Parser::printListing()
       i++;
     }
     listing << endl;
+}
 
-    i = 0;
+void printInstructions() {
+    int i = 0;
     listing << "P-Code Instruction Array" << endl;
     listing << setw(3) << left << "PC ";
     listing << setw(9) << left << "OP ";
@@ -963,4 +968,13 @@ void Parser::printListing()
       i++;
     }
     listing << endl;
+}
+
+void Parser::printListing()
+{
+  printStrConstants();
+  printSetConstants();
+  printIntConstants();
+  printRealConstants();
+  printInstructions();
 }
