@@ -1,0 +1,18 @@
+ldc b 0
+ldc b 1
+ldc c 'a'
+ldc c 'A'
+ldc c 'z'
+ldc c '!'
+ldc c ''''
+ldc i 13
+ldc i 0
+ldc i -54
+ldc r 9.8
+ldc r 3.14159
+ldc r 6.02e-19
+ldc r -15.6
+ldc s 'One, two, buckle my shoe,'
+ldc s 'Three, four, shut the door.'
+ldc s 'Five, six, pick up sticks.'
+ldc s 'Seven, eight, lay them straight.'
