@@ -26,6 +26,7 @@
 #include <cstdio>
 #include <map>
 #include <vector>
+#include <algorithm> 
 using namespace std;
 
 //---------------------------------------------------------------------
@@ -991,8 +992,17 @@ void printInstructions() {
     listing << endl;
 }
 
+void sortLabels() {
+  sort(labels.begin(), labels.end(), [](const PasmLabel& lhs, const PasmLabel& rhs)
+  {
+    return lhs.labelStr < rhs.labelStr;
+  });
+}
+
 void printLabels() {
+  sortLabels();
   listing << "Label Table" << endl;
+  listing << setw(8) << left << "Label ";
   listing << setw(10) << left << "Address ";
   listing << setw(10) << left << "Resolved ";
   listing << setw(14) << left << "Reference List" << endl;
@@ -1007,11 +1017,11 @@ PasmLabel* findLabel(string str) {
   int i = 0;
   for(PasmLabel l: labels) {
       if(l.getLabelStr().compare(str) == 0) {
-        break;
+        return &(labels.at(i));
       }
       i++;
   }
-  &(labels.at(i));
+
   return nullptr;
 }
 

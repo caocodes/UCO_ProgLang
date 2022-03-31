@@ -12,7 +12,10 @@
 using namespace std;
 
 class PasmLabel {
+    public:
     string labelStr;
+
+    private:
     int address;
     bool resolved;
     vector<int> refList;
