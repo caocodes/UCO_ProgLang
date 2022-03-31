@@ -22,7 +22,6 @@
 #include <fstream>
 #include <cstdio>
 #include <iomanip>
-#include "pasmtkn.h"
 using namespace std;
 
 class PasmInstruction {

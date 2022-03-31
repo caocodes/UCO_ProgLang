@@ -34,6 +34,7 @@ using namespace std;
 #include "pasmlex.h"
 #include "pasmpar.h"
 #include "pasm_instruction.h"
+#include "pasm_label.h"
 //---------------------------------------------------------------------
 //Externals
 //---------------------------------------------------------------------
@@ -52,6 +53,7 @@ vector<int> intConstants;
 vector<double> realConstants;
 vector<int> setConstants;
 vector<PasmInstruction> instructions;
+vector<PasmLabel> labels;
 
 int strIndex = 0;
 //---------------------------------------------------------------------
@@ -212,6 +214,7 @@ definition:
     DEFINE LABEL INTLIT
     {
       trace << endl << "#006 definition -> DEFINE LABEL INTLIT";
+      //TODO LT.Define($2,$3,IA);
     }
 statement:
     label_list operation
