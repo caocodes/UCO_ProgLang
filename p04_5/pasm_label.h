@@ -19,7 +19,9 @@ class PasmLabel {
 
     public:
         PasmLabel(string lbl = NULL, int addr = 0, bool res = false);
-        void print(ostream& output); 
+        void print(ostream& output);
+        string getLabelStr();
+        void addRef(int i);
 };
 
 #endif

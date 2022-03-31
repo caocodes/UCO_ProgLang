@@ -5,3 +5,10 @@ PasmLabel::PasmLabel(string lbl, int addr, bool res) : labelStr(lbl), address(ad
 void PasmLabel::print(ostream& output) {
     output << labelStr << endl;
 }
+
+string PasmLabel::getLabelStr() {
+    return labelStr;
+}
+void PasmLabel::addRef(int i) {
+  refList.push_back(i);
+}

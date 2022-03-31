@@ -54,6 +54,7 @@ vector<double> realConstants;
 vector<int> setConstants;
 vector<PasmInstruction> instructions;
 vector<PasmLabel> labels;
+vector<PasmInstruction> labelOp2Instructions;
 
 int strIndex = 0;
 //---------------------------------------------------------------------
@@ -61,6 +62,7 @@ int strIndex = 0;
 //---------------------------------------------------------------------
 void yyerror(const char* m);
 int addInstruction(PasmInstruction& instruction, double realit, char chrlit, char* strlit);
+PasmLabel* findLabel(string str);
 
 %}
 %union {
@@ -215,8 +217,12 @@ definition:
     {
       trace << endl << "#006 definition -> DEFINE LABEL INTLIT";
       string labelStr($2);
-      PasmLabel l(labelStr, $3);
-      labels.push_back(l);
+      if(findLabel(labelStr) == nullptr) {
+        PasmLabel l(labelStr, $3, true); //TODO wrong address
+        labels.push_back(l);
+      } else {
+        //TODO update instruction op2 and label address
+      }
     }
 statement:
     label_list operation
@@ -232,11 +238,21 @@ label_list:
     LABEL
     {
       trace << endl << "#009 label_list -> LABEL";
+      string labelStr($1);
+      if(findLabel(labelStr) == nullptr) {
+        PasmLabel l(labelStr);
+        labels.push_back(l);
+      }
     }
 label_list:
     label_list LABEL
     {
       trace << endl << "#010 label_list -> label_list LABEL";
+      string labelStr($2);
+      if(findLabel(labelStr) == nullptr) {
+        PasmLabel l(labelStr);
+        labels.push_back(l);
+      }
     }
 operation:
     class0_operation
@@ -985,6 +1001,18 @@ void printLabels() {
     l.print(listing);
   }
   listing << endl;
+}
+
+PasmLabel* findLabel(string str) {
+  int i = 0;
+  for(PasmLabel l: labels) {
+      if(l.getLabelStr().compare(str) == 0) {
+        break;
+      }
+      i++;
+  }
+  &(labels.at(i));
+  return nullptr;
 }
 
 void Parser::printListing()
