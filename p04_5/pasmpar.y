@@ -246,20 +246,40 @@ label_list:
     LABEL
     {
       trace << endl << "#009 label_list -> LABEL";
-      string labelStr($1);
-      if(findLabel(labelStr) == nullptr) {
-        PasmLabel l(labelStr, instructions.size());
+      string str($1);
+      PasmLabel* lptr = findLabel(str);
+      if(lptr == nullptr) {
+        PasmLabel l(str, instructions.size());
         labels.push_back(l);
+      } else {
+        int address = instructions.size();
+        for(PasmInstruction instr: labelOp2Instructions) {
+          if(instr.labelStr.compare(str) == 0) {
+            instr.setOperand2(address);
+          }
+        }
+        lptr->resolved = true;
+        lptr->address = address;
       }
     }
 label_list:
     label_list LABEL
     {
       trace << endl << "#010 label_list -> label_list LABEL";
-      string labelStr($2);
-      if(findLabel(labelStr) == nullptr) {
-        PasmLabel l(labelStr, instructions.size());
+      string str($2);
+      PasmLabel* lptr = findLabel(str);
+      if(lptr == nullptr) {
+        PasmLabel l(str, instructions.size());
         labels.push_back(l);
+      } else {
+        int address = instructions.size();
+        for(PasmInstruction instr: labelOp2Instructions) {
+          if(instr.labelStr.compare(str) == 0) {
+            instr.setOperand2(address);
+          }
+        }
+        lptr->resolved = true;
+        lptr->address = address;
       }
     }
 operation:
