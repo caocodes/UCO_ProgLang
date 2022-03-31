@@ -14,8 +14,6 @@ using namespace std;
 class PasmLabel {
     public:
     string labelStr;
-
-    private:
     int address;
     bool resolved;
     vector<int> refList;
@@ -23,7 +21,6 @@ class PasmLabel {
     public:
         PasmLabel(string lbl = NULL, int addr = 0, bool res = false);
         void print(ostream& output);
-        string getLabelStr();
         void addRef(int i);
 };
 

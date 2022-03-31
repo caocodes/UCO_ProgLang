@@ -217,12 +217,19 @@ definition:
     DEFINE LABEL INTLIT
     {
       trace << endl << "#006 definition -> DEFINE LABEL INTLIT";
-      string labelStr($2);
-      if(findLabel(labelStr) == nullptr) {
-        PasmLabel l(labelStr, $3, true); //TODO wrong address
+      string str($2);
+      PasmLabel* lptr = findLabel(str);
+      if(lptr == nullptr) {
+        PasmLabel l(str, $3, true);
         labels.push_back(l);
       } else {
-        //TODO update instruction op2 and label address
+        for(PasmInstruction instr: labelOp2Instructions) {
+          if(instr.labelStr.compare(str) == 0) {
+            instr.setOperand2($3);
+          }
+        }
+        lptr->resolved = true;
+        lptr->address = $3;
       }
     }
 statement:
@@ -241,7 +248,7 @@ label_list:
       trace << endl << "#009 label_list -> LABEL";
       string labelStr($1);
       if(findLabel(labelStr) == nullptr) {
-        PasmLabel l(labelStr);
+        PasmLabel l(labelStr, instructions.size());
         labels.push_back(l);
       }
     }
@@ -251,7 +258,7 @@ label_list:
       trace << endl << "#010 label_list -> label_list LABEL";
       string labelStr($2);
       if(findLabel(labelStr) == nullptr) {
-        PasmLabel l(labelStr);
+        PasmLabel l(labelStr, instructions.size());
         labels.push_back(l);
       }
     }
@@ -1016,7 +1023,7 @@ void printLabels() {
 PasmLabel* findLabel(string str) {
   int i = 0;
   for(PasmLabel l: labels) {
-      if(l.getLabelStr().compare(str) == 0) {
+      if(l.labelStr.compare(str) == 0) {
         return &(labels.at(i));
       }
       i++;

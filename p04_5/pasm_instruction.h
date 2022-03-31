@@ -22,12 +22,16 @@
 #include <fstream>
 #include <cstdio>
 #include <iomanip>
+#include <string>
 using namespace std;
 
 class PasmInstruction {
     int opcode;
     int operand1;
     int operand2;
+
+    public:
+    string labelStr;
 
     public:
         PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0);

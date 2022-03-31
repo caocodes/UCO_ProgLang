@@ -13,9 +13,6 @@ void PasmLabel::print(ostream& output) {
     output << endl;
 }
 
-string PasmLabel::getLabelStr() {
-    return labelStr;
-}
 void PasmLabel::addRef(int i) {
   refList.push_back(i);
 }
