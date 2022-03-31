@@ -1,7 +1,7 @@
 #include "pasm_label.h"
 
-PasmLabel::PasmLabel(char *lbl, int addr, bool res) : label(lbl), address(addr), resolved(res) {}
+PasmLabel::PasmLabel(string lbl, int addr, bool res) : labelStr(lbl), address(addr), resolved(res) {}
 
 void PasmLabel::print(ostream& output) {
-    output << label << endl;
+    output << labelStr << endl;
 }

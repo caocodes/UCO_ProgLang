@@ -214,7 +214,9 @@ definition:
     DEFINE LABEL INTLIT
     {
       trace << endl << "#006 definition -> DEFINE LABEL INTLIT";
-      //TODO LT.Define($2,$3,IA);
+      string labelStr($2);
+      PasmLabel l(labelStr, $3);
+      labels.push_back(l);
     }
 statement:
     label_list operation
@@ -973,6 +975,18 @@ void printInstructions() {
     listing << endl;
 }
 
+void printLabels() {
+  listing << "Label Table" << endl;
+  listing << setw(10) << left << "Address ";
+  listing << setw(10) << left << "Resolved ";
+  listing << setw(14) << left << "Reference List" << endl;
+
+  for(PasmLabel l: labels) {
+    l.print(listing);
+  }
+  listing << endl;
+}
+
 void Parser::printListing()
 {
   printStrConstants();
@@ -980,4 +994,5 @@ void Parser::printListing()
   printIntConstants();
   printRealConstants();
   printInstructions();
+  printLabels();
 }
