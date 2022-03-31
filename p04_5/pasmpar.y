@@ -622,24 +622,76 @@ class2_operation:
     {
       trace << endl << "#060 class2_operation -> UJP_O LABEL";
       PasmInstruction instruction($1);
+      string str($2);
+      instruction.labelStr = str;
+      PasmLabel* lptr = findLabel(str);
+      PasmLabel l(str);
+      if(lptr == nullptr) {
+        l.addRef(instructions.size());
+        labels.push_back(l);
+      } else {
+        lptr->addRef(instructions.size());
+        instruction.setOperand2(lptr->address);
+      }
+      instructions.push_back(instruction);
+      labelOp2Instructions.push_back(instruction);
     }
 class2_operation:
     FJP_O LABEL
     {
       trace << endl << "#061 class2_operation -> FJP_O LABEL";
       PasmInstruction instruction($1);
+      string str($2);
+      instruction.labelStr = str;
+      PasmLabel* lptr = findLabel(str);
+      PasmLabel l(str);
+      if(lptr == nullptr) {
+        l.addRef(instructions.size());
+        labels.push_back(l);
+      } else {
+        lptr->addRef(instructions.size());
+        instruction.setOperand2(lptr->address);
+      }
+      instructions.push_back(instruction);
+      labelOp2Instructions.push_back(instruction);
     }
 class2_operation:
     TJP_O LABEL
     {
       trace << endl << "#062 class2_operation -> TJP_O LABEL";
       PasmInstruction instruction($1);
+      string str($2);
+      instruction.labelStr = str;
+      PasmLabel* lptr = findLabel(str);
+      PasmLabel l(str);
+      if(lptr == nullptr) {
+        l.addRef(instructions.size());
+        labels.push_back(l);
+      } else {
+        lptr->addRef(instructions.size());
+        instruction.setOperand2(lptr->address);
+      }
+      instructions.push_back(instruction);
+      labelOp2Instructions.push_back(instruction);
     }
 class2_operation:
     XJP_O LABEL
     {
       trace << endl << "#063 class2_operation -> XJP_O LABEL";
       PasmInstruction instruction($1);
+      string str($2);
+      instruction.labelStr = str;
+      PasmLabel* lptr = findLabel(str);
+      PasmLabel l(str);
+      if(lptr == nullptr) {
+        l.addRef(instructions.size());
+        labels.push_back(l);
+      } else {
+        lptr->addRef(instructions.size());
+        instruction.setOperand2(lptr->address);
+      }
+      instructions.push_back(instruction);
+      labelOp2Instructions.push_back(instruction);
     }
 class2_operation:
     IXA_O INTLIT
@@ -653,12 +705,38 @@ class3_operation:
     {
       trace << endl << "#065 class3_operation -> CUP_O INTLIT LABEL";
       PasmInstruction instruction($1,$2);
+      string str($3);
+      instruction.labelStr = str;
+      PasmLabel* lptr = findLabel(str);
+      PasmLabel l(str);
+      if(lptr == nullptr) {
+        l.addRef(instructions.size());
+        labels.push_back(l);
+      } else {
+        lptr->addRef(instructions.size());
+        instruction.setOperand2(lptr->address);
+      }
+      instructions.push_back(instruction);
+      labelOp2Instructions.push_back(instruction);
     }
 class3_operation:
     ENT_O register LABEL
     {
       trace << endl << "#066 class3_operation -> ENT_O register LABEL";
       PasmInstruction instruction($1,$2);
+      string str($3);
+      instruction.labelStr = str;
+      PasmLabel* lptr = findLabel(str);
+      PasmLabel l(str);
+      if(lptr == nullptr) {
+        l.addRef(instructions.size());
+        labels.push_back(l);
+      } else {
+        lptr->addRef(instructions.size());
+        instruction.setOperand2(lptr->address);
+      }
+      instructions.push_back(instruction);
+      labelOp2Instructions.push_back(instruction);
     }
 class3_operation:
     LDA_O INTLIT INTLIT

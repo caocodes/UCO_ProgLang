@@ -26,11 +26,10 @@
 using namespace std;
 
 class PasmInstruction {
+    public:
     int opcode;
     int operand1;
     int operand2;
-
-    public:
     string labelStr;
 
     public:
