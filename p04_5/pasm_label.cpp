@@ -8,7 +8,7 @@ void PasmLabel::print(ostream& output) {
     output << setw(10) << boolalpha << left << setfill(' ') <<  resolved;
     output << dec;
     for(int ref: refList) {
-        output << ref << ", ";
+        output << ref << " ";
     }
     output << endl;
 }

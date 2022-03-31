@@ -1107,6 +1107,7 @@ void sortLabels() {
 void printLabels() {
   sortLabels();
   listing << "Label Table" << endl;
+  listing << setfill(' ');
   listing << setw(8) << left << "Label ";
   listing << setw(10) << left << "Address ";
   listing << setw(10) << left << "Resolved ";
