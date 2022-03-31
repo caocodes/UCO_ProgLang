@@ -223,9 +223,11 @@ definition:
         PasmLabel l(str, $3, true);
         labels.push_back(l);
       } else {
-        for(PasmInstruction instr: labelOp2Instructions) {
+        int i = 0;
+        for(PasmInstruction instr: instructions) {
           if(instr.labelStr.compare(str) == 0) {
-            instr.setOperand2($3);
+            instructions.at(i).setOperand2($3);
+            i++;
           }
         }
         lptr->resolved = true;
@@ -249,13 +251,15 @@ label_list:
       string str($1);
       PasmLabel* lptr = findLabel(str);
       if(lptr == nullptr) {
-        PasmLabel l(str, instructions.size());
+        PasmLabel l(str, instructions.size(), true);
         labels.push_back(l);
       } else {
         int address = instructions.size();
-        for(PasmInstruction instr: labelOp2Instructions) {
+        int i = 0;
+        for(PasmInstruction instr: instructions) {
           if(instr.labelStr.compare(str) == 0) {
-            instr.setOperand2(address);
+            instructions.at(i).setOperand2(address);
+            i++;
           }
         }
         lptr->resolved = true;
@@ -269,13 +273,15 @@ label_list:
       string str($2);
       PasmLabel* lptr = findLabel(str);
       if(lptr == nullptr) {
-        PasmLabel l(str, instructions.size());
+        PasmLabel l(str, instructions.size(), true);
         labels.push_back(l);
       } else {
         int address = instructions.size();
-        for(PasmInstruction instr: labelOp2Instructions) {
+        int i = 0;
+        for(PasmInstruction instr: instructions) {
           if(instr.labelStr.compare(str) == 0) {
-            instr.setOperand2(address);
+            instructions.at(i).setOperand2(address);
+            i++;
           }
         }
         lptr->resolved = true;
@@ -308,6 +314,7 @@ class0_operation:
       trace << endl << "#015 class0_operation -> ADI_O";
       PasmInstruction instruction($1, 0, 0);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     SBI_O
@@ -315,6 +322,7 @@ class0_operation:
       trace << endl << "#016 class0_operation -> SBI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     NGI_O
@@ -322,6 +330,7 @@ class0_operation:
       trace << endl << "#017 class0_operation -> NGI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     MPI_O
@@ -329,6 +338,7 @@ class0_operation:
       trace << endl << "#018 class0_operation -> MPI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     DVI_O
@@ -336,6 +346,7 @@ class0_operation:
       trace << endl << "#019 class0_operation -> DVI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     MOD_O
@@ -343,6 +354,7 @@ class0_operation:
       trace << endl << "#020 class0_operation -> MOD_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     ABI_O
@@ -350,6 +362,7 @@ class0_operation:
       trace << endl << "#021 class0_operation -> ABI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     SQI_O
@@ -357,6 +370,7 @@ class0_operation:
       trace << endl << "#022 class0_operation -> SQI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     ADR_O
@@ -364,6 +378,7 @@ class0_operation:
       trace << endl << "#023 class0_operation -> ADR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     SBR_O
@@ -371,6 +386,7 @@ class0_operation:
       trace << endl << "#024 class0_operation -> SBR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     NGR_O
@@ -378,6 +394,7 @@ class0_operation:
       trace << endl << "#025 class0_operation -> NGR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     MPR_O
@@ -385,6 +402,7 @@ class0_operation:
       trace << endl << "#026 class0_operation -> MPR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     DVR_O
@@ -392,6 +410,7 @@ class0_operation:
       trace << endl << "#027 class0_operation -> DVR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     ABR_O
@@ -399,6 +418,7 @@ class0_operation:
       trace << endl << "#028 class0_operation -> ABR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     SQR_O
@@ -406,6 +426,7 @@ class0_operation:
       trace << endl << "#029 class0_operation -> SQR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     IOR_O
@@ -413,6 +434,7 @@ class0_operation:
       trace << endl << "#030 class0_operation -> IOR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     XOR_O
@@ -420,6 +442,7 @@ class0_operation:
       trace << endl << "#031 class0_operation -> XOR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     AND_O
@@ -427,6 +450,7 @@ class0_operation:
       trace << endl << "#032 class0_operation -> AND_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     NOT_O
@@ -434,6 +458,7 @@ class0_operation:
       trace << endl << "#033 class0_operation -> NOT_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     INN_O
@@ -441,6 +466,7 @@ class0_operation:
       trace << endl << "#034 class0_operation -> INN_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     UNI_O
@@ -448,6 +474,7 @@ class0_operation:
       trace << endl << "#035 class0_operation -> UNI_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     NTR_O
@@ -455,6 +482,7 @@ class0_operation:
       trace << endl << "#036 class0_operation -> NTR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     DIF_O
@@ -462,6 +490,7 @@ class0_operation:
       trace << endl << "#037 class0_operation -> DIF_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     CMP_O
@@ -469,6 +498,7 @@ class0_operation:
       trace << endl << "#038 class0_operation -> CMP_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     SGS_O
@@ -476,6 +506,7 @@ class0_operation:
       trace << endl << "#039 class0_operation -> SGS_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     FLT_O
@@ -483,6 +514,7 @@ class0_operation:
       trace << endl << "#040 class0_operation -> FLT_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     FLO_O
@@ -490,6 +522,7 @@ class0_operation:
       trace << endl << "#041 class0_operation -> FLO_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     TRC_O
@@ -497,6 +530,7 @@ class0_operation:
       trace << endl << "#042 class0_operation -> TRC_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     RND_O
@@ -504,6 +538,7 @@ class0_operation:
       trace << endl << "#043 class0_operation -> RND_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     CHR_O
@@ -511,6 +546,7 @@ class0_operation:
       trace << endl << "#044 class0_operation -> CHR_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     ORD_O
@@ -518,6 +554,7 @@ class0_operation:
       trace << endl << "#045 class0_operation -> ORD_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class0_operation:
     STP_O
@@ -525,6 +562,7 @@ class0_operation:
       trace << endl << "#046 class0_operation -> STP_O";
       PasmInstruction instruction($1);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     MST_O INTLIT
@@ -532,6 +570,7 @@ class1_operation:
       trace << endl << "#047 class1_operation -> MST_O INTLIT";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     RTN_O type
@@ -539,6 +578,7 @@ class1_operation:
       trace << endl << "#048 class1_operation -> RTN_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     EQU_O type
@@ -546,6 +586,7 @@ class1_operation:
       trace << endl << "#049 class1_operation -> EQU_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     NEQ_O type
@@ -553,6 +594,7 @@ class1_operation:
       trace << endl << "#050 class1_operation -> NEQ_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     LES_O type
@@ -560,6 +602,7 @@ class1_operation:
       trace << endl << "#051 class1_operation -> LES_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     LEQ_O type
@@ -567,6 +610,7 @@ class1_operation:
       trace << endl << "#052 class1_operation -> LEQ_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     GRT_O type
@@ -574,6 +618,7 @@ class1_operation:
       trace << endl << "#053 class1_operation -> GRT_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     GEQ_O type
@@ -581,6 +626,7 @@ class1_operation:
       trace << endl << "#054 class1_operation -> GEQ_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     LDI_O type
@@ -588,6 +634,7 @@ class1_operation:
       trace << endl << "#055 class1_operation -> LDI_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     STI_O type
@@ -595,6 +642,7 @@ class1_operation:
       trace << endl << "#056 class1_operation -> STI_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     INC_O type
@@ -602,6 +650,7 @@ class1_operation:
       trace << endl << "#057 class1_operation -> INC_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class1_operation:
     DEC_O type
@@ -609,6 +658,7 @@ class1_operation:
       trace << endl << "#058 class1_operation -> DEC_O type";
       PasmInstruction instruction($1, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class2_operation:
     CSP_O stdfunction
@@ -616,6 +666,7 @@ class2_operation:
       trace << endl << "#059 class2_operation -> CSP_O stdfunction";
       PasmInstruction instruction($1, 0, $2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class2_operation:
     UJP_O LABEL
@@ -699,6 +750,7 @@ class2_operation:
       trace << endl << "#064 class2_operation -> IXA_O INTLIT";
       PasmInstruction instruction($1,0,$2);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     CUP_O INTLIT LABEL
@@ -744,6 +796,7 @@ class3_operation:
       trace << endl << "#067 class3_operation -> LDA_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LDC_O type INTLIT
@@ -783,6 +836,7 @@ class3_operation:
       trace << endl << "#072 class3_operation -> LVA_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LVB_O INTLIT INTLIT
@@ -790,6 +844,7 @@ class3_operation:
       trace << endl << "#073 class3_operation -> LVB_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LVC_O INTLIT INTLIT
@@ -797,6 +852,7 @@ class3_operation:
       trace << endl << "#074 class3_operation -> LVC_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LVI_O INTLIT INTLIT
@@ -804,6 +860,7 @@ class3_operation:
       trace << endl << "#075 class3_operation -> LVI_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LVR_O INTLIT INTLIT
@@ -811,6 +868,7 @@ class3_operation:
       trace << endl << "#076 class3_operation -> LVR_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LVS_O INTLIT INTLIT
@@ -818,6 +876,7 @@ class3_operation:
       trace << endl << "#077 class3_operation -> LVS_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 class3_operation:
     LVT_O INTLIT INTLIT
@@ -825,6 +884,7 @@ class3_operation:
       trace << endl << "#078 class3_operation -> LVT_O INTLIT INTLIT";
       PasmInstruction instruction($1,$2,$3);
       instruction.print(trace);
+      instructions.push_back(instruction);
     }
 type:
     P_T
