@@ -224,12 +224,14 @@ definition:
         labels.push_back(l);
       } else {
         int i = 0;
-        for(PasmInstruction instr: instructions) {
-          if(instr.labelStr.compare(str) == 0) {
-            instructions.at(i).setOperand2($3);
-            i++;
-          }
-        }
+        // for(PasmInstruction instr: instructions) {
+        //   if(instr.labelStr.compare(str) == 0) {
+        //     cout << "instr:" << instr.labelStr << endl;
+        //     instructions.at(i).setOperand2($3);
+        //     i++;
+        //     cout << instructions.at(i).operand2 << endl;
+        //   }
+        // }
         lptr->resolved = true;
         lptr->address = $3;
       }
@@ -256,12 +258,12 @@ label_list:
       } else {
         int address = instructions.size();
         int i = 0;
-        for(PasmInstruction instr: instructions) {
-          if(instr.labelStr.compare(str) == 0) {
-            instructions.at(i).setOperand2(address);
-            i++;
-          }
-        }
+        // for(PasmInstruction instr: instructions) {
+        //   if(instr.labelStr.compare(str) == 0) {
+        //     instructions.at(i).setOperand2(address);
+        //     i++;
+        //   }
+        // }
         lptr->resolved = true;
         lptr->address = address;
       }
@@ -278,12 +280,12 @@ label_list:
       } else {
         int address = instructions.size();
         int i = 0;
-        for(PasmInstruction instr: instructions) {
-          if(instr.labelStr.compare(str) == 0) {
-            instructions.at(i).setOperand2(address);
-            i++;
-          }
-        }
+        // for(PasmInstruction instr: instructions) {
+        //   if(instr.labelStr.compare(str) == 0) {
+        //     instructions.at(i).setOperand2(address);
+        //     i++;
+        //   }
+        // }
         lptr->resolved = true;
         lptr->address = address;
       }
@@ -1191,8 +1193,17 @@ PasmLabel* findLabel(string str) {
   return nullptr;
 }
 
+void resolveOp2() {
+  for(PasmLabel l : labels) {
+    for(int i: l.refList) {
+      instructions.at(i).operand2 = l.address;
+    }
+  }
+}
+
 void Parser::printListing()
 {
+  resolveOp2();
   printStrConstants();
   printSetConstants();
   printIntConstants();
