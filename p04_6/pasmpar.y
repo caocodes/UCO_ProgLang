@@ -676,7 +676,6 @@ class2_operation:
       trace << endl << "#060 class2_operation -> UJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -695,7 +694,6 @@ class2_operation:
       trace << endl << "#061 class2_operation -> FJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -714,7 +712,6 @@ class2_operation:
       trace << endl << "#062 class2_operation -> TJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -733,7 +730,6 @@ class2_operation:
       trace << endl << "#063 class2_operation -> XJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -760,7 +756,6 @@ class3_operation:
       trace << endl << "#065 class3_operation -> CUP_O INTLIT LABEL";
       PasmInstruction instruction($1,$2);
       string str($3);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -779,7 +774,6 @@ class3_operation:
       trace << endl << "#066 class3_operation -> ENT_O register LABEL";
       PasmInstruction instruction($1,$2);
       string str($3);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
