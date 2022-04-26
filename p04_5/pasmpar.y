@@ -13,7 +13,7 @@
 // CRN:		22708, Spring 2022
 // Course:	CMSC 5023 – Programming Languages
 // Project:	p04.5
-// Due:		March 31, 2022
+// Due:		April 26, 2022
 // Project Account Number: tt035
 //---------------------------------------------------------------------
 //C++ include files
@@ -258,12 +258,6 @@ label_list:
       } else {
         int address = instructions.size();
         int i = 0;
-        // for(PasmInstruction instr: instructions) {
-        //   if(instr.labelStr.compare(str) == 0) {
-        //     instructions.at(i).setOperand2(address);
-        //     i++;
-        //   }
-        // }
         lptr->resolved = true;
         lptr->address = address;
       }
@@ -280,12 +274,6 @@ label_list:
       } else {
         int address = instructions.size();
         int i = 0;
-        // for(PasmInstruction instr: instructions) {
-        //   if(instr.labelStr.compare(str) == 0) {
-        //     instructions.at(i).setOperand2(address);
-        //     i++;
-        //   }
-        // }
         lptr->resolved = true;
         lptr->address = address;
       }
@@ -676,7 +664,6 @@ class2_operation:
       trace << endl << "#060 class2_operation -> UJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -695,7 +682,6 @@ class2_operation:
       trace << endl << "#061 class2_operation -> FJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -714,7 +700,6 @@ class2_operation:
       trace << endl << "#062 class2_operation -> TJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -733,7 +718,6 @@ class2_operation:
       trace << endl << "#063 class2_operation -> XJP_O LABEL";
       PasmInstruction instruction($1);
       string str($2);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -760,7 +744,6 @@ class3_operation:
       trace << endl << "#065 class3_operation -> CUP_O INTLIT LABEL";
       PasmInstruction instruction($1,$2);
       string str($3);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {
@@ -779,7 +762,6 @@ class3_operation:
       trace << endl << "#066 class3_operation -> ENT_O register LABEL";
       PasmInstruction instruction($1,$2);
       string str($3);
-      instruction.labelStr = str;
       PasmLabel* lptr = findLabel(str);
       PasmLabel l(str);
       if(lptr == nullptr) {

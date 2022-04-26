@@ -12,7 +12,7 @@
 // CRN:		22708, Spring 2022
 // Course:	CMSC 5023 – Programming Languages
 // Project:	p04.5
-// Due:		March 31, 2022
+// Due:		April 26, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 #ifndef pasm_instruction_h
@@ -27,21 +27,20 @@ using namespace std;
 
 class PasmInstruction {
     public:
-    int opcode;
-    int operand1;
-    int operand2;
-    string labelStr;
+    unsigned char opcode;
+    unsigned char operand1;
+    short operand2;
 
     public:
-        PasmInstruction(int opc = 0, int op1 = 0, int op2 = 0);
+        PasmInstruction(unsigned char opc = 0,unsigned char op1 = 0, short op2 = 0);
         void print(ostream& output); 
         void printOPCode(ostream& output);
         void printOP1(ostream& output);
         void printOP2(ostream& output);
-        int getOpCode();
-        int getOperand1();
-        int getOperand2();
-        void setOperand2(int value);
+        unsigned char getOpCode();
+        unsigned char getOperand1();
+        short getOperand2();
+        void setOperand2(short value);
 };
 
 #endif

@@ -258,12 +258,6 @@ label_list:
       } else {
         int address = instructions.size();
         int i = 0;
-        // for(PasmInstruction instr: instructions) {
-        //   if(instr.labelStr.compare(str) == 0) {
-        //     instructions.at(i).setOperand2(address);
-        //     i++;
-        //   }
-        // }
         lptr->resolved = true;
         lptr->address = address;
       }
@@ -280,12 +274,6 @@ label_list:
       } else {
         int address = instructions.size();
         int i = 0;
-        // for(PasmInstruction instr: instructions) {
-        //   if(instr.labelStr.compare(str) == 0) {
-        //     instructions.at(i).setOperand2(address);
-        //     i++;
-        //   }
-        // }
         lptr->resolved = true;
         lptr->address = address;
       }

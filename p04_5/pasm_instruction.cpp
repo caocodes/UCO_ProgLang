@@ -12,7 +12,7 @@
 // CRN:		22708, Spring 2022
 // Course:	CMSC 5023 – Programming Languages
 // Project:	p04.5
-// Due:		March 31, 2022
+// Due:		April 26, 2022
 // Project Account Number: tt035
 //--------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ using namespace std;
 
 extern map<int, string> tokenSpelling;
 
-PasmInstruction::PasmInstruction(int opc, int op1, int op2)
+PasmInstruction::PasmInstruction(unsigned char opc, unsigned char op1, short op2)
     : opcode(opc), operand1(op1), operand2(op2) {}
 
 void PasmInstruction::print(ostream &output)
@@ -79,7 +79,7 @@ void PasmInstruction::printOP1(ostream &output)
 
     output << "  " << spelling;
     output << "(";
-    output << setw(2) << hex << setfill('0') << operand1;
+    output << setw(2) << hex << setfill('0') << static_cast<uint32_t>(operand1);
     output << ")";
 }
 
@@ -96,26 +96,25 @@ void PasmInstruction::printOP2(ostream &output)
     {
         spelling = to_string(operand2);
     }
-
     output << "  " << spelling;
     output << "(";
-    output << setw(4) << hex << setfill('0') << operand2;
+    output << setw(4) << hex << setfill('0') << (operand2);
     output << ")";
 }
 
 
-int PasmInstruction::getOpCode() {
+unsigned char PasmInstruction::getOpCode() {
     return opcode;
 }
 
-int PasmInstruction::getOperand1() {
+unsigned char PasmInstruction::getOperand1() {
     return operand1;
 }
 
-int PasmInstruction::getOperand2() {
+short PasmInstruction::getOperand2() {
     return operand2;
 }
 
-void PasmInstruction::setOperand2(int value) {
+void PasmInstruction::setOperand2(short value) {
     operand2 = value;
 }
