@@ -1102,8 +1102,8 @@ void printStrConstants() {
     listing << setw(40) << left << "Constant" << endl;
     for(char* str: strConstants) {
       listing << setw(5) << right << setfill(' ') << i << "\t";
-      listing << setw(40) << left << setfill(' ') << str << endl;
-      i++;
+      listing << left << setfill(' ') << "\"" << str << "\"" << endl;
+      i += strlen(str) + 1; // + 1 to account for '\0'
     }
     listing << endl;
 }

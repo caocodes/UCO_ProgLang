@@ -25,6 +25,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <regex>
 using namespace std;
 //--------------------------------------------------------------------
 // Application Includes
@@ -738,9 +739,11 @@ int chrlit(void) {
 
 int strlit(void) {
 	// removes first and last char
-	char* result = strdup(yytext) + 1; 
+	string str(yytext);
+	str = regex_replace(str, regex("('')"), "'");
+	char* result = strdup(str.c_str()) + 1; 
   	result[strlen(result)-1] = '\0';
-	yylval.strlit = result;
+	yylval.strlit = result; 
 	return STRLIT;
 }
 
