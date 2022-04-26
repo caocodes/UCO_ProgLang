@@ -33,6 +33,7 @@ using namespace std;
 //--------------------------------------------------------------------
 ofstream trace; // trace file stream
 ofstream listing; // listing file stream
+ofstream pex; // pex file stream
 
 //-------------------------------------------------------------------------
 // FileException is thrown when a file whose name is given on the command line
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
 {
 	try
 	{
-		char inputFile[255], traceFile[255], listingFile[255];
+		char inputFile[255], traceFile[255], listingFile[255], exeFile[255];;
 		switch (argc)
 		{
 		case 1: // no file arg provided in command line
@@ -96,9 +97,10 @@ int main(int argc, char *argv[])
 		if (!strstr(inputFile, ".pcd"))
 			throw ExtException(inputFile);
 
-		// create trace, listing files
+		// create trace, listing, exe files
 		strcpy(traceFile, ((string)inputFile).replace(((string)inputFile).size() - 4, 4, ".atrc").c_str());
 		strcpy(listingFile, ((string)inputFile).replace(((string)inputFile).size() - 4, 4, ".alst").c_str());
+		strcpy(exeFile, ((string)inputFile).replace(((string)inputFile).size() - 4, 4, ".pex").c_str());
 
 		// open files
 		FILE *inputPointer = fopen(inputFile, "r");
@@ -110,17 +112,22 @@ int main(int argc, char *argv[])
 		listing.open(listingFile);
 		if (!listing)
 			throw FileException(listingFile);
+		pex.open(exeFile);
+		if (!pex)
+			throw FileException(exeFile);
 		
 		// parse input file
 		Parser p(inputPointer);
 		int rc = p.parse();
 		p.printListing();
+		p.makePex();
 		
 		// close resources
 		trace << endl;
 		trace.close();
 		listing << endl;
 		listing.close();
+		pex.close();
 		fclose(inputPointer);
 	}
 	catch (...)

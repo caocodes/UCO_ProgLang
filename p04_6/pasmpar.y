@@ -41,6 +41,7 @@ using namespace std;
 //---------------------------------------------------------------------
 extern ofstream trace;
 extern ofstream listing;
+extern ofstream pex;
 extern int lineCount;
 extern int columnCount;
 extern map<int, string> tokenSpelling;
@@ -1192,4 +1193,9 @@ void Parser::printListing()
   printRealConstants();
   printInstructions();
   printLabels();
+}
+
+void Parser::makePex()
+{
+  pex << "Hello";
 }

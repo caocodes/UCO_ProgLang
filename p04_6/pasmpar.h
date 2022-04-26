@@ -29,6 +29,7 @@ class Parser: public Lexer
     Parser(FILE* i):Lexer(i){}
     int parse(void) { return yyparse(); }
     void printListing();
+    void makePex();
 };
 #endif
 
