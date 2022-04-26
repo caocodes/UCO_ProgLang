@@ -1,0 +1,14 @@
+L00001 ent sp L00002
+ ent ep L00003
+ lvi 0 5
+ lvi 0 6
+ equ i
+ fjp L00004
+ ujp L00004
+ tjp L00004
+L00004 rtn p
+#define L00002 4
+#define L00003 4
+ mst 0
+ cup 0 L00001
+ stp
