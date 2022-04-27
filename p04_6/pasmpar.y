@@ -1209,7 +1209,10 @@ void Parser::printListing()
   printLabels();
 }
 
-void  writeStrConstants() {}
+void  writeStrConstants() {
+  fwrite(&strConstants[0], sizeof(char), strIndex, pex);
+}
+
 void  writeSetConstants() {}
 void  writeRealConstants() {}
 void  writeIntConstants() {}

@@ -43,6 +43,7 @@ void PasmDirectory::print(ostream &o)
     o << "tcsize="   << tcsize << " \tset constants size" << endl; 
     o << "rcoffset=" << rcoffset << " \treal constants offset" << endl; 
     o << "rcsize="   << rcsize << " \treal constants size" << endl; 
+    o << "icoffset=" << icoffset << " \tinteger constants offset" << endl; 
     o << "icsize="   << icsize << " \tinteger constants size" << endl; 
     o << "iaoffset=" << iaoffset << " \tinstruction array offset" << endl;
     o << "iasize="  << iasize << " \tinstruction array size" << endl; 
