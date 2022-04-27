@@ -118,3 +118,7 @@ short PasmInstruction::getOperand2() {
 void PasmInstruction::setOperand2(short value) {
     operand2 = value;
 }
+
+void PasmInstruction::write(FILE* f) {
+    fwrite(this,sizeof(PasmInstruction),1,f);
+}

@@ -1213,10 +1213,23 @@ void  writeStrConstants() {
   fwrite(&strConstants[0], sizeof(char), strIndex, pex);
 }
 
-void  writeSetConstants() {}
-void  writeRealConstants() {}
-void  writeIntConstants() {}
-void  writeInstructions() {}
+void  writeSetConstants() {
+  // not implemented
+}
+
+void  writeRealConstants() {
+  fwrite(&realConstants[0], sizeof(double), realConstants.size(), pex);
+}
+
+void  writeIntConstants() {
+  fwrite(&intConstants[0], sizeof(int), intConstants.size(), pex);
+}
+
+void  writeInstructions() {
+    for(PasmInstruction pi: instructions) {
+      pi.write(pex);
+    }
+}
 
 void Parser::writePex()
 {

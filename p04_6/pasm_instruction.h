@@ -41,6 +41,7 @@ class PasmInstruction {
         unsigned char getOperand1();
         short getOperand2();
         void setOperand2(short value);
+        void write(FILE* f);
 };
 
 #endif
