@@ -42,7 +42,7 @@ using namespace std;
 //---------------------------------------------------------------------
 extern ofstream trace;
 extern ofstream listing;
-extern ofstream pex;
+extern FILE* pex;
 extern int lineCount;
 extern int columnCount;
 extern map<int, string> tokenSpelling;
@@ -1185,9 +1185,22 @@ void resolveOp2() {
   }
 }
 
+void printDirectory() {
+  int stackSize = 1024;
+  int ias = instructions.size()*sizeof(PasmInstruction);
+  int ics = intConstants.size()*sizeof(int);
+  int rcs = realConstants.size()*sizeof(double);
+  int tcs = setConstants.size()*sizeof(double);
+  int scs = strIndex*sizeof(char);
+  PasmDirectory directory(stackSize, ias, ics, rcs, tcs, scs);
+  directory.print(listing);
+  directory.write(pex);
+}
+
 void Parser::printListing()
 {
   resolveOp2();
+  printDirectory();
   printStrConstants();
   printSetConstants();
   printIntConstants();
@@ -1198,13 +1211,5 @@ void Parser::printListing()
 
 void Parser::makePex()
 {
-  int stackSize = 1024;
-  pex << "Stack size = " << stackSize << endl;
-  int ias = 0;
-  int ics = 0;
-  int rcs = 0;
-  int tcs = 0;
-  int scs = 0;
-  PasmDirectory directory(stackSize, ias, ics, rcs, tcs, scs);
-  directory.print(pex);
+
 }
