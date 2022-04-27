@@ -36,6 +36,7 @@ using namespace std;
 #include "pasmpar.h"
 #include "pasm_instruction.h"
 #include "pasm_label.h"
+#include "pasm_directory.h"
 //---------------------------------------------------------------------
 //Externals
 //---------------------------------------------------------------------
@@ -53,7 +54,7 @@ vector<char> charConstants;
 vector<char*> strConstants;
 vector<int> intConstants;
 vector<double> realConstants;
-vector<int> setConstants;
+vector<double> setConstants;
 vector<PasmInstruction> instructions;
 vector<PasmLabel> labels;
 vector<PasmInstruction> labelOp2Instructions;
@@ -1197,5 +1198,13 @@ void Parser::printListing()
 
 void Parser::makePex()
 {
-  pex << "Hello";
+  int stackSize = 1024;
+  pex << "Stack size = " << stackSize << endl;
+  int ias = 0;
+  int ics = 0;
+  int rcs = 0;
+  int tcs = 0;
+  int scs = 0;
+  PasmDirectory directory(stackSize, ias, ics, rcs, tcs, scs);
+  directory.print(pex);
 }
