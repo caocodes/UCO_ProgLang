@@ -1081,7 +1081,7 @@ int addInstruction(PasmInstruction& instruction, double realit, char chrlit, cha
 
 void printStrConstants() {
     int i = 0;
-    listing << "String Constants" << endl;
+    listing << endl << "String Constants" << endl;
     listing << left << "Index" << "\t";
     listing << setw(40) << left << "Constant" << endl;
     for(char* str: strConstants) {
@@ -1209,7 +1209,17 @@ void Parser::printListing()
   printLabels();
 }
 
-void Parser::makePex()
-{
+void  writeStrConstants() {}
+void  writeSetConstants() {}
+void  writeRealConstants() {}
+void  writeIntConstants() {}
+void  writeInstructions() {}
 
+void Parser::writePex()
+{
+  writeStrConstants();
+  writeSetConstants();
+  writeRealConstants();
+  writeIntConstants();
+  writeInstructions();
 }

@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 		Parser p(inputPointer);
 		int rc = p.parse();
 		p.printListing();
-		p.makePex();
+		p.writePex();
 		
 		// close resources
 		trace << endl;

@@ -33,19 +33,19 @@ PasmDirectory::PasmDirectory(int ss, int ias, int ics, int rcs, int tcs, int scs
 void PasmDirectory::print(ostream &o)
 {
     o << endl << "Directory" << endl;
-    o << "start = " << start << " instruction address of first instruction" << endl;
-    o << "ssize=" << ssize << " stack size" << endl; 
-    o << "doffset=" << 0 << " directory offset" << endl; 
-    o << "dsize=" << sizeof(PasmDirectory) << " directory size" << endl; 
-    o << "scoffset=" << scoffset << " string constants offset" << endl; 
-    o << "scsize="   << scsize << " string constants size" << endl; 
-    o << "tcoffset=" << tcoffset << " set constants offset" << endl; 
-    o << "tcsize="   << tcsize << " set constants size" << endl; 
-    o << "rcoffset=" << rcoffset << " real constants offset" << endl; 
-    o << "rcsize="   << rcsize << " real constants size" << endl; 
-    o << "icsize="   << icsize << " integer constants size" << endl; 
-    o << "iaoffset=" << iaoffset << " instruction array offset" << endl;
-    o << "iasize="  << iasize << " instruction array size" << endl; 
+    o << "start = " << start << " \tinstruction address of first instruction" << endl;
+    o << "ssize=" << ssize << " \tstack size" << endl; 
+    o << "doffset=" << 0 << " \tdirectory offset" << endl; 
+    o << "dsize=" << sizeof(PasmDirectory) << " \tdirectory size" << endl; 
+    o << "scoffset=" << scoffset << " \tstring constants offset" << endl; 
+    o << "scsize="   << scsize << " \tstring constants size" << endl; 
+    o << "tcoffset=" << tcoffset << " \tset constants offset" << endl; 
+    o << "tcsize="   << tcsize << " \tset constants size" << endl; 
+    o << "rcoffset=" << rcoffset << " \treal constants offset" << endl; 
+    o << "rcsize="   << rcsize << " \treal constants size" << endl; 
+    o << "icsize="   << icsize << " \tinteger constants size" << endl; 
+    o << "iaoffset=" << iaoffset << " \tinstruction array offset" << endl;
+    o << "iasize="  << iasize << " \tinstruction array size" << endl; 
 }
 
 void PasmDirectory::write(FILE *f)
